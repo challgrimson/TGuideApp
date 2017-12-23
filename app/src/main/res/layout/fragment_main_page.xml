@@ -1,0 +1,17 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.android.tguide.MainPage">
+
+    <!-- TODO: Update blank fragment layout -->
+    <EditText
+        android:id="@+id/notepad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="@string/notpad_hint"
+        android:gravity="center_horizontal|center_vertical"
+        android:cursorVisible="false"/>
+
+</FrameLayout>
