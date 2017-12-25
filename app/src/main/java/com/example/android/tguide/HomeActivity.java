@@ -1,15 +1,12 @@
 package com.example.android.tguide;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.Gravity;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,12 +17,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import static android.R.attr.fragment;
+
 public class HomeActivity extends AppCompatActivity
+
         implements
         MainPage.OnFragmentInteractionListener,
         FAQ.OnFragmentInteractionListener,
         AboutTurner.OnFragmentInteractionListener,
         Reminders.OnFragmentInteractionListener,
+        HomePage.OnFragmentInteractionListener,
 
         NavigationView.OnNavigationItemSelectedListener {
 
@@ -46,13 +47,12 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // Check first item in the navigation drawer initially
-        navigationView.setCheckedItem(R.id.frag_mainPage);
+        navigationView.setCheckedItem(R.id.frag_homepage);
 
         // Open faq fragment initially
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.mainFrame, new MainPage());
+        ft.replace(R.id.mainFrame, new HomePage());
         ft.commit();
-
     }
 
     @Override
@@ -100,10 +100,11 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         Fragment fragment = null;
-        if (id == R.id.frag_mainPage) {
+        if (id == R.id.frag_homepage) {
+            fragment = new HomePage();
+        } else if (id == R.id.frag_mainPage) {
             fragment = new MainPage();
-        }
-        else if (id == R.id.frag_faq) {
+        } else if (id == R.id.frag_faq) {
             fragment = new FAQ();
         } else if (id == R.id.frag_aboutTurner) {
             fragment = new AboutTurner();

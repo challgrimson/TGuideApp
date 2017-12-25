@@ -1,17 +1,39 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     tools:context="com.example.android.tguide.MainPage">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- For when accessibility is on - will read to user -->
+    <TextView
+        android:id="@+id/notepad_caption"
+        android:labelFor="@+id/notepad"
+        android:text="@string/txt_notepad"
+        android:layout_height="0dp"
+        android:layout_width="0dp"/>
+
+    <!-- This is for the notepad -->
     <EditText
         android:id="@+id/notepad"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:hint="@string/notpad_hint"
-        android:gravity="center_horizontal|center_vertical"
-        android:cursorVisible="false"/>
+        android:layout_width="349dp"
+        android:layout_height="486dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_edittext"
+        android:inputType="text"
+        android:gravity="start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.564"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="LabelFor"
+        app:layout_constraintVertical_bias="0.507"
+        tools:layout_editor_absoluteY="-11dp"
+        tools:layout_editor_absoluteX="8dp" />
 
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>
