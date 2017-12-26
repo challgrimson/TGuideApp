@@ -1,12 +1,22 @@
 package com.example.android.tguide;
 
+import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 
 /**
@@ -41,7 +51,7 @@ public class Reminders extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment Reminders.
      */
-    // TODO: Rename and change types and number of parameters
+
     public static Reminders newInstance(String param1, String param2) {
         Reminders fragment = new Reminders();
         Bundle args = new Bundle();
@@ -69,6 +79,13 @@ public class Reminders extends Fragment {
         if (mListener != null){
             mListener.onFragmentInteraction("Reminders");
         }
+
+        final Button button = (Button) view.findViewById(R.id.button_test);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                mListener.sendNotification();
+            }
+        });
 
         return view;
     }
@@ -103,5 +120,6 @@ public class Reminders extends Fragment {
     public interface OnFragmentInteractionListener {
         //Passed needed title for fragment to MainActivity
         void onFragmentInteraction(String title);
+        void sendNotification();
     }
 }

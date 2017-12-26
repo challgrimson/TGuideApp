@@ -1,6 +1,9 @@
 package com.example.android.tguide;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 import static android.R.attr.fragment;
@@ -124,4 +129,26 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
+
+    // Send a notification to the user
+    public void sendNotification(){
+        // Builder Object for notification
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher).setContentTitle("My First Notification").setContentTitle("Hello World!");
+
+        // Create intent for this notification
+        Intent resultIntent = new Intent(this, Reminders.class);
+        PendingIntent resultPendingIntnt = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Add intent to notification builder object
+        mBuilder.setContentIntent(resultPendingIntnt);
+
+        // Create id for notification
+        int mNotificationId = 001;
+
+        // Fet instant of notification manager
+        NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        // Build and issue notification
+        mNotifyMgr.notify(mNotificationId, mBuilder.build());
+    }
 }
