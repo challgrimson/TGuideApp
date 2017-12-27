@@ -1,10 +1,16 @@
 package com.example.android.tguide;
 
+import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +27,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import java.util.Date;
 
 import static android.R.attr.fragment;
 
@@ -58,6 +66,7 @@ public class HomeActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.mainFrame, new HomePage());
         ft.commit();
+
     }
 
     @Override
@@ -131,7 +140,7 @@ public class HomeActivity extends AppCompatActivity
 
 
     // Send a notification to the user
-    public void sendNotification(){
+    public Notification sendNotification(){
         // Builder Object for notification
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher).setContentTitle("My First Notification").setContentTitle("Hello World!");
 
@@ -142,13 +151,33 @@ public class HomeActivity extends AppCompatActivity
         // Add intent to notification builder object
         mBuilder.setContentIntent(resultPendingIntnt);
 
-        // Create id for notification
-        int mNotificationId = 001;
-
-        // Fet instant of notification manager
-        NotificationManager mNotifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
-        // Build and issue notification
-        mNotifyMgr.notify(mNotificationId, mBuilder.build());
+        return mBuilder.build();
     }
+
+    // Start notifications
+    public void begin_notifications(){
+        // Create Notificiton
+        Notification notification = sendNotification();
+
+        // Create alarm
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Date dat = new Date();
+        Calendar cal_alarm = Calendar.getInstance();
+        Calendar cal_now = Calendar.getInstance();
+        cal_now.setTime(dat);
+        cal_alarm.setTime(dat);
+        //cal_alarm.set(Calendar.HOUR_OF_DAY,14);
+        //cal_alarm.set(Calendar.MINUTE,18);
+        cal_alarm.set(Calendar.SECOND,30);
+        //if(cal_alarm.before(cal_now)){
+        //    cal_alarm.add(Calendar.DATE,1);
+        //}
+
+        Intent myIntent = new Intent(this, AlarmReceiver.class);
+        myIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
+        PendingIntent resultPendingIntent = PendingIntent.getBroadcast(this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        manager.set(AlarmManager.RTC_WAKEUP,cal_alarm.getTimeInMillis(), resultPendingIntent);
+    }
+
 }

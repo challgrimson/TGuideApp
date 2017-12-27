@@ -7,10 +7,17 @@
 
 
     <Button
+        android:id="@+id/button_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Stop" />
+
+    <Button
         android:id="@+id/button_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Button"
-        android:onClick="Notificationsend"/>
+        android:onClick="Notificationsend"
+        android:text="Start" />
 </LinearLayout>

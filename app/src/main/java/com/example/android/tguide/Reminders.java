@@ -3,12 +3,14 @@ package com.example.android.tguide;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.job.JobParameters;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
@@ -83,7 +85,7 @@ public class Reminders extends Fragment {
         final Button button = (Button) view.findViewById(R.id.button_test);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
-                mListener.sendNotification();
+                mListener.begin_notifications();
             }
         });
 
@@ -120,6 +122,6 @@ public class Reminders extends Fragment {
     public interface OnFragmentInteractionListener {
         //Passed needed title for fragment to MainActivity
         void onFragmentInteraction(String title);
-        void sendNotification();
+        void begin_notifications();
     }
 }
