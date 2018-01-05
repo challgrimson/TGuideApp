@@ -65,7 +65,7 @@ public class FAQ extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_faq, container, false);
 
-        // Send Main Page as a title parameter
+        // Send FAQ as a title parameter
         if (mListener != null){
             mListener.onFragmentInteraction("FAQ");
         }

@@ -21,7 +21,6 @@
         </activity>
         <!-- Register alarm in manifest -->
         <receiver android:name=".AlarmReceiver"/>
-
     </application>
 
 </manifest>

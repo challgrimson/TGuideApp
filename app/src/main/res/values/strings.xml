@@ -6,5 +6,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="notpad_hint"> Welcome to TGuide!\nUse this space to keep your notes.</string>
     <string name="txt_notepad">Use this space to keep any notes you may have.</string>
+    <string name="reminder_Hint">Click on the button bellow to create a reminder!</string>
+    <string name="reminder_titleText">Reminder Name</string>
+    <string name="reminder_descripHint">Description</string>
+    <string name="reminder_date">Date</string>
+    <string name="reminder_time">Time</string>
+    <string name="reminder_repeat_switch">Repeat</string>
+    <string name="reminder_switch_on">On</string>
+    <string name="reminder_switch_off">Off</string>
+    <string name="reminder_interval_time">Repition Interval</string>
+    <string name="reminder_type_repitition">Repition Type</string>
 
 </resources>

@@ -4,19 +4,24 @@ import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -26,7 +31,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
+
+import com.example.android.tguide.data.AlarmReminderContract;
+import com.example.android.tguide.data.AlarmReminderDbHelper;
 
 import java.util.Date;
 
@@ -40,8 +50,12 @@ public class HomeActivity extends AppCompatActivity
         AboutTurner.OnFragmentInteractionListener,
         Reminders.OnFragmentInteractionListener,
         HomePage.OnFragmentInteractionListener,
+        Add_Reminder.OnFragmentInteractionListener,
 
         NavigationView.OnNavigationItemSelectedListener {
+
+    // Unique Id for Loader
+    private static final int VEHICLE_LOADER = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +80,6 @@ public class HomeActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.mainFrame, new HomePage());
         ft.commit();
-
     }
 
     @Override
@@ -154,7 +167,7 @@ public class HomeActivity extends AppCompatActivity
         return mBuilder.build();
     }
 
-    // Start notifications
+    /* Start notifications
     public void begin_notifications(){
         // Create Notificiton
         Notification notification = sendNotification();
@@ -167,8 +180,8 @@ public class HomeActivity extends AppCompatActivity
         cal_now.setTime(dat);
         cal_alarm.setTime(dat);
         //cal_alarm.set(Calendar.HOUR_OF_DAY,14);
-        //cal_alarm.set(Calendar.MINUTE,18);
-        cal_alarm.set(Calendar.SECOND,30);
+        cal_alarm.set(Calendar.MINUTE,25);
+        //cal_alarm.set(Calendar.SECOND,30);
         //if(cal_alarm.before(cal_now)){
         //    cal_alarm.add(Calendar.DATE,1);
         //}
@@ -178,6 +191,13 @@ public class HomeActivity extends AppCompatActivity
         PendingIntent resultPendingIntent = PendingIntent.getBroadcast(this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         manager.set(AlarmManager.RTC_WAKEUP,cal_alarm.getTimeInMillis(), resultPendingIntent);
+    }*/
+
+    // Change to add reminder fragment when clicked
+    public void change_AddReminder () {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, new Add_Reminder());
+        ft.commit();
     }
 
 }

@@ -1,29 +1,23 @@
-//IMPORTANT:
-//
-// THIS IS THE NOTEPAD
 package com.example.android.tguide;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-
-import static com.example.android.tguide.R.id.parent;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MainPage.OnFragmentInteractionListener} interface
+ * {@link FAQ.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MainPage#newInstance} factory method to
+ * Use the {@link FAQ#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainPage extends Fragment {
+public class Add_Reminder extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,11 +29,7 @@ public class MainPage extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    // Notepad editText view
-    EditText editText;
-    String notepad_txt;
-
-    public MainPage() {
+    public Add_Reminder() {
         // Required empty public constructor
     }
 
@@ -49,11 +39,11 @@ public class MainPage extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MainPage.
+     * @return A new instance of fragment FAQ.
      */
     // TODO: Rename and change types and number of parameters
-    public static MainPage newInstance(String param1, String param2) {
-        MainPage fragment = new MainPage();
+    public static FAQ newInstance(String param1, String param2) {
+        FAQ fragment = new FAQ();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,22 +63,15 @@ public class MainPage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_page, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_reminder, container, false);
 
-        // Send Main Page as a title parameter
+        // Send FAQ as a title parameter
         if (mListener != null){
-            mListener.onFragmentInteraction("Notepad");
+            mListener.onFragmentInteraction("Add Reminder");
         }
-
-        // Update notepad based on saved data
-        editText =  (EditText) view.findViewById(R.id.notepad);
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        notepad_txt = sharedPref.getString("notepad","");
-        editText.setText(notepad_txt);
 
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -120,16 +103,5 @@ public class MainPage extends Fragment {
     public interface OnFragmentInteractionListener {
         //Passed needed title for fragment to MainActivity
         void onFragmentInteraction(String title);
-    }
-
-    // Save data on pause
-    @Override
-    public void onPause(){
-        super.onPause();
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        notepad_txt = editText.getText().toString();
-        editor.putString("notepad",notepad_txt);
-        editor.apply();
     }
 }

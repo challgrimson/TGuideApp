@@ -1,24 +1,22 @@
 package com.example.android.tguide;
 
-import android.app.Activity;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.job.JobParameters;
-import android.content.BroadcastReceiver;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.icu.util.Calendar;
-import android.net.Uri;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.app.LoaderManager;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-import static android.content.Context.NOTIFICATION_SERVICE;
+import com.example.android.tguide.data.AlarmReminderContract;
+import com.example.android.tguide.data.AlarmReminderDbHelper;
 
 
 /**
@@ -29,7 +27,7 @@ import static android.content.Context.NOTIFICATION_SERVICE;
  * Use the {@link Reminders#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Reminders extends Fragment {
+public class Reminders extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -45,14 +43,14 @@ public class Reminders extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Reminders.
-     */
+    // Create variables for creating reminders
+    private FloatingActionButton mAddReminderButton;
+    AlarmReceiver mCursorAdapter;
+    AlarmReminderDbHelper alarmReminderDbHelper = new AlarmReminderDbHelper(getActivity());
+    ListView reminderListView;
+    ProgressDialog prgDialog;
+
+    private static final int VEHICLE_LOADER = 0;
 
     public static Reminders newInstance(String param1, String param2) {
         Reminders fragment = new Reminders();
@@ -82,12 +80,36 @@ public class Reminders extends Fragment {
             mListener.onFragmentInteraction("Reminders");
         }
 
-        final Button button = (Button) view.findViewById(R.id.button_test);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v){
-                mListener.begin_notifications();
+        // Initilize List View with EmptyView (what to show when empty)
+        reminderListView = (ListView) view.findViewById(R.id.reminder_ListView);
+        View emptyView = view.findViewById(R.id.reminder_EmptyView);
+        reminderListView.setEmptyView(emptyView);
+
+        // Inililze the AlarmReview
+        mCursorAdapter = new AlarmReceiver(getActivity(), null);
+        reminderListView.setAdapter(mCursorAdapter);
+
+        reminderListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // Switch to Add_Reminder Fragment
+                mListener.change_AddReminder();
             }
         });
+
+        // Set Floating Action Button to switch fragment
+        mAddReminderButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButton2);
+
+        mAddReminderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                // Switch to Add_Reminder Fragment
+                mListener.change_AddReminder();
+            }
+        });
+
+        // Add loader to LoaderManager
+        getLoaderManager().initLoader(VEHICLE_LOADER, null, this);
 
         return view;
     }
@@ -109,19 +131,45 @@ public class Reminders extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         //Passed needed title for fragment to MainActivity
         void onFragmentInteraction(String title);
-        void begin_notifications();
+        void change_AddReminder();
+    }
+
+    // Create Loeader
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        String[] projection = {
+                AlarmReminderContract.AlarmReminderEntry._ID,
+                AlarmReminderContract.AlarmReminderEntry.KEY_TITLE,
+                AlarmReminderContract.AlarmReminderEntry.KEY_DATE,
+                AlarmReminderContract.AlarmReminderEntry.KEY_TIME,
+                AlarmReminderContract.AlarmReminderEntry.KEY_REPEAT,
+                AlarmReminderContract.AlarmReminderEntry.KEY_REPEAT_NO,
+                AlarmReminderContract.AlarmReminderEntry.KEY_REPEAT_TYPE,
+                AlarmReminderContract.AlarmReminderEntry.KEY_ACTIVE
+
+        };
+
+        return new CursorLoader(getActivity(),   // Parent activity context
+                AlarmReminderContract.AlarmReminderEntry.CONTENT_URI,   // Provider content URI to query
+                projection,             // Columns to include in the resulting Cursor
+                null,                   // No selection clause
+                null,                   // No selection arguments
+                null);                  // Default sort order
+
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        mCursorAdapter.swapCursor(cursor);
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mCursorAdapter.swapCursor(null);
     }
 }
