@@ -7,14 +7,26 @@
     <string name="notpad_hint"> Welcome to TGuide!\nUse this space to keep your notes.</string>
     <string name="txt_notepad">Use this space to keep any notes you may have.</string>
     <string name="reminder_Hint">Click on the button bellow to create a reminder!</string>
-    <string name="reminder_titleText">Reminder Name</string>
+    <string name="reminder_titleText">Reminder Title</string>
     <string name="reminder_descripHint">Description</string>
     <string name="reminder_date">Date</string>
     <string name="reminder_time">Time</string>
     <string name="reminder_repeat_switch">Repeat</string>
     <string name="reminder_switch_on">On</string>
     <string name="reminder_switch_off">Off</string>
-    <string name="reminder_interval_time">Repition Interval</string>
-    <string name="reminder_type_repitition">Repition Type</string>
+    <string name="reminder_interval_time">Repetition Interval</string>
+    <string name="reminder_type_repitition">Repetition Type</string>
+    <string name="reminder_MenuTrash">Delete</string>
+    <string name="reminder_MenuSave">Save</string>
+    <string name="keep_editing">Keep Editing</string>
+    <string name="unsaved_changes_dialog_msg">Quit and discard changes?</string>
+    <string name="delete_dialog_msg">Delete Reminder?</string>
+    <string name="cancel">Cancel</string>
+    <string name="editor_delete_reminder_successful">Reminder deleted</string>
+    <string name="editor_delete_reminder_failed">Error with deleting reminder</string>
+    <string name="editor_insert_reminder_failed">Error with saving reminder</string>
+    <string name="editor_insert_reminder_successful">Reminder saved</string>
+    <string name="editor_update_reminder_successful">Reminder updated</string>
+    <string name="editor_update_reminder_failed">Error with updating reminder</string>
 
 </resources>

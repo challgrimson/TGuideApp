@@ -6,29 +6,23 @@
     tools:context="com.example.android.tguide.Add_Reminder">
 
     <!-- For Title Section -->
-    <LinearLayout
-        android:id="@+id/reminder_add_title"
-        android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-        android:orientation="vertical"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
 
-        <EditText
-            android:id="@+id/reminder_add_titleText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/reminder_titleText"
-            android:inputType="text"
-            android:maxLines="1"/>
-    </LinearLayout>
+    <EditText
+        android:id="@+id/reminder_add_titleText"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_alignParentTop="true"
+        android:hint="@string/reminder_titleText"
+        android:inputType="text"
+        android:maxLines="1"
+        android:textSize="40sp"
+        android:padding="7dp"/>
 
     <!-- For handling the Details of the Alarm -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/reminder_add_title">
+        android:layout_below="@id/reminder_add_titleText">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,15 +35,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:hint="@string/reminder_descripHint"
-                android:background="@android:color/transparent" />
+                android:background="@android:color/transparent"
+                android:padding="10dp"/>
 
             <!-- Adding Date -->
             <RelativeLayout
                 android:id="@+id/reminder_date"
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"
-                android:clickable="true"
-                android:onClick="setDate">
+                android:clickable="true">
 
                 <ImageView
                     android:id="@+id/add_date_icon"
@@ -62,16 +56,16 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/add_date_icon"
-                    android:layout_centerVertical="true">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/reminder_date_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:text="@string/reminder_date"/>
+                        android:text="@string/reminder_date"
+                        android:textSize="15dp" />
 
                     <TextView
                         android:id="@+id/reminder_set_date"
@@ -87,8 +81,7 @@
                 android:id="@+id/reminder_time"
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"
-                android:clickable="true"
-                android:onClick="setTime">
+                android:clickable="true">
 
                 <ImageView
                     android:id="@+id/add_time_icon"
@@ -163,7 +156,6 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="16dp"
                         android:layout_marginLeft="8dp"
-                        android:onClick="onSwitchRepeat"
                         android:checked="true"
                         android:textOn="@string/reminder_switch_on"
                         android:textOff="@string/reminder_switch_off"/>
@@ -173,7 +165,8 @@
             <RelativeLayout
                 android:id="@+id/reminder_repeat_interval"
                 android:layout_width="match_parent"
-                android:layout_height="72dp">
+                android:layout_height="72dp"
+                android:clickable="true">
 
                 <ImageView
                     android:id="@+id/reminder_interval_icon"
@@ -210,7 +203,8 @@
             <RelativeLayout
                 android:id="@+id/reminder_type_repitiion"
                 android:layout_width="match_parent"
-                android:layout_height="72dp">
+                android:layout_height="72dp"
+                android:clickable="true">
 
                 <ImageView
                     android:id="@+id/reminder_typeRepition_icon"
