@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="86dp">
+    android:layout_height="110dp">
 
     <!-- Image to go beside reminder with first letter of Sentence-->
     <ImageView
@@ -43,16 +43,22 @@
             android:maxLines="1"
             android:text="Date and Time"
             android:textSize="15sp"/>
-
         <TextView
             android:id="@+id/recycle_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:maxLines="1"
+            android:text="Repeat Details"
+            android:textSize="15sp"/>
+        <TextView
+            android:id="@+id/recycle_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:maxLines="1"
             android:text="Description"
             android:textSize="15sp"/>
-
     </LinearLayout>
 
     <!-- Image Indicating if sound is on or off -->

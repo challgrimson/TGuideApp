@@ -32,5 +32,6 @@ dependencies {
     compile 'com.bignerdranch.android:recyclerview-multiselect:0.2'
     compile 'com.wrapp.floatlabelededittext:library:0.0.6'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
 }

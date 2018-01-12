@@ -1,7 +1,11 @@
 package com.example.android.tguide;
 
 import android.app.ProgressDialog;
+import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.app.LoaderManager;
@@ -14,9 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
-import com.example.android.tguide.data.AlarmReminderContract;
-import com.example.android.tguide.data.AlarmReminderDbHelper;
+import com.example.android.tguide.ReminderDBHelper;
 
 
 /**
@@ -27,7 +32,8 @@ import com.example.android.tguide.data.AlarmReminderDbHelper;
  * Use the {@link Reminders#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Reminders extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class Reminders extends Fragment {
+//public class Reminders extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -45,8 +51,8 @@ public class Reminders extends Fragment implements LoaderManager.LoaderCallbacks
 
     // Create variables for creating reminders
     private FloatingActionButton mAddReminderButton;
-    AlarmReceiver mCursorAdapter;
-    AlarmReminderDbHelper alarmReminderDbHelper = new AlarmReminderDbHelper(getActivity());
+    ReminderAdapter mCursorAdapter;
+    ReminderDBHelper alarmReminderDbHelper = new ReminderDBHelper(getActivity());
     ListView reminderListView;
     ProgressDialog prgDialog;
 
@@ -80,20 +86,34 @@ public class Reminders extends Fragment implements LoaderManager.LoaderCallbacks
             mListener.onFragmentInteraction("Reminders");
         }
 
+        // Connect to SQL database
+        ReminderDBHelper handler = new ReminderDBHelper(getContext());
+        //SQLiteDatabase db = handler.getWritableDatabase();
+        Cursor ReminderCursor = handler.getAllReminders();
+        //Cursor ReminderCursor = db.rawQuery("SELECT * FROM reminder", null);
+
         // Initilize List View with EmptyView (what to show when empty)
         reminderListView = (ListView) view.findViewById(R.id.reminder_ListView);
         View emptyView = view.findViewById(R.id.reminder_EmptyView);
         reminderListView.setEmptyView(emptyView);
 
         // Inililze the AlarmReview
-        mCursorAdapter = new AlarmReceiver(getActivity(), null);
+        mCursorAdapter = new ReminderAdapter(getContext(), null);
         reminderListView.setAdapter(mCursorAdapter);
 
+        // Populate ListView
+        mCursorAdapter.changeCursor(ReminderCursor);
+
+
+        // Swap curcor - load data
         reminderListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                // Switch to Add_Reminder Fragment
-                mListener.change_AddReminder();
+
+                //Uri currentVehicleUri = ContentUris.withAppendedId(AlarmReminderContract.AlarmReminderEntry.CONTENT_URI, id);
+
+                // Set reminder values
+                //mListener.bundle_reminder(currentVehicleUri, id);
             }
         });
 
@@ -109,7 +129,8 @@ public class Reminders extends Fragment implements LoaderManager.LoaderCallbacks
         });
 
         // Add loader to LoaderManager
-        getLoaderManager().initLoader(VEHICLE_LOADER, null, this);
+        //LOADER
+        //getLoaderManager().initLoader(VEHICLE_LOADER, null, this);
 
         return view;
     }
@@ -136,40 +157,5 @@ public class Reminders extends Fragment implements LoaderManager.LoaderCallbacks
         //Passed needed title for fragment to MainActivity
         void onFragmentInteraction(String title);
         void change_AddReminder();
-    }
-
-    // Create Loeader
-    @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        String[] projection = {
-                AlarmReminderContract.AlarmReminderEntry._ID,
-                AlarmReminderContract.AlarmReminderEntry.KEY_TITLE,
-                AlarmReminderContract.AlarmReminderEntry.KEY_DATE,
-                AlarmReminderContract.AlarmReminderEntry.KEY_TIME,
-                AlarmReminderContract.AlarmReminderEntry.KEY_REPEAT,
-                AlarmReminderContract.AlarmReminderEntry.KEY_REPEAT_NO,
-                AlarmReminderContract.AlarmReminderEntry.KEY_REPEAT_TYPE,
-                AlarmReminderContract.AlarmReminderEntry.KEY_ACTIVE
-
-        };
-
-        return new CursorLoader(getActivity(),   // Parent activity context
-                AlarmReminderContract.AlarmReminderEntry.CONTENT_URI,   // Provider content URI to query
-                projection,             // Columns to include in the resulting Cursor
-                null,                   // No selection clause
-                null,                   // No selection arguments
-                null);                  // Default sort order
-
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        mCursorAdapter.swapCursor(cursor);
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        mCursorAdapter.swapCursor(null);
     }
 }

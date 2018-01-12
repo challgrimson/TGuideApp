@@ -35,12 +35,9 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.android.tguide.data.AlarmReminderContract;
-import com.example.android.tguide.data.AlarmReminderDbHelper;
+import com.example.android.tguide.ReminderDBHelper;
 
 import java.util.Date;
-
-import static android.R.attr.fragment;
 
 public class HomeActivity extends AppCompatActivity
 
@@ -200,4 +197,10 @@ public class HomeActivity extends AppCompatActivity
         ft.commit();
     }
 
+    // Change to reminder activity when clicked
+    public void change_Reminder () {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, new Reminders());
+        ft.commit();
+    }
 }
