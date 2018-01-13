@@ -108,12 +108,10 @@ public class Reminders extends Fragment {
         // Swap curcor - load data
         reminderListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            public void onItemClick(AdapterView reminderListView, View view, int position, long id) {
+                // Populate enew fragment using HomeActivity method
+                mListener.restoreReminder(reminderListView, position);
 
-                //Uri currentVehicleUri = ContentUris.withAppendedId(AlarmReminderContract.AlarmReminderEntry.CONTENT_URI, id);
-
-                // Set reminder values
-                //mListener.bundle_reminder(currentVehicleUri, id);
             }
         });
 
@@ -157,5 +155,6 @@ public class Reminders extends Fragment {
         //Passed needed title for fragment to MainActivity
         void onFragmentInteraction(String title);
         void change_AddReminder();
+        void restoreReminder (AdapterView reminderListView, int position);
     }
 }

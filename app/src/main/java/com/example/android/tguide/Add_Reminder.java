@@ -51,12 +51,28 @@ public class Add_Reminder extends Fragment implements
         //LoaderManager.LoaderCallbacks<Cursor> {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String TextTitle = "";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String prestore = "false";
+    private static final String ptitle = "";
+    private static final String pdescription = "";
+    private static final String pdate = "";
+    private static final String ptime = "";
+    private static final String prepeat = "";
+    private static final String prepeatNu = "";
+    private static final String prepeatTy = "";
+    private static final String pactive = "";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String mParamR;
+    private String mParamT;
+    private String mParamD;
+    private String mParamDA;
+    private String mParamTI;
+    private String mParamRE;
+    private String mParamRN;
+    private String mParamRT;
+    private String mParamA;
+
+    private Boolean mRestore = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -111,12 +127,21 @@ public class Add_Reminder extends Fragment implements
         // Required empty public constructor
     }
 
-    public static Add_Reminder newInstance(String param1, String param2) {
+    public static Add_Reminder newInstance(String restore, String title, String desp, String date, String time, String repeat, String repeatNu, String repeatTy, String active) {
         Add_Reminder fragment = new Add_Reminder();
         Bundle args = new Bundle();
-        args.putString(TextTitle, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(prestore, restore);
+        args.putString(ptitle, title);
+        args.putString(pdescription, desp);
+        args.putString(pdate,date);
+        args.putString(ptime, time);
+        args.putString(prepeat,repeat);
+        args.putString(prepeatNu, repeatNu);
+        args.putString(prepeatTy, repeatTy);
+        args.putString(pactive, active);
+
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -124,8 +149,8 @@ public class Add_Reminder extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(TextTitle);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mRestore = true;
+
         }
     }
 
@@ -291,6 +316,32 @@ public class Add_Reminder extends Fragment implements
             }
         });
 
+        // Restore values
+        if (mRestore) {
+                // Grab bundle if passed
+                mTitleText.setText(getArguments().getString("title"));
+                mDescription.setText(getArguments().getString("description"));
+                mDateText.setText(getArguments().getString("date"));
+                mTimeText.setText(getArguments().getString("time"));
+                String isRepeat = getArguments().getString("repeat");
+                if (isRepeat.equals("true")) {
+                    mRepeatText.setText("Every " + getArguments().getString("repeatNu") + " " + getArguments().getString("repeatTy") + "(s)");
+                    mRepeatNoText.setText(getArguments().getString("repeatNu"));
+                    mRepeatTypeText.setText(getArguments().getString("repeatTy"));
+                }else {
+                    mRepeatText.setText("Repeat Off");
+                    mRepeatSwitch.setChecked(false);
+                }
+                mActive = getArguments().getString("title");
+
+                // If sound was already set
+                if (mActive == "true") {
+                    mFAB2.setVisibility(View.GONE);
+                    mFAB1.setVisibility(View.VISIBLE);
+                    mActive = "false";
+                }
+        }
+
         return view;
     }
 
@@ -391,14 +442,14 @@ public class Add_Reminder extends Fragment implements
         mTimeText.setText(mTime);
     }
 
-    // On click make sound off visible
+    // On click make sound on visible
     public void selectFab1(View v) {
         mFAB1.setVisibility(View.GONE);
         mFAB2.setVisibility(View.VISIBLE);
         mActive = "true";
     }
 
-    // On click make sound on visible
+    // On click make sound off visible
     public void selectFab2(View v) {
         mFAB2.setVisibility(View.GONE);
         mFAB1.setVisibility(View.VISIBLE);

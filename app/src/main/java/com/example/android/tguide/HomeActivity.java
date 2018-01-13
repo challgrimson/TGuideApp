@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.LoaderManager;
@@ -34,6 +35,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.android.tguide.ReminderDBHelper;
 
@@ -202,5 +204,53 @@ public class HomeActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.mainFrame, new Reminders());
         ft.commit();
+    }
+
+    // Restore reminder for editing
+    public void restoreReminder (AdapterView reminderListView, int position) {
+
+        // Get person ID and populate view
+        Cursor cursor = (Cursor) reminderListView.getItemAtPosition(position);
+        int reminderID = cursor.getInt(cursor.getColumnIndex(ReminderDBHelper.REMINDER_COLUMN_ID));
+        // Get handler for data base
+
+        ReminderDBHelper handler = new ReminderDBHelper(this);
+
+        // Give cursor view data
+        cursor = handler.getReminder(reminderID);
+        // Grab data from cursor
+        // Extra properties from cursor
+        cursor.moveToFirst();
+        String title = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_TITLE));
+        String description = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_DESCRIPTION));
+        String date = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_DATE));
+        String time = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_TIME));
+        String repeat = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_REPEAT));
+        String repeatNu = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_REPEATNUM));
+        String repeatTy = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_REPEATTYPE));
+        String active = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_SOUND));
+        // Pass data to fragment using bundle
+
+        Bundle bundle = new Bundle();
+        bundle.putString("title",title);
+        bundle.putString("description",description);
+        bundle.putString("date",date);
+        bundle.putString("time",time);
+        bundle.putString("repeat",repeat);
+        bundle.putString("repeatNu",repeatNu);
+        bundle.putString("repeatTy",repeatTy);
+        bundle.putString("active",active);
+
+        // close database
+        //cursor.close();
+        // Change Fragmentow();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Add_Reminder fragobj = new Add_Reminder();
+        fragobj.setArguments(bundle);
+        //fragobj.newInstance("true", title, description, date, time, repeat, repeatNu, repeatTy, active);
+        fragmentTransaction.replace(R.id.mainFrame,fragobj);
+        fragmentTransaction.commit();
+
     }
 }
