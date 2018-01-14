@@ -49,31 +49,11 @@ public class Add_Reminder extends Fragment implements
         TimePickerDialog.OnTimeSetListener,
         DatePickerDialog.OnDateChangedListener {
         //LoaderManager.LoaderCallbacks<Cursor> {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String prestore = "false";
-    private static final String ptitle = "";
-    private static final String pdescription = "";
-    private static final String pdate = "";
-    private static final String ptime = "";
-    private static final String prepeat = "";
-    private static final String prepeatNu = "";
-    private static final String prepeatTy = "";
-    private static final String pactive = "";
-
-    // TODO: Rename and change types of parameters
-    private String mParamR;
-    private String mParamT;
-    private String mParamD;
-    private String mParamDA;
-    private String mParamTI;
-    private String mParamRE;
-    private String mParamRN;
-    private String mParamRT;
-    private String mParamA;
-
+    // If need to restore get reminder ID and initilize not to restore
+    private static int reminderID;
     private Boolean mRestore = false;
 
+    // Listener to interact with HomeActivity
     private OnFragmentInteractionListener mListener;
 
     // Create Values
@@ -125,24 +105,6 @@ public class Add_Reminder extends Fragment implements
 
     public Add_Reminder() {
         // Required empty public constructor
-    }
-
-    public static Add_Reminder newInstance(String restore, String title, String desp, String date, String time, String repeat, String repeatNu, String repeatTy, String active) {
-        Add_Reminder fragment = new Add_Reminder();
-        Bundle args = new Bundle();
-        args.putString(prestore, restore);
-        args.putString(ptitle, title);
-        args.putString(pdescription, desp);
-        args.putString(pdate,date);
-        args.putString(ptime, time);
-        args.putString(prepeat,repeat);
-        args.putString(prepeatNu, repeatNu);
-        args.putString(prepeatTy, repeatTy);
-        args.putString(pactive, active);
-
-        fragment.setArguments(args);
-
-        return fragment;
     }
 
     @Override
@@ -228,9 +190,6 @@ public class Add_Reminder extends Fragment implements
             public void afterTextChanged(Editable s) {}
         });
 
-        // Initialize paramter values
-        //mCurrentReminderUri = getActivity().getIntent().getData();
-
         // Setup TextViews using default reminder values
         mDateText.setText(mDate);
         mTimeText.setText(mTime);
@@ -238,15 +197,9 @@ public class Add_Reminder extends Fragment implements
         mRepeatTypeText.setText(mRepeatType);
         mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType + "(s)");
 
-        // Setup up active floating action buttons
-        if (mActive.equals("false")) {
-            mFAB1.setVisibility(View.VISIBLE);
-            mFAB2.setVisibility(View.GONE);
-
-        } else if (mActive.equals("true")) {
-            mFAB1.setVisibility(View.GONE);
-            mFAB2.setVisibility(View.VISIBLE);
-        }
+        // Initilize floating action buttons to sound on
+        mFAB1.setVisibility(View.GONE);
+        mFAB2.setVisibility(View.VISIBLE);
 
         // To change menu
         setHasOptionsMenu(true);
@@ -319,6 +272,7 @@ public class Add_Reminder extends Fragment implements
         // Restore values
         if (mRestore) {
                 // Grab bundle if passed
+                reminderID = getArguments().getInt("reminderID");
                 mTitleText.setText(getArguments().getString("title"));
                 mDescription.setText(getArguments().getString("description"));
                 mDateText.setText(getArguments().getString("date"));
@@ -332,13 +286,11 @@ public class Add_Reminder extends Fragment implements
                     mRepeatText.setText("Repeat Off");
                     mRepeatSwitch.setChecked(false);
                 }
-                mActive = getArguments().getString("title");
+                mActive = getArguments().getString("active");
 
-                // If sound was already set
-                if (mActive == "true") {
-                    mFAB2.setVisibility(View.GONE);
+                if (mActive.equals("false")) {
                     mFAB1.setVisibility(View.VISIBLE);
-                    mActive = "false";
+                    mFAB2.setVisibility(View.GONE);
                 }
         }
 
@@ -418,7 +370,7 @@ public class Add_Reminder extends Fragment implements
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog v, int year, int monthOfYear, int dayOfMonth) {
-                        String mDate = dayOfMonth + "/" + (monthOfYear+1) + "/" + year;
+                        mDate = dayOfMonth + "/" + (monthOfYear+1) + "/" + year;
                         mDateText.setText(mDate);
                     }
                 },
@@ -601,23 +553,23 @@ public class Add_Reminder extends Fragment implements
 
     private void deleteReminder() {
         // Only perform the delete if this is an existing reminder.
-        if (mCurrentReminderUri != null) {
             // Call the ContentResolver to delete the reminder at the given content URI.
             // Pass in null for the selection and selection args because the mCurrentreminderUri
             // content URI already identifies the reminder that we want.
-            int rowsDeleted = getActivity().getContentResolver().delete(mCurrentReminderUri, null, null);
+            if (mRestore) {
+                ReminderDBHelper handler = new ReminderDBHelper(getContext());
+                int check = handler.deletePerson(reminderID);
 
-            // Show a toast message depending on whether or not the delete was successful.
-            if (rowsDeleted == 0) {
-                // If no rows were deleted, then there was an error with the delete.
-                Toast.makeText(getActivity(), getString(R.string.editor_delete_reminder_failed),
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                // Otherwise, the delete was successful and we can display a toast.
-                Toast.makeText(getActivity(), getString(R.string.editor_delete_reminder_successful),
-                        Toast.LENGTH_SHORT).show();
+                if (check == 0) {
+                    // If no rows were deleted, then there was an error with the delete.
+                    Toast.makeText(getActivity(), getString(R.string.editor_delete_reminder_failed),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    // Otherwise, the delete was successful and we can display a toast.
+                    Toast.makeText(getActivity(), getString(R.string.editor_delete_reminder_successful),
+                            Toast.LENGTH_SHORT).show();
+                }
             }
-        }
 
         // Move to remidner fragment
         mListener.change_Reminder();
@@ -636,16 +588,29 @@ public class Add_Reminder extends Fragment implements
         if (mDescrip == null) {
             mDescrip = "";
         }
+
         // Get Handler for database
         ReminderDBHelper handler = new ReminderDBHelper(getContext());
 
-        // Insert into dataebase
-        boolean saved = handler.insertReminder(mTitle, mDescrip, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive);
+        // If resotring then just updating, if not then create new
+        if (mRestore) {
+            // Insert into dataebase
+            boolean saved = handler.updateReminder(reminderID,mTitle, mDescrip, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive);
 
-        if (saved) {
-            Toast.makeText(getContext(), "Reminder Saved!", Toast.LENGTH_LONG).show();
+            if (saved) {
+                Toast.makeText(getContext(), R.string.updateComplete, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getContext(), R.string.updateFailed, Toast.LENGTH_LONG).show();
+            }
         } else {
-            Toast.makeText(getContext(), "Error. Please try again", Toast.LENGTH_LONG).show();
+            // Insert into dataebase
+            boolean saved = handler.insertReminder(mTitle, mDescrip, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive);
+
+            if (saved) {
+                Toast.makeText(getContext(), R.string.saved, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getContext(), R.string.savedFailed, Toast.LENGTH_LONG).show();
+            }
         }
 
         /*

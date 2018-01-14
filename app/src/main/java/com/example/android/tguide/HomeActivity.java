@@ -240,6 +240,7 @@ public class HomeActivity extends AppCompatActivity
         bundle.putString("repeatNu",repeatNu);
         bundle.putString("repeatTy",repeatTy);
         bundle.putString("active",active);
+        bundle.putInt("reminderID",reminderID);
 
         // close database
         //cursor.close();
@@ -248,7 +249,7 @@ public class HomeActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Add_Reminder fragobj = new Add_Reminder();
         fragobj.setArguments(bundle);
-        //fragobj.newInstance("true", title, description, date, time, repeat, repeatNu, repeatTy, active);
+        //fragobj.newInstance("true", title, description, date, time, repeat, repeatNu, repeatTy, active, reminderID);
         fragmentTransaction.replace(R.id.mainFrame,fragobj);
         fragmentTransaction.commit();
 
