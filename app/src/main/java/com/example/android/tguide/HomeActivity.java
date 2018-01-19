@@ -16,6 +16,7 @@ import android.database.Cursor;
 import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -53,8 +54,8 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView.OnNavigationItemSelectedListener {
 
-    // Unique Id for Loader
-    private static final int VEHICLE_LOADER = 0;
+    // Unique Id for notifications
+    private static int NOTIFICATION_UNIQUE_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,10 @@ public class HomeActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.mainFrame, new HomePage());
         ft.commit();
+
+        // Grab unique ID value and store in NOTIFICATION_UNIQUE_ID
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        NOTIFICATION_UNIQUE_ID = sharedPref.getInt("uniqueIDValue",0);
     }
 
     @Override
@@ -119,6 +124,19 @@ public class HomeActivity extends AppCompatActivity
         getSupportActionBar().setTitle(title);
     }
 
+    // Save notification unique id value on pause
+    @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        // Save NOTIFICATION_UNIQUE_ID
+        editor.putInt("uniqueIDValue",NOTIFICATION_UNIQUE_ID);
+
+        // Commit Change
+        editor.commit();
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -151,46 +169,54 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-    // Send a notification to the user
-    public Notification sendNotification(){
+    // Build notification
+    public Notification sendNotification(String notificationTitle, String notificationDesp){
         // Builder Object for notification
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher).setContentTitle("My First Notification").setContentTitle("Hello World!");
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher)
+                                                    .setContentTitle(notificationTitle)
+                                                    .setContentText(notificationDesp);
 
         // Create intent for this notification
-        Intent resultIntent = new Intent(this, Reminders.class);
-        PendingIntent resultPendingIntnt = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //Intent resultIntent = new Intent(this, Reminders.class);
+        //PendingIntent resultPendingIntnt = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Add intent to notification builder object
-        mBuilder.setContentIntent(resultPendingIntnt);
+        //mBuilder.setContentIntent(resultPendingIntnt);
 
         return mBuilder.build();
     }
 
-    /* Start notifications
-    public void begin_notifications(){
+    // Create notification
+    public boolean begin_notifications(int ID, String notificationTitle, String notificationDesp, long alarmTime, long repeatTime){
         // Create Notificiton
-        Notification notification = sendNotification();
-
-        // Create alarm
-        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Date dat = new Date();
-        Calendar cal_alarm = Calendar.getInstance();
-        Calendar cal_now = Calendar.getInstance();
-        cal_now.setTime(dat);
-        cal_alarm.setTime(dat);
-        //cal_alarm.set(Calendar.HOUR_OF_DAY,14);
-        cal_alarm.set(Calendar.MINUTE,25);
-        //cal_alarm.set(Calendar.SECOND,30);
-        //if(cal_alarm.before(cal_now)){
-        //    cal_alarm.add(Calendar.DATE,1);
-        //}
-
+        Notification notification = sendNotification(notificationTitle, notificationDesp);
         Intent myIntent = new Intent(this, AlarmReceiver.class);
+        myIntent.putExtra(AlarmReceiver.NOTIFICATION_ID,(int) ID);
         myIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
-        PendingIntent resultPendingIntent = PendingIntent.getBroadcast(this, 0, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent resultPendingIntent = PendingIntent.getBroadcast(this,ID, myIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        manager.set(AlarmManager.RTC_WAKEUP,cal_alarm.getTimeInMillis(), resultPendingIntent);
-    }*/
+        // See if repeat and so, set
+        if (repeatTime == -1) {
+            manager.set(AlarmManager.RTC_WAKEUP, alarmTime, resultPendingIntent);
+        } else {
+            manager.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime, repeatTime, resultPendingIntent);
+        }
+
+        return true;
+    }
+
+    // Delete the notification
+    public boolean deleteNotification(int ID, String notificationTitle, String notificationDesp) {
+        Notification notification = sendNotification(notificationTitle, notificationDesp);
+        Intent myIntent = new Intent(this, AlarmReceiver.class);
+        myIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, ID);
+        myIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
+        PendingIntent resultPendingIntent = PendingIntent.getBroadcast(this,ID, myIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        manager.cancel(resultPendingIntent);
+        return true;
+    }
 
     // Change to add reminder fragment when clicked
     public void change_AddReminder () {
@@ -229,6 +255,7 @@ public class HomeActivity extends AppCompatActivity
         String repeatNu = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_REPEATNUM));
         String repeatTy = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_REPEATTYPE));
         String active = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_SOUND));
+        String uniqueID = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_UNIQUE_ID));
         // Pass data to fragment using bundle
 
         Bundle bundle = new Bundle();
@@ -241,6 +268,7 @@ public class HomeActivity extends AppCompatActivity
         bundle.putString("repeatTy",repeatTy);
         bundle.putString("active",active);
         bundle.putInt("reminderID",reminderID);
+        bundle.putString("uniqueID",uniqueID);
 
         // close database
         //cursor.close();
@@ -252,6 +280,10 @@ public class HomeActivity extends AppCompatActivity
         //fragobj.newInstance("true", title, description, date, time, repeat, repeatNu, repeatTy, active, reminderID);
         fragmentTransaction.replace(R.id.mainFrame,fragobj);
         fragmentTransaction.commit();
+    }
 
+    public String generateUniqueID() {
+        ++NOTIFICATION_UNIQUE_ID;
+        return String.valueOf(NOTIFICATION_UNIQUE_ID);
     }
 }

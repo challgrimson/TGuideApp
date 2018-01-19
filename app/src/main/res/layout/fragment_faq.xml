@@ -19,6 +19,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="@color/colorAccent"
+            android:layout_alignParentTop="true"
             android:text="use this to test" />
 
         <Button
@@ -28,7 +29,7 @@
             android:layout_below="@+id/button1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_alignParentTop="@+id/button1"
             android:background="@color/colorAccent"
             android:text="@string/buttonEx" />
 
@@ -39,7 +40,7 @@
             android:layout_below="@+id/button2"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_alignParentTop="@+id/button2"
             android:background="@color/colorAccent"
             android:text="@string/buttonEx" />
 

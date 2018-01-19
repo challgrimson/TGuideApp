@@ -27,6 +27,7 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
     public static final String REMINDER_COLUMN_REPEATNUM = "repeatnum";
     public static final String REMINDER_COLUMN_REPEATTYPE = "repeatTYPE";
     public static final String REMINDER_COLUMN_SOUND = "repeatactive";
+    public static final String REMINDER_UNIQUE_ID = "uniqueID";
 
 
     public ReminderDBHelper(Context context) {
@@ -44,7 +45,8 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
                 REMINDER_COLUMN_REPEAT + " TEXT NOT NULL, " +
                 REMINDER_COLUMN_REPEATNUM + " TEXT NOT NULL, " +
                 REMINDER_COLUMN_REPEATTYPE + " TEXT NOT NULL, " +
-                REMINDER_COLUMN_SOUND+ " TEXT NOT NULL)"
+                REMINDER_COLUMN_SOUND + " TEXT NOT NULL, " +
+                REMINDER_UNIQUE_ID+ " TEXT NOT NULL)"
         );
     }
 
@@ -55,8 +57,8 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
     }
 
     // Insert Reminder into database
-    public boolean insertReminder(String titleText, String description, String dateText, String timeText, String repeat,
-                                  String repeatNum, String repeatType, String sound) {
+    public long insertReminder(String titleText, String description, String dateText, String timeText, String repeat,
+                                  String repeatNum, String repeatType, String sound, String uniqueID) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(REMINDER_COLUMN_TITLE, titleText);
@@ -67,10 +69,11 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
         contentValues.put(REMINDER_COLUMN_REPEATNUM, repeatNum);
         contentValues.put(REMINDER_COLUMN_REPEATTYPE, repeatType);
         contentValues.put(REMINDER_COLUMN_SOUND, sound);
+        contentValues.put(REMINDER_UNIQUE_ID, uniqueID);
 
         // Insert into database
-        db.insert(REMINDER_TABLE_NAME, null, contentValues);
-        return true;
+        long reminderID = db.insert(REMINDER_TABLE_NAME, null, contentValues);
+        return reminderID;
     }
 
     // Grab all reminders from database
@@ -86,11 +89,10 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public Integer deletePerson(Integer id) {
+    // Return res to
+    public int deletePerson(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(REMINDER_TABLE_NAME,
-                REMINDER_COLUMN_ID + " = ?",
-                new String[]{Integer.toString(id)});
+        return db.delete(REMINDER_TABLE_NAME, REMINDER_COLUMN_ID + " = ?", new String[]{Integer.toString(id)});
     }
 
     // Update Reminder

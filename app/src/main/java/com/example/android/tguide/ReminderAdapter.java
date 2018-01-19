@@ -20,7 +20,7 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 public class ReminderAdapter extends CursorAdapter {
 
     // Define variables
-    private TextView mTitleText, mDateAndTimeText, mRepeatInfoText, mDescription, mDescriptionText;
+    private TextView mTitleText, mDateAndTimeText, mRepeatInfoText, mDescription, mDescriptionText, mUniqueID;
     private ImageView mActiveImage, mThumbnailImage;
     private ColorGenerator mColorGenerator = ColorGenerator.DEFAULT;
     private TextDrawable mDrawableBuilder;

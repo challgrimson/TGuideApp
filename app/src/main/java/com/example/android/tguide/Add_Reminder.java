@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -73,6 +74,7 @@ public class Add_Reminder extends Fragment implements
     private String mRepeatNo;
     private String mRepeatType;
     private String mActive;
+    private String uniqueID;
 
     private Uri mCurrentReminderUri;
     private boolean mVehicleHasChanged = false;
@@ -93,6 +95,9 @@ public class Add_Reminder extends Fragment implements
     private static final long milDay = 86400000L;
     private static final long milWeek = 604800000L;
     private static final long milMonth = 2592000000L;
+
+    // For alarm ID
+    long alarmID;
 
     // Do something when touched
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
@@ -277,6 +282,7 @@ public class Add_Reminder extends Fragment implements
                 mDescription.setText(getArguments().getString("description"));
                 mDateText.setText(getArguments().getString("date"));
                 mTimeText.setText(getArguments().getString("time"));
+                uniqueID = getArguments().getString("uniqueID");
                 String isRepeat = getArguments().getString("repeat");
                 if (isRepeat.equals("true")) {
                     mRepeatText.setText("Every " + getArguments().getString("repeatNu") + " " + getArguments().getString("repeatTy") + "(s)");
@@ -328,6 +334,9 @@ public class Add_Reminder extends Fragment implements
         //Passed needed title for fragment to MainActivity
         void onFragmentInteraction(String title);
         void change_Reminder();
+        boolean begin_notifications(int ID, String notificationTitle, String notificationDesp, long alarmTime, long repeatTime);
+        boolean deleteNotification(int ID, String notifictionTitle, String notificationDesp);
+        String generateUniqueID();
     }
 
     // Save data on pause
@@ -554,13 +563,15 @@ public class Add_Reminder extends Fragment implements
     private void deleteReminder() {
         // Only perform the delete if this is an existing reminder.
             // Call the ContentResolver to delete the reminder at the given content URI.
-            // Pass in null for the selection and selection args because the mCurrentreminderUri
-            // content URI already identifies the reminder that we want.
             if (mRestore) {
                 ReminderDBHelper handler = new ReminderDBHelper(getContext());
+                // Delete the alarm
+                boolean alarmCheck = mListener.deleteNotification(Integer.parseInt(uniqueID), mTitle, mDescrip);
+
+                // Delete reminder view
                 int check = handler.deletePerson(reminderID);
 
-                if (check == 0) {
+                if (check == 0 & alarmCheck) {
                     // If no rows were deleted, then there was an error with the delete.
                     Toast.makeText(getActivity(), getString(R.string.editor_delete_reminder_failed),
                             Toast.LENGTH_SHORT).show();
@@ -570,7 +581,6 @@ public class Add_Reminder extends Fragment implements
                             Toast.LENGTH_SHORT).show();
                 }
             }
-
         // Move to remidner fragment
         mListener.change_Reminder();
     }
@@ -592,28 +602,6 @@ public class Add_Reminder extends Fragment implements
         // Get Handler for database
         ReminderDBHelper handler = new ReminderDBHelper(getContext());
 
-        // If resotring then just updating, if not then create new
-        if (mRestore) {
-            // Insert into dataebase
-            boolean saved = handler.updateReminder(reminderID,mTitle, mDescrip, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive);
-
-            if (saved) {
-                Toast.makeText(getContext(), R.string.updateComplete, Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getContext(), R.string.updateFailed, Toast.LENGTH_LONG).show();
-            }
-        } else {
-            // Insert into dataebase
-            boolean saved = handler.insertReminder(mTitle, mDescrip, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive);
-
-            if (saved) {
-                Toast.makeText(getContext(), R.string.saved, Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getContext(), R.string.savedFailed, Toast.LENGTH_LONG).show();
-            }
-        }
-
-        /*
         // Set up calender for creating the notification
         mCalendar.set(Calendar.MONTH, --mMonth);
         mCalendar.set(Calendar.YEAR, mYear);
@@ -635,10 +623,43 @@ public class Add_Reminder extends Fragment implements
             mRepeatTime = Integer.parseInt(mRepeatNo) * milWeek;
         } else if (mRepeatType.equals("Month")) {
             mRepeatTime = Integer.parseInt(mRepeatNo) * milMonth;
+        } else {
+            mRepeatTime = -1;
         }
-        */
 
+        // If resotring then just updating, if not then create new
+        if (mRestore) {
+            // Insert into dataebase
+            boolean saved = handler.updateReminder(reminderID,mTitle, mDescrip, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive);
+            // Delete the alarm
+            // NEED TO UPDATE NOTIFICATION
+            boolean alarmCheck = mListener.deleteNotification(Integer.parseInt(uniqueID), mTitle, mDescrip);
+            // Re-create Notification
+            boolean checkAlarm = mListener.begin_notifications(Integer.parseInt(uniqueID), mTitle, mDescrip, selectedTimestamp, mRepeatTime);
+
+            if (saved & alarmCheck & checkAlarm) {
+                Toast.makeText(getContext(), R.string.updateComplete, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getContext(), R.string.updateFailed, Toast.LENGTH_LONG).show();
+            }
+
+        } else {
+
+            String uniqueID = mListener.generateUniqueID();
+            // Insert into dataebase
+            handler.insertReminder(mTitle, mDescrip, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive, uniqueID);
+            // Create notification
+            boolean checkAlarm = mListener.begin_notifications(Integer.parseInt(uniqueID), mTitle, mDescrip, selectedTimestamp, mRepeatTime);
+
+            if (checkAlarm) {
+                Toast.makeText(getContext(), R.string.saved, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getContext(), R.string.savedFailed, Toast.LENGTH_LONG).show();
+            }
+
+        }
     }
+
     @Override
     public void onDateChanged(){
     }
