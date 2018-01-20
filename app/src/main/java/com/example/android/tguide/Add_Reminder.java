@@ -623,8 +623,6 @@ public class Add_Reminder extends Fragment implements
             mRepeatTime = Integer.parseInt(mRepeatNo) * milWeek;
         } else if (mRepeatType.equals("Month")) {
             mRepeatTime = Integer.parseInt(mRepeatNo) * milMonth;
-        } else {
-            mRepeatTime = -1;
         }
 
         // If resotring then just updating, if not then create new
@@ -644,6 +642,8 @@ public class Add_Reminder extends Fragment implements
             }
 
         } else {
+            // No repeat
+            mRepeatTime = -1;
 
             String uniqueID = mListener.generateUniqueID();
             // Insert into dataebase

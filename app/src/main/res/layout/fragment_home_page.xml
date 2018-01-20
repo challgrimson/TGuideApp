@@ -4,9 +4,32 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.tguide.HomePage">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="340dp"
+            android:layout_height="328dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/tguide_home" />
+
+        <TextView
+            android:id="@+id/hometextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="22dp"
+            android:gravity="center"
+            android:text="@string/welcome"
+            android:textColor="@color/welcomeHome"
+            android:textSize="33sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
 
 </FrameLayout>
