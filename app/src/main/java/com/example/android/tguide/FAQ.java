@@ -83,11 +83,19 @@ public class FAQ extends Fragment {
         final Button btn1 = (Button) view.findViewById(R.id.button1);
         final Button btn2 = (Button) view.findViewById(R.id.button2);
         final Button btn3 = (Button) view.findViewById(R.id.button3);
+        final Button btn4 = (Button) view.findViewById(R.id.button4);
+        final Button btn5 = (Button) view.findViewById(R.id.button5);
+        final Button btn6 = (Button) view.findViewById(R.id.button6);
 
         final TextView tv1 = (TextView) view.findViewById(R.id.text1);
+        final TextView tv2 = (TextView) view.findViewById(R.id.text2);
+        final TextView tv3 = (TextView) view.findViewById(R.id.text3);
+        final TextView tv4 = (TextView) view.findViewById(R.id.text4);
+        final TextView tv5 = (TextView) view.findViewById(R.id.text5);
+        final TextView tv6 = (TextView) view.findViewById(R.id.text6);
 
-        final Button[] btnArray = {btn1, btn2, btn3};
-        final TextView[] tvArray = {tv1};
+        final Button[] btnArray = {btn1, btn2, btn3, btn4,btn5,btn6};
+        final TextView[] tvArray = {tv1,tv2,tv3,tv4,tv5,tv6};
 
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -106,50 +114,71 @@ public class FAQ extends Fragment {
                 buttonResponse(3, btnArray,tvArray,view);
             }
         });
+        btn4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                buttonResponse(4, btnArray,tvArray,view);
+            }
+        });
+        btn5.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                buttonResponse(5, btnArray,tvArray,view);
+            }
+        });
+        btn6.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                buttonResponse(6, btnArray,tvArray,view);
+            }
+        });
 
 
         return view;
     }
 
-    boolean[] posFlag = {false, false, false};
-    boolean[] isCollapsed = {false};
+    boolean[] posFlag = {false, false, false,false,false,false};
+    boolean[] isCollapsed = {false,false,false,false,false,false};
 
-    public void buttonResponse(int id, Button[] btnArray, final TextView[] tvArray, View view) {
+    public void buttonResponse(final int id, Button[] btnArray, final TextView[] tvArray, View view) {
         float deltaX;
         int[] location = new int[2];
+        int[] locationT = new int[2];
 
 
 
         for (int i = id; i < btnArray.length; i++) {
             btnArray[i].getLocationInWindow(location);
+            tvArray[i].getLocationInWindow(locationT);
 
-            if (posFlag[id] == true)
+            if (posFlag[id-1] == true) {
                 location[1] -= 940;
+                locationT[1] -= 940;
+
+            }
 
             ObjectAnimator animX = ObjectAnimator.ofFloat(btnArray[i], "y", location[1]).setDuration(300);
+            ObjectAnimator animXT = ObjectAnimator.ofFloat(tvArray[i], "y", locationT[1]).setDuration(300);
             animX.start();
-
+            animXT.start();
         }
 
 
-        if (posFlag[id] == false) {
-            posFlag[id] = true;
+        if (posFlag[id-1] == false) {
+            posFlag[id-1] = true;
         } else {
-            posFlag[id] = false;
+            posFlag[id-1] = false;
         }
 
-        if(!isCollapsed[0]){
+        if(!isCollapsed[id-1]){
             ValueAnimator va = ValueAnimator.ofInt(0, 432);
             va.setDuration(300);
             va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 public void onAnimationUpdate(ValueAnimator animation) {
                     Integer value = (Integer) animation.getAnimatedValue();
-                    tvArray[0].getLayoutParams().height = value.intValue();
-                    tvArray[0].requestLayout();
+                    tvArray[id-1].getLayoutParams().height = value.intValue();
+                    tvArray[id-1].requestLayout();
                 }
             });
             va.start();
-            isCollapsed[0] = true;
+            isCollapsed[id-1] = true;
         }
         else{
             ValueAnimator va = ValueAnimator.ofInt(432, 0);
@@ -157,13 +186,17 @@ public class FAQ extends Fragment {
             va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 public void onAnimationUpdate(ValueAnimator animation) {
                     Integer value = (Integer) animation.getAnimatedValue();
-                    tvArray[0].getLayoutParams().height = value.intValue();
-                    tvArray[0].requestLayout();
+                    tvArray[id-1].getLayoutParams().height = value.intValue();
+                    tvArray[id-1].requestLayout();
                 }
             });
             va.start();
-            isCollapsed[0] = false;
+            isCollapsed[id-1] = false;
         }
+
+
+
+
     }
 
 

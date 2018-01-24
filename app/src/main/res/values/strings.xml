@@ -65,4 +65,39 @@
     medical developments allow women with TS who are interested in starting a family to seek the help
     of an obstetrician who specializes in in-vitro fertilization. A girl with Turner Syndrome may get
     growth horomone under the supervision of a pediartric endocrinologist.</string>
+
+    <!--String for FAQ-->
+    <string name="button1Title">This is a button</string>
+    <string name="button1Text">McMaster University is co-educational, and has over 25,000 undergraduate and over 4,000 post-graduate students.[10]
+        Alumni and former students reside across Canada and in 139 countries.[3] Notable alumni include government officials, academics, business
+        $405,300 per faculty member, the highest in Canada.</string>
+
+    <string name="button2Title">This is a button</string>
+    <string name="button2Text">McMaster University is co-educational, and has over 25,000 undergraduate and over 4,000 post-graduate students.[10]
+        Alumni and former students reside across Canada and in 139 countries.[3] Notable alumni include government officials, academics, business
+        $405,300 per faculty member, the highest in Canada.</string>
+
+    <string name="button3Title">This is a button</string>
+    <string name="button3Text">McMaster University is co-educational, and has over 25,000 undergraduate and over 4,000 post-graduate students.[10]
+        Alumni and former students reside across Canada and in 139 countries.[3] Notable alumni include government officials, academics, business
+        $405,300 per faculty member, the highest in Canada.</string>
+
+    <string name="button4Title">This is a button</string>
+    <string name="button4Text">McMaster University is co-educational, and has over 25,000 undergraduate and over 4,000 post-graduate students.[10]
+        Alumni and former students reside across Canada and in 139 countries.[3] Notable alumni include government officials, academics, business
+        $405,300 per faculty member, the highest in Canada.</string>
+
+    <string name="button5Title">This is a button</string>
+    <string name="button5Text">McMaster University is co-educational, and has over 25,000 undergraduate and over 4,000 post-graduate students.[10]
+        Alumni and former students reside across Canada and in 139 countries.[3] Notable alumni include government officials, academics, business
+        $405,300 per faculty member, the highest in Canada.</string>
+
+    <string name="button6Title">This is a button</string>
+    <string name="button6Text">McMaster University is co-educational, and has over 25,000 undergraduate and over 4,000 post-graduate students.[10]
+        Alumni and former students reside across Canada and in 139 countries.[3] Notable alumni include government officials, academics, business
+        $405,300 per faculty member, the highest in Canada.</string>
+
+
+
+
 </resources>
