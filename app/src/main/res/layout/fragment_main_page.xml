@@ -7,14 +7,15 @@
     tools:context="com.example.android.tguide.MainPage">
 
     <!-- For when accessibility is on - will read to user -->
-    <TextView
-        android:id="@+id/notepad_caption"
-        android:labelFor="@+id/notepad"
-        android:text="@string/txt_notepad"
-        android:layout_height="0dp"
-        android:layout_width="0dp"/>
 
     <!-- This is for the notepad -->
+    <TextView
+        android:id="@+id/notepad_caption"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:labelFor="@+id/notepad"
+        android:text="@string/txt_notepad" />
+
     <EditText
         android:id="@+id/notepad"
         android:layout_width="349dp"
@@ -24,8 +25,9 @@
         android:layout_marginBottom="4dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/rounded_edittext"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:gravity="start"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.564"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -5,6 +5,9 @@
     tools:context="com.example.android.tguide.FAQ">
 
     <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -53,10 +56,11 @@
             android:background="@drawable/border"
             android:gravity="center"
             android:text="blah blah blah blah blah blah blah blah
-blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blahblah blah blah blah blah blah blah blah"
-            android:layout_alignStart="@+id/button2"
-            android:layout_alignEnd="@+id/button2"/>
+blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blahblah blah blah blah blah blah blad"/>
+
     </RelativeLayout>
+
+    </ScrollView>
 
 
 </FrameLayout>

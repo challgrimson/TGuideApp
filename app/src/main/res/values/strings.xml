@@ -38,4 +38,31 @@
 
     <!-- Strings for home view -->
     <string name="welcome">Welcome to TGuide!</string>
+
+    <!--String for About Turner Syndrom -->
+    <string name="whatTurner">What is Turner Syndrome?</string>
+    <string name="whatTurnerAns">Turner Syndrome is a condition that affects only girls and women.
+    Most people have 23 pairs of chromosomes, with 1 pair being sex chromoses. Most males have
+    an X and Y sex chromosome and most females have two X chromosomes. In turner syndrome, there
+    is an absence of all or part of the second X chromosome in some or all of the cells of the body.
+    </string>
+    <string name="typesTurner">Are there different types of Turner Syndrome?</string>
+    <string name="typesTurnerAns">There are multiple types of Turner Syndrome. Females who
+    are completely missing an X chromosome have "classic" Turner Syndrom. Others are missing only
+    part of the second X chromosome or have structural rearrangements of the chromosome. In some
+    females, only some cells are missing the X chromosome, known as a mosaic karyotype. Knowing your
+    type is important because each type is assocaited with different health issues.</string>
+    <string name="impTurner">Why is it important to know if someone has Turner Syndrome?</string>
+    <string name="impTurnerAns">Missing part of or all of one X chromosome is associated with a
+    range of health, development, social and learning challenges which affects females with Turner
+    Syndrome to different extends. It is important to diagnosis Turner Syndrome as early as possible
+    so that your health care provider can determine whether you have health issues that need to be
+    treated or watched.</string>
+    <string name="treatTurner">Can Turner Syndrome be treated?</string>
+    <string name="treatTurnerAns">Turner Syndrome is not a disease, but a genetic condition that is
+    associated with a range of health concerns. Turner Syndrome is not directly treated by a health
+    care provider, but the individual health concerns that arive are monitered and treated. New
+    medical developments allow women with TS who are interested in starting a family to seek the help
+    of an obstetrician who specializes in in-vitro fertilization. A girl with Turner Syndrome may get
+    growth horomone under the supervision of a pediartric endocrinologist.</string>
 </resources>

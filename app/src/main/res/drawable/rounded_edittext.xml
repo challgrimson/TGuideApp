@@ -7,6 +7,10 @@
         android:bottomLeftRadius="10dip"
         android:bottomRightRadius="10dip"/>
     <solid
-        android:color="#FFD700"/>
+        android:color="#FFD700" />
+
+    <padding
+        android:left="10dp"
+        android:right="10dp"/>
 
 </shape>
