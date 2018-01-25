@@ -51,6 +51,8 @@ public class HomeActivity extends AppCompatActivity
         Reminders.OnFragmentInteractionListener,
         HomePage.OnFragmentInteractionListener,
         Add_Reminder.OnFragmentInteractionListener,
+        WeeklyCheckList.OnFragmentInteractionListener,
+        Reflection.OnFragmentInteractionListener,
 
         NavigationView.OnNavigationItemSelectedListener {
 
@@ -155,6 +157,10 @@ public class HomeActivity extends AppCompatActivity
             fragment = new AboutTurner();
         } else if (id == R.id.frag_reminders) {
             fragment = new Reminders();
+        } else if (id == R.id.frag_checklist) {
+            fragment = new WeeklyCheckList();
+        } else if (id == R.id.fraq_reflect) {
+            fragment = new Reflection();
         }
 
         // Change Fragment

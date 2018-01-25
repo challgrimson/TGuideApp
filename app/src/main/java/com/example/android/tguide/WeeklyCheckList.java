@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AboutTurner.OnFragmentInteractionListener} interface
+ * {@link WeeklyCheckList.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AboutTurner#newInstance} factory method to
+ * Use the {@link WeeklyCheckList#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AboutTurner extends Fragment {
+public class WeeklyCheckList extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -28,7 +28,7 @@ public class AboutTurner extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public AboutTurner() {
+    public WeeklyCheckList() {
         // Required empty public constructor
     }
 
@@ -38,11 +38,11 @@ public class AboutTurner extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AboutTurner.
+     * @return A new instance of fragment WeeklyCheckList.
      */
     // TODO: Rename and change types and number of parameters
-    public static AboutTurner newInstance(String param1, String param2) {
-        AboutTurner fragment = new AboutTurner();
+    public static WeeklyCheckList newInstance(String param1, String param2) {
+        WeeklyCheckList fragment = new WeeklyCheckList();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -62,16 +62,16 @@ public class AboutTurner extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_about_turner, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_weekly_check_list, container, false);
 
         // Send Main Page as a title parameter
         if (mListener != null){
-            mListener.onFragmentInteraction("About Turner Syndrome");
+            mListener.onFragmentInteraction("Weekly Checklist");
         }
 
         return view;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -101,7 +101,6 @@ public class AboutTurner extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        //Passed needed title for fragment to MainActivity
         void onFragmentInteraction(String title);
     }
 }

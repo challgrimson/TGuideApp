@@ -97,7 +97,7 @@
         Alumni and former students reside across Canada and in 139 countries.[3] Notable alumni include government officials, academics, business
         $405,300 per faculty member, the highest in Canada.</string>
 
-
-
+    <!-- Strings for Checklist -->
+    <string name="titleChecklist">Checklist Description</string>
 
 </resources>
