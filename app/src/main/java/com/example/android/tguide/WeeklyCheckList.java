@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
 
 
 /**
@@ -27,6 +29,13 @@ public class WeeklyCheckList extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    // Create variables for checkBoxes and refresh
+    CheckBox box1;
+    CheckBox box2;
+    CheckBox box3;
+    CheckBox box4;
+    ImageButton refresh;
 
     public WeeklyCheckList() {
         // Required empty public constructor
@@ -69,6 +78,24 @@ public class WeeklyCheckList extends Fragment {
         if (mListener != null){
             mListener.onFragmentInteraction("Weekly Checklist");
         }
+
+        // Grab views
+        box1 = (CheckBox) view.findViewById(R.id.checkBox1);
+        box2 = (CheckBox) view.findViewById(R.id.checkBox2);
+        box3 = (CheckBox) view.findViewById(R.id.checkBox3);
+        box4 = (CheckBox) view.findViewById(R.id.checkBox4);
+        refresh = (ImageButton) view.findViewById(R.id.refreshChecklist);
+
+        // If touch refresh, uncheck all checkBoxes
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                box1.setChecked(false);
+                box2.setChecked(false);
+                box3.setChecked(false);
+                box4.setChecked(false);
+            }
+        });
 
         return view;
     }

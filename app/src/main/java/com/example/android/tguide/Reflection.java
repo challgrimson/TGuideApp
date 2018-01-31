@@ -1,11 +1,15 @@
 package com.example.android.tguide;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.SeekBar;
 
 
 /**
@@ -25,6 +29,11 @@ public class Reflection extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    // Set variables
+    MediaPlayer reflectionTrack;
+    SeekBar seekBar;
+    Handler seekHandler = new Handler();
 
     public Reflection() {
         // Required empty public constructor
@@ -67,6 +76,63 @@ public class Reflection extends Fragment {
             mListener.onFragmentInteraction("Reflection");
         }
 
+        // Grab mp3 file
+        reflectionTrack = MediaPlayer.create(getContext(), R.raw.guided_reflection);
+
+        // Grab button and seek bar
+        final ImageButton playSound = (ImageButton) view.findViewById(R.id.playAudio);
+        final ImageButton pauseSound = (ImageButton) view.findViewById(R.id.pauseAudio);
+        seekBar = (SeekBar) view.findViewById(R.id.seekBar);
+
+        // Set max value of seek bar
+        seekBar.setMax(reflectionTrack.getDuration());
+
+        // Run seekUpdating to update Seek
+        seekUpdating();
+
+        // When click play audio
+        playSound.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        reflectionTrack.start();
+                        playSound.setVisibility(View.INVISIBLE);
+                        pauseSound.setVisibility(View.VISIBLE);
+                }
+        });
+
+        // When click play audio
+        pauseSound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reflectionTrack.pause();
+                playSound.setVisibility(View.VISIBLE);
+                pauseSound.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        // If seek bar changed
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                //If to prevent blimp in audio due to updating
+                if(reflectionTrack.isPlaying() && fromUser) {
+                    reflectionTrack.seekTo(progress);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
+
         return view;
     }
 
@@ -100,5 +166,20 @@ public class Reflection extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(String title);
+    }
+
+    // For Running seekBar
+    Runnable run = new Runnable() {
+        @Override
+        public void run() {
+            seekUpdating();
+        }
+    };
+    // To Update seekBar
+    public void seekUpdating() {
+        seekBar.setProgress(reflectionTrack.getCurrentPosition());
+        // Delay post by 1 second
+        seekHandler.postDelayed(run, 1000);
+
     }
 }

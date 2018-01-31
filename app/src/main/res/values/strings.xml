@@ -99,5 +99,9 @@
 
     <!-- Strings for Checklist -->
     <string name="titleChecklist">Checklist Description</string>
+    <string name="medChecklist">Have medications for the week</string>
+    <string name="appChecklist">Appointments set for the week</string>
+    <string name="infoChecklsit">Any forms for appointments</string>
+    <string name="reflectCheclist">Complete reflection actiivty</string>
 
 </resources>
