@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 
 /**
@@ -34,6 +35,7 @@ public class Reflection extends Fragment {
     MediaPlayer reflectionTrack;
     SeekBar seekBar;
     Handler seekHandler = new Handler();
+    TextView displayTime;
 
     public Reflection() {
         // Required empty public constructor
@@ -83,6 +85,7 @@ public class Reflection extends Fragment {
         final ImageButton playSound = (ImageButton) view.findViewById(R.id.playAudio);
         final ImageButton pauseSound = (ImageButton) view.findViewById(R.id.pauseAudio);
         seekBar = (SeekBar) view.findViewById(R.id.seekBar);
+        displayTime = (TextView) view.findViewById(R.id.timeDisplay);
 
         // Set max value of seek bar
         seekBar.setMax(reflectionTrack.getDuration());
@@ -115,8 +118,9 @@ public class Reflection extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 //If to prevent blimp in audio due to updating
-                if(reflectionTrack.isPlaying() && fromUser) {
+                if(fromUser) {
                     reflectionTrack.seekTo(progress);
+                    updateTime();
                 }
             }
 
@@ -178,8 +182,15 @@ public class Reflection extends Fragment {
     // To Update seekBar
     public void seekUpdating() {
         seekBar.setProgress(reflectionTrack.getCurrentPosition());
+        updateTime();
         // Delay post by 1 second
         seekHandler.postDelayed(run, 1000);
+    }
 
+    // Update text time
+    public void updateTime() {
+        int timePassed = reflectionTrack.getCurrentPosition();
+        displayTime.setText(String.format("%02d:%02d", java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(timePassed),
+                java.util.concurrent.TimeUnit.MILLISECONDS.toSeconds(timePassed) % 60));
     }
 }

@@ -29,4 +29,11 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingTop="175dp"/>
+
+    <TextView
+        android:id="@+id/timeDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="50dp"/>
 </FrameLayout>
