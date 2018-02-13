@@ -19,6 +19,9 @@
             android:id="@+id/fraq_reflect"
             android:title="Reflection"/>
         <item
+            android:id="@+id/fraq_surv"
+            android:title="Surveillance Times" />
+        <item
             android:id="@+id/frag_mainPage"
             android:title="Notepad"/>
         <item

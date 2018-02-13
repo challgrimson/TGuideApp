@@ -104,4 +104,22 @@
     <string name="infoChecklsit">Any forms for appointments</string>
     <string name="reflectCheclist">Complete reflection actiivty</string>
 
+    <!-- Self-reflection description -->
+    <string name="selfReflection">Reflection and meditation can help to reduce stress and anxiety. It is a great way to see how you are doing and
+        how you are doing. Try taking a few minutes out of your day to see how you are doing. Some questions to think about are;
+        \n\n\t How have you been doing recently?
+        \n\t Are taking care of yourself physically?
+        \n\t What about Mentally?
+        \n\t Do you feel stressed? How come?
+        \n\t Do you feel supported?
+        \n\t Do changes need to be made in your life?
+        \n\t Are you content
+        \n\nTry using this audio as a guide to help you with your reflection and medititation practice.
+    </string>
+
+    <!-- Strings for surveillance exams -->
+    <string name="physicalExam">Physical Exam</string>
+    <string name= "PAP">Breast and Pelvic (PAP)</string>
+    <string name="yearly">Yearly</string>
+    <string name="overdue">Overdue</string>
 </resources>

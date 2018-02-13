@@ -17,4 +17,19 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- OverDue theme -->
+    <style name="overdueText" parent="@style/TextAppearance.AppCompat">
+        <item name="android:text">@string/overdue</item>
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <!-- When date inserted -->
+    <style name="DateInsert" parent="@style/TextAppearance.AppCompat">
+        <item name="android:text">@string/overdue</item>
+        <item name="android:textColor">@android:color/holo_green_dark</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
 </resources>

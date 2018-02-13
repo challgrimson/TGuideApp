@@ -13,15 +13,14 @@
 
     <RelativeLayout
         android:id="@+id/reminder_EmptyView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/reminder_Hint"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:gravity="center"
             android:text="@string/reminder_Hint"/>
 
     </RelativeLayout>

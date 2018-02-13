@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.android.tguide.SurveillenceTimes"
+    android:layout_weight="1.0">
+
+    <!-- Physical Exams Times -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="@string/physicalExam"
+        android:textColor="@color/mdtp_white"
+        android:textSize="20sp"
+        android:paddingStart="10dp" />
+    
+    <LinearLayout
+        android:id="@+id/PAP"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_purple"
+            android:text="@string/PAP"
+            android:textColor="@color/mdtp_ampm_text_color"
+            android:textSize="15sp"
+            android:layout_weight="1.0" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/yearly"
+            android:layout_weight="1.0"
+            android:textSize="15sp"/>
+
+        <TextView
+            style="@style/overdueText"
+            android:id="@+id/PAPtext"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -150,17 +150,21 @@ public class Add_Reminder extends Fragment implements
         mRepeat = "true";
         mRepeatNo = Integer.toString(1);
         mRepeatType = "Hour";
+
         // Initialize date value so that they first appear as current data
         mCalendar = Calendar.getInstance();
         mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
         mMinute = mCalendar.get(Calendar.MINUTE);
         mYear = mCalendar.get(Calendar.YEAR);
-        mMonth = mCalendar.get(Calendar.MONTH) + 1;
+        mMonth = mCalendar.get(Calendar.MONTH);
         mDay = mCalendar.get(Calendar.DATE);
         // Create the date layout to be displayed
-        mDate = mDay + "/" + mMonth + "/" + mYear;
-        mTime = mHour + ":" + mMinute;
-
+        mDate = mDay + "/" + (mMonth + 1) + "/" + mYear;
+        if (mMinute < 10) {
+            mTime = mHour + ":" + "0" + mMinute;
+        } else {
+            mTime = mHour + ":" + mMinute;
+        }
 
         // Setup Reminder Title To Inputted Title Text
         mTitleText.addTextChangedListener(new TextWatcher() {
@@ -238,6 +242,7 @@ public class Add_Reminder extends Fragment implements
                 } else {
                         mRepeat = "false";
                         mRepeatText.setText(R.string.reminder_switch_off);
+                        mRepeatTime = -1;
                     }
                 }
         });
@@ -379,8 +384,11 @@ public class Add_Reminder extends Fragment implements
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog v, int year, int monthOfYear, int dayOfMonth) {
-                        mDate = dayOfMonth + "/" + (monthOfYear+1) + "/" + year;
+                        mDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                         mDateText.setText(mDate);
+                        mMonth = monthOfYear;
+                        mYear = year;
+                        mDay = dayOfMonth;
                     }
                 },
                 now.get(Calendar.YEAR),
@@ -603,8 +611,8 @@ public class Add_Reminder extends Fragment implements
         ReminderDBHelper handler = new ReminderDBHelper(getContext());
 
         // Set up calender for creating the notification
-        mCalendar.set(Calendar.MONTH, --mMonth);
         mCalendar.set(Calendar.YEAR, mYear);
+        mCalendar.set(Calendar.MONTH, mMonth);
         mCalendar.set(Calendar.DAY_OF_MONTH, mDay);
         mCalendar.set(Calendar.HOUR_OF_DAY, mHour);
         mCalendar.set(Calendar.MINUTE, mMinute);
@@ -613,16 +621,18 @@ public class Add_Reminder extends Fragment implements
         long selectedTimestamp = mCalendar.getTimeInMillis();
 
         // Check repeat type
-        if (mRepeatType.equals("Minute")) {
-            mRepeatTime = Integer.parseInt(mRepeatNo) * milMinute;
-        } else if (mRepeatType.equals("Hour")) {
-            mRepeatTime = Integer.parseInt(mRepeatNo) * milHour;
-        } else if (mRepeatType.equals("Day")) {
-            mRepeatTime = Integer.parseInt(mRepeatNo) * milDay;
-        } else if (mRepeatType.equals("Week")) {
-            mRepeatTime = Integer.parseInt(mRepeatNo) * milWeek;
-        } else if (mRepeatType.equals("Month")) {
-            mRepeatTime = Integer.parseInt(mRepeatNo) * milMonth;
+        if (mRepeat.equals("true")) {
+            if (mRepeatType.equals("Minute")) {
+                mRepeatTime = Integer.parseInt(mRepeatNo) * milMinute;
+            } else if (mRepeatType.equals("Hour")) {
+                mRepeatTime = Integer.parseInt(mRepeatNo) * milHour;
+            } else if (mRepeatType.equals("Day")) {
+                mRepeatTime = Integer.parseInt(mRepeatNo) * milDay;
+            } else if (mRepeatType.equals("Week")) {
+                mRepeatTime = Integer.parseInt(mRepeatNo) * milWeek;
+            } else if (mRepeatType.equals("Month")) {
+                mRepeatTime = Integer.parseInt(mRepeatNo) * milMonth;
+            }
         }
 
         // If resotring then just updating, if not then create new
@@ -642,9 +652,6 @@ public class Add_Reminder extends Fragment implements
             }
 
         } else {
-            // No repeat
-            mRepeatTime = -1;
-
             String uniqueID = mListener.generateUniqueID();
             // Insert into dataebase
             handler.insertReminder(mTitle, mDescrip, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive, uniqueID);

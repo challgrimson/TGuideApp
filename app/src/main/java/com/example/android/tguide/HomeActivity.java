@@ -53,6 +53,7 @@ public class HomeActivity extends AppCompatActivity
         Add_Reminder.OnFragmentInteractionListener,
         WeeklyCheckList.OnFragmentInteractionListener,
         Reflection.OnFragmentInteractionListener,
+        SurveillenceTimes.OnFragmentInteractionListener,
 
         NavigationView.OnNavigationItemSelectedListener {
 
@@ -161,6 +162,8 @@ public class HomeActivity extends AppCompatActivity
             fragment = new WeeklyCheckList();
         } else if (id == R.id.fraq_reflect) {
             fragment = new Reflection();
+        } else if (id == R.id.fraq_surv) {
+            fragment = new SurveillenceTimes();
         }
 
         // Change Fragment
