@@ -33,5 +33,12 @@ dependencies {
     compile 'com.wrapp.floatlabelededittext:library:0.0.6'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.android.support:support-v4:25.3.1'
+    //FIREBASE
+    compile 'com.google.firebase:firebase-core:11.8.0'
+    compile 'com.google.firebase:firebase-storage:11.8.0'
+
     testCompile 'junit:junit:4.12'
 }
+
+// FIREBASE
+apply plugin: 'com.google.gms.google-services'

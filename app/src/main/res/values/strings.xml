@@ -120,6 +120,35 @@
     <!-- Strings for surveillance exams -->
     <string name="physicalExam">Physical Exam</string>
     <string name= "PAP">Breast and Pelvic (PAP)</string>
+    <string name="bloodPressure">Blood Pressure</string>
+    <string name="BMI">BMI (weight)</string>
+    <string name="lyphedema">Lyphedema</string>
+    <string name="moleAssessment">Mole Assessment</string>
+    <string name="screeningWork">Screening blood work for;</string>
+    <string name="thyroidDisease">Thyroid Disease</string>
+    <string name="diabetes">Diabetes</string>
+    <string name="kidneyDisease">Kidney Disease</string>
+    <string name="highCholesterol">High Cholesterol</string>
+    <string name="celiacDisease">Celiac Disease</string>
+    <string name="cardiacExamination">Cardiac Examination</string>
+    <string name="ECG">ECG</string>
+    <string name="Echo">Echo</string>
+    <string name="CTMRI">CT/MRI if necessary</string>
+    <string name="prophAnti">Antibiotic prophylaxis?</string>
+    <string name="Other">Other</string>
+    <string name="vision">Vision</string>
+    <string name="hearing">Hearing</string>
+    <string name="boneDensity">Bone Density</string>
     <string name="yearly">Yearly</string>
+    <string name="onetwoyears">1&#8211;2 Years</string>
+    <string name="twofiveyears">2&#8211;5 Years</string>
+    <string name="threefiveyears">3&#8211;5 Years</string>
+    <string name="twothreeyears">2&#8211;3 Years</string>
     <string name="overdue">Overdue</string>
+    <string name="surveillance_infoTitle">Information</string>
+    <string name="surveillance_dialogDescrip"> Use this space as a way to keep track of when you need to schedule appoints. Just
+    click on the appointment and enter when your appointment is or was. Then text will turn red when it is time to book another
+    appointment. \n\nYou can download a PDF version of the table below. </string>
+    <string name="surveillance_tableDownload">Download Table</string>
+    <string name="dialog_close">Close!</string>
 </resources>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "675327140281",
+    "firebase_url": "https://tguide-4d702.firebaseio.com",
+    "project_id": "tguide-4d702",
+    "storage_bucket": "tguide-4d702.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675327140281:android:0b8890ac1acf18ec",
+        "android_client_info": {
+          "package_name": "com.example.android.tguide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "675327140281-bqk0jo30urlvesu4p9b3i5jtbn1pte9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOe66UymRq1g-hNff2qspYd2N5j07m-TU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

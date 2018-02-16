@@ -1,53 +1,719 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.android.tguide.SurveillenceTimes"
-    android:layout_weight="1.0">
+    tools:context="com.example.android.tguide.SurveillenceTimes">
 
-    <!-- Physical Exams Times -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="@string/physicalExam"
-        android:textColor="@color/mdtp_white"
-        android:textSize="20sp"
-        android:paddingStart="10dp" />
-    
-    <LinearLayout
-        android:id="@+id/PAP"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.0"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
+        <!-- PHYSICAL EXAM TIMES -->
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/holo_purple"
-            android:text="@string/PAP"
-            android:textColor="@color/mdtp_ampm_text_color"
-            android:textSize="15sp"
-            android:layout_weight="1.0" />
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="@string/physicalExam"
+            android:textColor="@color/mdtp_white"
+            android:textSize="17sp"
+            android:paddingStart="10dp"
+            android:textStyle="bold"/>
 
-        <TextView
+        <!-- PAP -->
+        <LinearLayout
+            android:id="@+id/PAP"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/yearly"
+            android:layout_height="30dp"
             android:layout_weight="1.0"
-            android:textSize="15sp"/>
+            android:orientation="horizontal">
 
-        <TextView
-            style="@style/overdueText"
-            android:id="@+id/PAPtext"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/PAP"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/onetwoyears"
+                android:layout_weight="0.9"
+                android:paddingLeft="10dp"
+                android:textStyle="italic"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/PAPtext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- Blood Pressure -->
+        <LinearLayout
+            android:id="@+id/bloodPressure"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="0.7"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/bloodPressure"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/yearly"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/bloodPressuretext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- BMI -->
+        <LinearLayout
+            android:id="@+id/BMI"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="0.5"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/BMI"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/yearly"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/BMItext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- Lymphedema -->
+        <LinearLayout
+            android:id="@+id/lymphedema"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="0.7"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/lyphedema"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/yearly"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/lymphedemaText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- Mole Assessment -->
+        <LinearLayout
+            android:id="@+id/moleAssess"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:layout_weight="1.0"
-            android:textSize="15sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/moleAssessment"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/yearly"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/moleAssesstext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- SCREENING BLOOD WORK -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="@string/screeningWork"
+            android:textColor="@color/mdtp_white"
+            android:textSize="17sp"
+            android:paddingStart="10dp"
+            android:textStyle="bold"/>
+
+        <!-- Thyroid Disease -->
+        <LinearLayout
+            android:id="@+id/thyroidDisease"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/thyroidDisease"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/yearly"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/thyroidDiseasetext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- Diabetes -->
+        <LinearLayout
+            android:id="@+id/diabetes"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/diabetes"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/yearly"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/diabetestext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- Kidney Disease -->
+        <LinearLayout
+            android:id="@+id/kidneyDisease"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/kidneyDisease"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/yearly"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/kidneyDiseasetext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- High Cholesterol -->
+        <LinearLayout
+            android:id="@+id/highCholesterol"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/highCholesterol"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/yearly"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/highCholesteroltext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- Celiac Disease -->
+        <LinearLayout
+            android:id="@+id/celiacDisease"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/celiacDisease"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/twofiveyears"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/celiacDiseasetext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- CARDIAC EVALUATION -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="@string/cardiacExamination"
+            android:textColor="@color/mdtp_white"
+            android:textSize="17sp"
+            android:paddingStart="10dp"
+            android:textStyle="bold"/>
+
+        <!-- ECG -->
+        <LinearLayout
+            android:id="@+id/ECG"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/ECG"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/threefiveyears"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/ECGtext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- ECHO -->
+        <LinearLayout
+            android:id="@+id/Echo"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/Echo"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/threefiveyears"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/Echotext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- CT/MRI -->
+        <LinearLayout
+            android:id="@+id/CTMRI"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/CTMRI"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/threefiveyears"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/CTMRItext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- Prophylaxis Need -->
+        <LinearLayout
+            android:id="@+id/prophylaxisAnti"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/prophAnti"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/yearly"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/prophylaxisAntitext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- OTHER -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="@string/Other"
+            android:textColor="@color/mdtp_white"
+            android:textSize="17sp"
+            android:paddingStart="10dp"
+            android:textStyle="bold"/>
+
+        <!-- Vision -->
+        <LinearLayout
+            android:id="@+id/vision"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/vision"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/onetwoyears"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/visiontext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- Hearing -->
+        <LinearLayout
+            android:id="@+id/hearing"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/hearing"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/twothreeyears"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/hearingtext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <!-- Bone Density -->
+        <LinearLayout
+            android:id="@+id/boneDensity"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="1.0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple"
+                android:text="@string/boneDensity"
+                android:textColor="@color/mdtp_ampm_text_color"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/threefiveyears"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/boneDensitytext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:textSize="15sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>
