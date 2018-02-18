@@ -1,15 +1,16 @@
 package com.example.android.tguide;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.TextViewCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -57,6 +57,7 @@ public class SurveillenceTimes extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //intent = new Intent(getActivity(), surveillenceSurvice.class);
+
     }
 
     @Override
@@ -106,7 +107,6 @@ public class SurveillenceTimes extends Fragment {
 
         // To change menu
         setHasOptionsMenu(true);
-
 
         return view;
     }
@@ -205,6 +205,7 @@ public class SurveillenceTimes extends Fragment {
         managecolours();
     }
 
+
     // Dialog to show information and if want to download chart
     private void showInformationDialog() {
         // Create an AlertDialog.Builder and set the message, and click listeners
@@ -213,10 +214,12 @@ public class SurveillenceTimes extends Fragment {
         builder.setMessage(R.string.surveillance_dialogDescrip);
         builder.setNeutralButton(R.string.surveillance_tableDownload, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                String URL = "http://www.turnersyndrome.ca/wp-content/uploads/TS_Surveillance_Chart_Colour.pdf";
-                // Download passed URL
-                new DownLoadTask(getContext(), URL);
-
+                //downloadFile();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("http://www.turnersyndrome.ca/wp-content/uploads/TS_Surveillance_Chart_Colour.pdf"));
+                startActivity(intent);
             }
         });
         builder.setNegativeButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
@@ -235,6 +238,40 @@ public class SurveillenceTimes extends Fragment {
     }
 
     /*
+    // Firebase reference
+    FirebaseStorage mStorageRef;
+    StorageReference mChartRef;
+    File localFile;
+
+    private void downloadFile() {
+
+        mStorageRef = FirebaseStorage.getInstance();
+        mChartRef = mStorageRef.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/tguide-4d702.appspot.com/o/jpg-icon.png?alt=media&token=5c9368dd-7fcd-41cc-be2e-1032ed6c236a");
+
+        try {
+           localFile = File.createTempFile("images", "png");
+
+            Log.d("SurveillanceTimes:","Get message");
+            mChartRef.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Successfully downloaded data to local file
+                            Log.d("SurveillanceTimes:","Download complete");
+                            Toast.makeText(getContext(), "Download Complete!", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle failed download
+                    Toast.makeText(getContext(), "Download Error.", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        } catch (IOException ex) {}
+
+        }
+
     // Broadcast Reciever to recieve from service and will just check times
     public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -253,6 +290,5 @@ public class SurveillenceTimes extends Fragment {
         PAPstate = false;
     }
     */
-
 
 }

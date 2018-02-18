@@ -149,6 +149,6 @@
     <string name="surveillance_dialogDescrip"> Use this space as a way to keep track of when you need to schedule appoints. Just
     click on the appointment and enter when your appointment is or was. Then text will turn red when it is time to book another
     appointment. \n\nYou can download a PDF version of the table below. </string>
-    <string name="surveillance_tableDownload">Download Table</string>
-    <string name="dialog_close">Close!</string>
+    <string name="surveillance_tableDownload">View Table</string>
+    <string name="dialog_close">Close</string>
 </resources>
