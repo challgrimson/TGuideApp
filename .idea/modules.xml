@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TGuide.iml" filepath="$PROJECT_DIR$/TGuide.iml" />
+      <module fileurl="file://C:\Users\Christian\Desktop\TGuideC\TGuide.iml" filepath="C:\Users\Christian\Desktop\TGuideC\TGuide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TGuideC.iml" filepath="$PROJECT_DIR$/TGuideC.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

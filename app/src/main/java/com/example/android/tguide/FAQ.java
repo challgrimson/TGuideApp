@@ -1,22 +1,19 @@
 package com.example.android.tguide;
 // Code for questions
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.transition.ChangeBounds;
-import android.support.transition.TransitionManager;
-import android.support.transition.TransitionSet;
 import android.support.v4.app.Fragment;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
-
-
+import android.widget.RelativeLayout;
+import android.widget.GridLayout.LayoutParams;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -99,28 +96,39 @@ public class FAQ extends Fragment {
 
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+                for (int i = 0; i < btnArray.length-1; i++)
+                    btnArray[i].setEnabled(false);
                 buttonResponse(1, btnArray, tvArray, view);
             }
         });
 
         btn2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                for (int i = 0; i < btnArray.length-1; i++)
+                    btnArray[i].setEnabled(false);
                 buttonResponse(2, btnArray,tvArray,view);
             }
         });
 
         btn3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                for (int i = 0; i < btnArray.length-1; i++)
+                    btnArray[i].setEnabled(false);
                 buttonResponse(3, btnArray,tvArray,view);
             }
         });
         btn4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                for (int i = 0; i < btnArray.length-1; i++)
+                    btnArray[i].setEnabled(false);
                 buttonResponse(4, btnArray,tvArray,view);
             }
         });
         btn5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                for (int i = 0; i < btnArray.length-1; i++)
+                    btnArray[i].setEnabled(false);
                 buttonResponse(5, btnArray,tvArray,view);
             }
         });
@@ -137,13 +145,15 @@ public class FAQ extends Fragment {
     boolean[] posFlag = {false, false, false,false,false,false};
     boolean[] isCollapsed = {false,false,false,false,false,false};
 
-    public void buttonResponse(final int id, Button[] btnArray, final TextView[] tvArray, View view) {
+    public void buttonResponse(final int id, final Button[] btnArray, final TextView[] tvArray, View view) {
         float deltaX;
         int[] location = new int[2];
         int[] locationT = new int[2];
+        final ScrollView myScrollView = view.findViewById(R.id.SV);
 
-
-
+        //myScrollView.setLayoutParams(new ViewGroup.LayoutParams(480, 8000));
+       // myScrollView.setLayoutParams(new RelativeLayout.LayoutParams(
+               // LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         for (int i = id; i < btnArray.length; i++) {
             btnArray[i].getLocationInWindow(location);
             tvArray[i].getLocationInWindow(locationT);
@@ -158,6 +168,29 @@ public class FAQ extends Fragment {
             ObjectAnimator animXT = ObjectAnimator.ofFloat(tvArray[i], "y", locationT[1]).setDuration(300);
             animX.start();
             animXT.start();
+
+            animXT.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    for (int i = 0; i < btnArray.length-1; i++)
+                        btnArray[i].setEnabled(true);
+                    //myScrollView.removeAllViews();
+                    //myScrollView.addView(view);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                }
+            });
         }
 
 
@@ -198,11 +231,6 @@ public class FAQ extends Fragment {
 
 
     }
-
-
-
-
-
 
     @Override
     public void onAttach(Context context) {
