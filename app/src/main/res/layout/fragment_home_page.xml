@@ -1,35 +1,37 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.tguide.HomePage">
+    tools:context="com.example.android.tguide.HomePage"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="340dp"
-            android:layout_height="328dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/tguide_home" />
-
-        <TextView
-            android:id="@+id/hometextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView2"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="22dp"
-            android:gravity="center"
-            android:text="@string/welcome"
-            android:textColor="@color/welcomeHome"
-            android:textSize="33sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+            android:layout_gravity="center"
+            android:contentDescription="@string/homeContentDesp"
+            android:src="@drawable/tguide_home" />
+
+        <com.example.android.tguide.WelcomeAnimation
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+    <!--TextView
+        android:id="@+id/hometextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="0.5"
+        android:text="@string/welcome"
+        android:textColor="@color/welcomeHome"
+        android:textSize="33sp"
+        android:textStyle="bold" /-->
 
 
-</FrameLayout>
+</LinearLayout>

@@ -1,46 +1,30 @@
 package com.example.android.tguide;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
-import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.icu.util.Calendar;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import com.example.android.tguide.ReminderDBHelper;
-
-import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity
 
@@ -59,6 +43,10 @@ public class HomeActivity extends AppCompatActivity
 
     // Unique Id for notifications
     private static int NOTIFICATION_UNIQUE_ID;
+
+    // Set shared preference
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +72,45 @@ public class HomeActivity extends AppCompatActivity
         ft.replace(R.id.mainFrame, new HomePage());
         ft.commit();
 
+        // Set shared preference values
+        sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+
         // Grab unique ID value and store in NOTIFICATION_UNIQUE_ID
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        NOTIFICATION_UNIQUE_ID = sharedPref.getInt("uniqueIDValue",0);
+        NOTIFICATION_UNIQUE_ID = sharedPref.getInt("uniqueIDValue",1);
+
+        // Check if first time opening app: if so then run introduction dialog
+        if (sharedPref.getBoolean("firstTime", true)) {
+            // Set to not first time
+            editor.putBoolean("firstTime",false);
+            editor.apply();
+
+            // Set introduction dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.welcomeDialog);
+            builder.setPositiveButton(R.string.welcomeDialogBegin, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // Dismess on button click
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+
+            // Create and show the AlertDialog
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+            // Create welcome alarm
+            welcomeAlarm();
+
+            // Put date into database
+            // Get Handler for database
+            //Log.i("bootReceiver", "Putting time into database");
+            //Log.i("bootReceiver", String.valueOf(System.currentTimeMillis()) + 10000);
+            //ReminderDBHelper handler = new ReminderDBHelper(this);
+            //handler.insertAlarmTime(String.valueOf(System.currentTimeMillis()) + 10000);
+        }
     }
 
     @Override
@@ -132,13 +156,10 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onPause() {
         super.onPause();
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
         // Save NOTIFICATION_UNIQUE_ID
         editor.putInt("uniqueIDValue",NOTIFICATION_UNIQUE_ID);
-
-        // Commit Change
-        editor.commit();
+        // Apply Change
+        editor.apply();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -180,11 +201,26 @@ public class HomeActivity extends AppCompatActivity
 
 
     // Build notification
-    public Notification sendNotification(String notificationTitle, String notificationDesp){
-        // Builder Object for notification
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher)
-                                                    .setContentTitle(notificationTitle)
-                                                    .setContentText(notificationDesp);
+    public Notification sendNotification(String notificationTitle, String notificationDesp, String mActive){
+        // Set sound for notification
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        if (mActive.equals("true")) {
+            // Builder Object for notification sound on
+            return new Notification.Builder(this)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(notificationTitle)
+                    .setContentText(notificationDesp)
+                    .setSound(soundUri)
+                    .build();
+        } else {
+            // Builder Object for notification sound off
+            return new Notification.Builder(this)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(notificationTitle)
+                    .setContentText(notificationDesp)
+                    .build();
+        }
 
         // Create intent for this notification
         //Intent resultIntent = new Intent(this, Reminders.class);
@@ -192,16 +228,14 @@ public class HomeActivity extends AppCompatActivity
 
         // Add intent to notification builder object
         //mBuilder.setContentIntent(resultPendingIntnt);
-
-        return mBuilder.build();
     }
 
     // Create notification
-    public boolean begin_notifications(int ID, String notificationTitle, String notificationDesp, long alarmTime, long repeatTime){
+    public boolean begin_notifications(int ID, String notificationTitle, String notificationDesp, long alarmTime, long repeatTime, String mActive){
         // Create Notificiton
-        Notification notification = sendNotification(notificationTitle, notificationDesp);
+        Notification notification = sendNotification(notificationTitle, notificationDesp, mActive);
         Intent myIntent = new Intent(this, AlarmReceiver.class);
-        myIntent.putExtra(AlarmReceiver.NOTIFICATION_ID,(int) ID);
+        myIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, ID);
         myIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
         PendingIntent resultPendingIntent = PendingIntent.getBroadcast(this,ID, myIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
@@ -217,8 +251,8 @@ public class HomeActivity extends AppCompatActivity
     }
 
     // Delete the notification
-    public boolean deleteNotification(int ID, String notificationTitle, String notificationDesp) {
-        Notification notification = sendNotification(notificationTitle, notificationDesp);
+    public boolean deleteNotification(int ID, String notificationTitle, String notificationDesp, String mActive) {
+        Notification notification = sendNotification(notificationTitle, notificationDesp, mActive);
         Intent myIntent = new Intent(this, AlarmReceiver.class);
         myIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, ID);
         myIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
@@ -295,5 +329,11 @@ public class HomeActivity extends AppCompatActivity
     public String generateUniqueID() {
         ++NOTIFICATION_UNIQUE_ID;
         return String.valueOf(NOTIFICATION_UNIQUE_ID);
+    }
+
+    public void welcomeAlarm () {
+        // Creat alarm: SET FOR 5 MINUTS
+        Log.i("Alarm","Creating welcome alarm;");
+        begin_notifications(1, getString(R.string.welcomeNotificationTitle), getString(R.string.welcomeNotificationDescrip), System.currentTimeMillis() + 5 * 60 * 1000, 5 * 60 * 1000, "true");
     }
 }

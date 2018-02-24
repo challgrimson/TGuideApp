@@ -79,7 +79,7 @@ public class Reflection extends Fragment {
         }
 
         // Grab mp3 file
-      // reflectionTrack = MediaPlayer.create(getContext(), R.raw.guided_reflection);
+        reflectionTrack = MediaPlayer.create(getContext(), R.raw.guided_reflection);
 
         // Grab button and seek bar
         final ImageButton playSound = (ImageButton) view.findViewById(R.id.playAudio);

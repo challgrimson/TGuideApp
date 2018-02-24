@@ -14,7 +14,7 @@
             android:title="Reminders" />
         <item
             android:id="@+id/frag_checklist"
-            android:title="Weekly Checklist"/>
+            android:title="Checklist"/>
         <item
             android:id="@+id/fraq_reflect"
             android:title="Reflection"/>

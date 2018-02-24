@@ -38,6 +38,14 @@
 
     <!-- Strings for home view -->
     <string name="welcome">Welcome to TGuide!</string>
+    <string name="welcomeDialog">Welcome to TGuide! An app designed to help you manage turner syndrome. Go to the FAQ
+    section for a guide on the different aspects of this app. Lets begin!</string>
+    <string name="welcomeDialogBegin">Let\'s Begin!</string>
+    <string name="welcomeNotificationTitle">How are you doing?</string>
+    <string name="welcomeNotificationDescrip">Remember to complete your checklist!</string>
+    <string name="channelTitle">TGuide Reminders</string>
+    <string name="channelDesp">TGuide Reminders Channel</string>
+    <string name="homeContentDesp">Welcome to TGuide!</string>
 
     <!--String for About Turner Syndrom -->
     <string name="whatTurner">What is Turner Syndrome?</string>
@@ -67,35 +75,28 @@
     growth horomone under the supervision of a pediartric endocrinologist.</string>
 
     <!--String for FAQ-->
-    <string name="button1Title">This is a button</string>
-    <string name="button1Text">McMaster University is co-educational, and has over 25,000 undergraduate and over 4,000 post-graduate students.[10]
-        Alumni and former students reside across Canada and in 139 countries.[3] Notable alumni include government officials, academics, business
-        $405,300 per faculty member, the highest in Canada.</string>
+    <string name="button1Title">What is TGuide?</string>
+    <string name="button1Text">TGuide is an app to help you manage turner syndrome. It provides some information about turner syndrome as well as some
+    helpful information regarding the condition.</string>
 
-    <string name="button2Title">This is a button</string>
-    <string name="button2Text">McMaster University is co-educational, and has over 25,000 undergraduate and over 4,000 post-graduate students.[10]
-        Alumni and former students reside across Canada and in 139 countries.[3] Notable alumni include government officials, academics, business
-        $405,300 per faculty member, the highest in Canada.</string>
+    <string name="button2Title">Why should I complete the checklist?</string>
+    <string name="button2Text">Managing a chronic condition can be difficult. Completing a checklist every couple of months can be good to help
+    you stay on track and see how you are doing. As well as helpin you to keep up to data with all of your doctors appointments and medications.</string>
 
-    <string name="button3Title">This is a button</string>
-    <string name="button3Text">McMaster University is co-educational, and has over 25,000 undergraduate and over 4,000 post-graduate students.[10]
-        Alumni and former students reside across Canada and in 139 countries.[3] Notable alumni include government officials, academics, business
-        $405,300 per faculty member, the highest in Canada.</string>
+    <string name="button3Title">What are surveillance times?</string>
+    <string name="button3Text">To help manage your condition, doctors appointments need to be set periodically. The surveillance times table provides you with
+    a table to input the date of your appointment and it will turn to red when it is time to book your next one. In screening time, click on the information
+    button for a table that provides you with more information for each appointment and speak to your family doctor as well to set up each one.</string>
 
-    <string name="button4Title">This is a button</string>
-    <string name="button4Text">McMaster University is co-educational, and has over 25,000 undergraduate and over 4,000 post-graduate students.[10]
-        Alumni and former students reside across Canada and in 139 countries.[3] Notable alumni include government officials, academics, business
-        $405,300 per faculty member, the highest in Canada.</string>
+    <string name="button4Title">I keep getting reminders every few months, can I get rid of them?</string>
+    <string name="button4Text">Unfortunately not. They are meant to help you to keep track of your condition by reminding you to set up doctors
+    appointments and medications.</string>
 
-    <string name="button5Title">This is a button</string>
-    <string name="button5Text">McMaster University is co-educational, and has over 25,000 undergraduate and over 4,000 post-graduate students.[10]
-        Alumni and former students reside across Canada and in 139 countries.[3] Notable alumni include government officials, academics, business
-        $405,300 per faculty member, the highest in Canada.</string>
+    <string name="button5Title">Where can I go for more information?</string>
+    <string name="button5Text">You can go for more information at the following locations;</string>
 
-    <string name="button6Title">This is a button</string>
-    <string name="button6Text">McMaster University is co-educational, and has over 25,000 undergraduate and over 4,000 post-graduate students.[10]
-        Alumni and former students reside across Canada and in 139 countries.[3] Notable alumni include government officials, academics, business
-        $405,300 per faculty member, the highest in Canada.</string>
+    <string name="button6Title">Where can I go if I need help?</string>
+    <string name="button6Text">You can find help at the following locations;</string>
 
     <!-- Strings for Checklist -->
     <string name="titleChecklist">Checklist Description</string>
@@ -116,6 +117,8 @@
         \n\t Are you content
         \n\nTry using this audio as a guide to help you with your reflection and medititation practice.
     </string>
+    <string name="PlayAudio">Play Audio</string>
+    <string name="PauseAudio">Stop Audio</string>
 
     <!-- Strings for surveillance exams -->
     <string name="physicalExam">Physical Exam</string>
@@ -124,7 +127,7 @@
     <string name="BMI">BMI (weight)</string>
     <string name="lyphedema">Lyphedema</string>
     <string name="moleAssessment">Mole Assessment</string>
-    <string name="screeningWork">Screening blood work for;</string>
+    <string name="screeningWork">Screening Blood Work</string>
     <string name="thyroidDisease">Thyroid Disease</string>
     <string name="diabetes">Diabetes</string>
     <string name="kidneyDisease">Kidney Disease</string>

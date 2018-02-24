@@ -1,23 +1,12 @@
 package com.example.android.tguide;
 
 import android.app.AlertDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.app.NavUtils;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -34,14 +23,11 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import com.example.android.tguide.ReminderDBHelper;
 
 import java.util.Calendar;
 
@@ -339,8 +325,8 @@ public class Add_Reminder extends Fragment implements
         //Passed needed title for fragment to MainActivity
         void onFragmentInteraction(String title);
         void change_Reminder();
-        boolean begin_notifications(int ID, String notificationTitle, String notificationDesp, long alarmTime, long repeatTime);
-        boolean deleteNotification(int ID, String notifictionTitle, String notificationDesp);
+        boolean begin_notifications(int ID, String notificationTitle, String notificationDesp, long alarmTime, long repeatTime, String mActive);
+        boolean deleteNotification(int ID, String notifictionTitle, String notificationDesp, String mActive);
         String generateUniqueID();
     }
 
@@ -574,7 +560,7 @@ public class Add_Reminder extends Fragment implements
             if (mRestore) {
                 ReminderDBHelper handler = new ReminderDBHelper(getContext());
                 // Delete the alarm
-                boolean alarmCheck = mListener.deleteNotification(Integer.parseInt(uniqueID), mTitle, mDescrip);
+                boolean alarmCheck = mListener.deleteNotification(Integer.parseInt(uniqueID), mTitle, mDescrip, mActive);
 
                 // Delete reminder view
                 int check = handler.deletePerson(reminderID);
@@ -641,9 +627,9 @@ public class Add_Reminder extends Fragment implements
             boolean saved = handler.updateReminder(reminderID,mTitle, mDescrip, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive);
             // Delete the alarm
             // NEED TO UPDATE NOTIFICATION
-            boolean alarmCheck = mListener.deleteNotification(Integer.parseInt(uniqueID), mTitle, mDescrip);
+            boolean alarmCheck = mListener.deleteNotification(Integer.parseInt(uniqueID), mTitle, mDescrip, mActive);
             // Re-create Notification
-            boolean checkAlarm = mListener.begin_notifications(Integer.parseInt(uniqueID), mTitle, mDescrip, selectedTimestamp, mRepeatTime);
+            boolean checkAlarm = mListener.begin_notifications(Integer.parseInt(uniqueID), mTitle, mDescrip, selectedTimestamp, mRepeatTime, mActive);
 
             if (saved & alarmCheck & checkAlarm) {
                 Toast.makeText(getContext(), R.string.updateComplete, Toast.LENGTH_LONG).show();
@@ -656,7 +642,7 @@ public class Add_Reminder extends Fragment implements
             // Insert into dataebase
             handler.insertReminder(mTitle, mDescrip, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive, uniqueID);
             // Create notification
-            boolean checkAlarm = mListener.begin_notifications(Integer.parseInt(uniqueID), mTitle, mDescrip, selectedTimestamp, mRepeatTime);
+            boolean checkAlarm = mListener.begin_notifications(Integer.parseInt(uniqueID), mTitle, mDescrip, selectedTimestamp, mRepeatTime, mActive);
 
             if (checkAlarm) {
                 Toast.makeText(getContext(), R.string.saved, Toast.LENGTH_LONG).show();

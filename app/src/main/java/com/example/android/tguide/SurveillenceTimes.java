@@ -215,6 +215,8 @@ public class SurveillenceTimes extends Fragment {
         builder.setNeutralButton(R.string.surveillance_tableDownload, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 //downloadFile();
+
+                // Open and show turner webpage
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);

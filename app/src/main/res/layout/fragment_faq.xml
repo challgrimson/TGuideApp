@@ -22,7 +22,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@android:color/holo_blue_light"
+            android:background="#a281c7"
             android:text="@string/button1Title"
             android:textColor="@color/mdtp_white"/>
 
@@ -34,7 +34,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@android:color/holo_blue_light"
+            android:background="#a281c7"
             android:text="@string/button2Title"
             android:textColor="@color/mdtp_white"/>
 
@@ -46,7 +46,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@android:color/holo_blue_light"
+            android:background="#a281c7"
             android:text="@string/button3Title"
             android:textColor="@color/mdtp_white"/>
 
@@ -58,7 +58,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@android:color/holo_blue_light"
+            android:background="#a281c7"
             android:text="@string/button4Title"
             android:textColor="@color/mdtp_white"/>
 
@@ -70,7 +70,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@android:color/holo_blue_light"
+            android:background="#a281c7"
             android:text="@string/button5Title"
             android:textColor="@color/mdtp_white"/>
 
@@ -82,7 +82,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:background="@android:color/holo_blue_light"
+            android:background="#a281c7"
             android:text="@string/button6Title"
             android:textColor="@color/mdtp_white"/>
 

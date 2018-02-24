@@ -17,6 +17,8 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
     // Define table parameters
     public static final String DATABASE_NAME = "reminder_tguide.db";
     private static final int DATABASE_VERSION = 1;
+
+    // Reminder Table
     public static final String REMINDER_TABLE_NAME = "reminder";
     public static final String REMINDER_COLUMN_ID = "_id";
     public static final String REMINDER_COLUMN_TITLE = "title";
@@ -28,6 +30,10 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
     public static final String REMINDER_COLUMN_REPEATTYPE = "repeatTYPE";
     public static final String REMINDER_COLUMN_SOUND = "repeatactive";
     public static final String REMINDER_UNIQUE_ID = "uniqueID";
+
+    // Welcome Notification Table
+    public static final String WALARM_TABLE_NAME = "welcomeAlarm";
+    public static final String WALARM_ALARN_DATE = "Alarmtime";
 
 
     public ReminderDBHelper(Context context) {
@@ -48,11 +54,18 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
                 REMINDER_COLUMN_SOUND + " TEXT NOT NULL, " +
                 REMINDER_UNIQUE_ID+ " TEXT NOT NULL)"
         );
+
+        /*
+        db.execSQL("CREATE TABLE " + WALARM_TABLE_NAME + "(" +
+                WALARM_ALARN_DATE + " TEXT NOT NULL)"
+        );
+        */
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + REMINDER_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + WALARM_TABLE_NAME);
         onCreate(db);
     }
 
@@ -114,4 +127,23 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
         db.update(REMINDER_TABLE_NAME, contentValues, REMINDER_COLUMN_ID + " = ? ", new String[] { Integer.toString(reminderID) } );
         return true;
     }
+
+    /*
+    // Insert welcome alarm time into database - alarm time in ms
+    public void insertAlarmTime(String alarmTime) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(WALARM_ALARN_DATE, alarmTime);
+
+        // Insert into database
+        db.insert(WALARM_TABLE_NAME, null, contentValues);
+    }
+
+    // Grab welcome alarm time
+    public Cursor getAlarmTime(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery( "SELECT * FROM " + WALARM_TABLE_NAME, null);
+        return res;
+    }
+    */
 }
