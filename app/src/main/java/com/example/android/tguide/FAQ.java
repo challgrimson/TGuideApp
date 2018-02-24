@@ -159,13 +159,13 @@ public class FAQ extends Fragment {
             tvArray[i].getLocationInWindow(locationT);
 
             if (posFlag[id-1] == true) {
-                location[1] -= 940;
-                locationT[1] -= 940;
+                location[1] -= 950;
+                locationT[1] -= 950;
 
             }
 
-            ObjectAnimator animX = ObjectAnimator.ofFloat(btnArray[i], "y", location[1]).setDuration(300);
-            ObjectAnimator animXT = ObjectAnimator.ofFloat(tvArray[i], "y", locationT[1]).setDuration(300);
+            ObjectAnimator animX = ObjectAnimator.ofFloat(btnArray[i], "y", location[1]+120).setDuration(300);
+            ObjectAnimator animXT = ObjectAnimator.ofFloat(tvArray[i], "y", locationT[1]+120).setDuration(300);
             animX.start();
             animXT.start();
 
