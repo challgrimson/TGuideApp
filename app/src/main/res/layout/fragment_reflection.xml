@@ -9,10 +9,12 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/selfReflection"
-        android:textSize="16sp"
+        android:background="@drawable/tguide_background"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"/>
+        android:paddingRight="10dp"
+        android:text="@string/selfReflection"
+        android:textColor="@color/mdtp_date_picker_text_normal"
+        android:textSize="16sp" />
 
 
     <!-- Layout containing seek bar stuff -->

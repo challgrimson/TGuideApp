@@ -10,11 +10,11 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="230dp"
+            android:layout_height="230dp"
             android:layout_gravity="center"
             android:contentDescription="@string/homeContentDesp"
-            android:src="@drawable/tguide_home" />
+            android:src="@drawable/turnersyndromelogo" />
 
         <com.example.android.tguide.WelcomeAnimation
             android:id="@+id/imageView2"
