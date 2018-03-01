@@ -1,5 +1,6 @@
 package com.example.android.tguide;
 // Code for questions
+
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -10,10 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.RelativeLayout;
 import android.widget.GridLayout.LayoutParams;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -91,50 +94,51 @@ public class FAQ extends Fragment {
         final TextView tv5 = (TextView) view.findViewById(R.id.text5);
         final TextView tv6 = (TextView) view.findViewById(R.id.text6);
 
-        final Button[] btnArray = {btn1, btn2, btn3, btn4,btn5,btn6};
-        final TextView[] tvArray = {tv1,tv2,tv3,tv4,tv5,tv6};
+        final LinearLayout LL = view.findViewById(R.id.LL);
+        final Button[] btnArray = {btn1, btn2, btn3, btn4, btn5, btn6};
+        final TextView[] tvArray = {tv1, tv2, tv3, tv4, tv5, tv6};
 
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                for (int i = 0; i < btnArray.length-1; i++)
+                for (int i = 0; i < btnArray.length - 1; i++)
                     btnArray[i].setEnabled(false);
-                buttonResponse(1, btnArray, tvArray, view);
+                buttonResponse(1, btnArray, tvArray, LL);
             }
         });
 
         btn2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                for (int i = 0; i < btnArray.length-1; i++)
+                for (int i = 0; i < btnArray.length - 1; i++)
                     btnArray[i].setEnabled(false);
-                buttonResponse(2, btnArray,tvArray,view);
+                buttonResponse(2, btnArray, tvArray, LL);
             }
         });
 
         btn3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                for (int i = 0; i < btnArray.length-1; i++)
+                for (int i = 0; i < btnArray.length - 1; i++)
                     btnArray[i].setEnabled(false);
-                buttonResponse(3, btnArray,tvArray,view);
+                buttonResponse(3, btnArray, tvArray, LL);
             }
         });
         btn4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                for (int i = 0; i < btnArray.length-1; i++)
+                for (int i = 0; i < btnArray.length - 1; i++)
                     btnArray[i].setEnabled(false);
-                buttonResponse(4, btnArray,tvArray,view);
+                buttonResponse(4, btnArray, tvArray, LL);
             }
         });
         btn5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                for (int i = 0; i < btnArray.length-1; i++)
+                for (int i = 0; i < btnArray.length - 1; i++)
                     btnArray[i].setEnabled(false);
-                buttonResponse(5, btnArray,tvArray,view);
+                buttonResponse(5, btnArray, tvArray, LL);
             }
         });
         btn6.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                buttonResponse(6, btnArray,tvArray,view);
+                buttonResponse(6, btnArray, tvArray, LL);
             }
         });
 
@@ -142,34 +146,29 @@ public class FAQ extends Fragment {
         return view;
     }
 
-    boolean[] posFlag = {false, false, false,false,false,false};
-    boolean[] isCollapsed = {false,false,false,false,false,false};
-
+    boolean[] posFlag = {false, false, false, false, false, false};
+    boolean[] isCollapsed = {false, false, false, false, false, false};
+    int[] btnPosC = {0,0,0,0,0,0};
     public void buttonResponse(final int id, final Button[] btnArray, final TextView[] tvArray, View view) {
-        float deltaX;
-        int[] location = new int[2];
-        int[] locationT = new int[2];
-        final ScrollView myScrollView = view.findViewById(R.id.SV);
-
+       // final ScrollView myScrollView = view.findViewById(R.id.SV);
+            int trans;
         //myScrollView.setLayoutParams(new ViewGroup.LayoutParams(480, 8000));
-       // myScrollView.setLayoutParams(new RelativeLayout.LayoutParams(
-               // LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        // myScrollView.setLayoutParams(new RelativeLayout.LayoutParams(
+        // LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         for (int i = id; i < btnArray.length; i++) {
-            btnArray[i].getLocationInWindow(location);
-            tvArray[i].getLocationInWindow(locationT);
-
             if (posFlag[id-1] == true) {
-                location[1] -= 950;
-                locationT[1] -= 950;
-
+                btnPosC[i] -= 468;
+               // view.getLayoutParams().height -=468;
+            } else {
+                btnPosC[i] += 468;
+               // view.getLayoutParams().height +=468;
             }
-
-            ObjectAnimator animX = ObjectAnimator.ofFloat(btnArray[i], "y", location[1]+120).setDuration(300);
-            ObjectAnimator animXT = ObjectAnimator.ofFloat(tvArray[i], "y", locationT[1]+120).setDuration(300);
+            ObjectAnimator animX = ObjectAnimator.ofFloat(btnArray[i], "translationY",  btnPosC[i]).setDuration(300);
+            ObjectAnimator animXT = ObjectAnimator.ofFloat(tvArray[i], "translationY",  btnPosC[i]).setDuration(300);
             animX.start();
             animXT.start();
 
-            animXT.addListener(new Animator.AnimatorListener() {
+           animX.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animation) {
 
@@ -177,8 +176,9 @@ public class FAQ extends Fragment {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    for (int i = 0; i < btnArray.length-1; i++)
+                    for (int i = 0; i < btnArray.length - 1; i++)
                         btnArray[i].setEnabled(true);
+
                     //myScrollView.removeAllViews();
                     //myScrollView.addView(view);
                 }
@@ -194,40 +194,37 @@ public class FAQ extends Fragment {
         }
 
 
-        if (posFlag[id-1] == false) {
-            posFlag[id-1] = true;
-        } else {
+       if (posFlag[id-1] == false) {
+           posFlag[id-1] = true;
+       } else {
             posFlag[id-1] = false;
-        }
+       }
 
-        if(!isCollapsed[id-1]){
+        if (!isCollapsed[id - 1]) {
             ValueAnimator va = ValueAnimator.ofInt(0, 432);
             va.setDuration(300);
             va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 public void onAnimationUpdate(ValueAnimator animation) {
                     Integer value = (Integer) animation.getAnimatedValue();
-                    tvArray[id-1].getLayoutParams().height = value.intValue();
-                    tvArray[id-1].requestLayout();
+                    tvArray[id - 1].getLayoutParams().height = value.intValue();
+                    tvArray[id - 1].requestLayout();
                 }
             });
             va.start();
-            isCollapsed[id-1] = true;
-        }
-        else{
+            isCollapsed[id - 1] = true;
+        } else {
             ValueAnimator va = ValueAnimator.ofInt(432, 0);
             va.setDuration(300);
             va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 public void onAnimationUpdate(ValueAnimator animation) {
                     Integer value = (Integer) animation.getAnimatedValue();
-                    tvArray[id-1].getLayoutParams().height = value.intValue();
-                    tvArray[id-1].requestLayout();
+                    tvArray[id - 1].getLayoutParams().height = value.intValue();
+                    tvArray[id - 1].requestLayout();
                 }
             });
             va.start();
-            isCollapsed[id-1] = false;
+            isCollapsed[id - 1] = false;
         }
-
-
 
 
     }
