@@ -10,7 +10,7 @@ import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
+import java.util.Calendar;
 
 /**
  * Created by zacha_000 on 2018-02-21.
@@ -20,6 +20,19 @@ import android.widget.Toast;
 public class bootReceiver extends BroadcastReceiver {
     Context mContext;
     String TAG = "bootReceiver";
+
+    // Date to store time for alarms
+    Calendar mCalendar;
+
+    // Create variable to store repeat time
+    long mRepeatTime;
+
+    // Create time variables in milliseconds
+    private static final long milMinute = 60000L;
+    private static final long milHour = 3600000L;
+    private static final long milDay = 86400000L;
+    private static final long milWeek = 604800000L;
+    private static final long milMonth = 2592000000L;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -37,6 +50,12 @@ public class bootReceiver extends BroadcastReceiver {
 
         //Reset welcomeAlarm
         begin_notifications(1, mContext.getString(R.string.welcomeNotificationTitle), mContext.getString(R.string.welcomeNotificationDescrip), determineNextTime(), 5* 60 * 1000, "true");
+
+        // Initilize calendar
+        mCalendar = Calendar.getInstance();
+
+        // Restore set reminders
+        restoreReminder();
     }
 
     // Build notification
@@ -70,7 +89,7 @@ public class bootReceiver extends BroadcastReceiver {
     }
 
     // Set alarm
-    public boolean begin_notifications(int ID, String notificationTitle, String notificationDesp, long alarmTime, long repeatTime, String mActive) {
+    public void begin_notifications(int ID, String notificationTitle, String notificationDesp, long alarmTime, long repeatTime, String mActive) {
         // Create Notificiton
         Notification notification = sendNotification(notificationTitle, notificationDesp, mActive);
         Intent myIntent = new Intent(mContext, AlarmReceiver.class);
@@ -85,12 +104,79 @@ public class bootReceiver extends BroadcastReceiver {
         } else {
             manager.setRepeating(AlarmManager.RTC_WAKEUP, alarmTime, repeatTime, resultPendingIntent);
         }
-
-        return true;
     }
 
     public long determineNextTime() {
         return (System.currentTimeMillis() + System.currentTimeMillis() % (5*60*1000));
     }
 
+    // Restore the created reminders
+    public void restoreReminder () {
+
+        // Grab DB and all datapoints
+        ReminderDBHelper handler = new ReminderDBHelper(mContext);
+        Cursor cursor = handler.getAllReminders();
+
+        // Iterate through cursor data and restore set alarms
+
+        // Grab data from cursor
+        // Extra properties from cursor
+        cursor.moveToFirst();
+        try {
+            while (cursor.moveToNext()) {
+                String title = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_TITLE));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_DESCRIPTION));
+                String date = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_DATE));
+                String time = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_TIME));
+                String mRepeat = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_REPEAT));
+                String mRepeatNo = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_REPEATNUM));
+                String mRepeatType = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_REPEATTYPE));
+                String active = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_COLUMN_SOUND));
+                String uniqueID = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_UNIQUE_ID));
+
+                // Get time in milliseconds
+
+                //Grab dash values for index
+                int dash1 = date.indexOf("/");
+                int dash2 = date.indexOf("/", dash1 + 1);
+
+                Log.i("TIME",date);
+                Log.i("TIME",date);
+                Log.i("TIME",date.substring(dash2 + 1));
+                Log.i("TIME",date.substring(dash1 + 1, dash2));
+                Log.i("TIME",date.substring(0, dash1));
+                Log.i("TIME",time.substring(0,2));
+                Log.i("TIME",time.substring(3));
+
+                mCalendar.set(Calendar.YEAR, Integer.valueOf(date.substring(dash2 + 1)));
+                mCalendar.set(Calendar.MONTH, Integer.valueOf(date.substring(dash1 +1, dash2)) - 1); //-1 b/c one month behind
+                mCalendar.set(Calendar.DAY_OF_MONTH, Integer.valueOf(date.substring(0, dash1)));
+                mCalendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(time.substring(0,2)));
+                mCalendar.set(Calendar.MINUTE, Integer.valueOf(time.substring(3)));
+                mCalendar.set(Calendar.SECOND, 0);
+
+                long timeInMs = mCalendar.getTimeInMillis();
+
+                // Check repeat type
+                if (mRepeat.equals("true")) {
+                    if (mRepeatType.equals("Minute")) {
+                        mRepeatTime = Integer.parseInt(mRepeatNo) * milMinute;
+                    } else if (mRepeatType.equals("Hour")) {
+                        mRepeatTime = Integer.parseInt(mRepeatNo) * milHour;
+                    } else if (mRepeatType.equals("Day")) {
+                        mRepeatTime = Integer.parseInt(mRepeatNo) * milDay;
+                    } else if (mRepeatType.equals("Week")) {
+                        mRepeatTime = Integer.parseInt(mRepeatNo) * milWeek;
+                    } else if (mRepeatType.equals("Month")) {
+                        mRepeatTime = Integer.parseInt(mRepeatNo) * milMonth;
+                    }
+                }
+
+                // Pass data to set alarm
+                begin_notifications(Integer.valueOf(uniqueID), title, description, timeInMs, mRepeatTime, active);
+            }
+        } finally {
+            cursor.close();
+        }
+    }
 }

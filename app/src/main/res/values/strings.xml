@@ -104,6 +104,7 @@
     <string name="appChecklist">Appointments set for the week</string>
     <string name="infoChecklsit">Any forms for appointments</string>
     <string name="reflectCheclist">Complete reflection actiivty</string>
+    <string name="refreshDesp">Refresh Checklist</string>
 
     <!-- Self-reflection description -->
     <string name="selfReflection">Reflection and meditation can help to reduce stress and anxiety. It is a great way to see how you are doing and
@@ -122,7 +123,7 @@
 
     <!-- Strings for surveillance exams -->
     <string name="physicalExam">Physical Exam</string>
-    <string name= "PAP">Breast and Pelvic (PAP)</string>
+    <string name= "PAP">Breast and Pelvic</string>
     <string name="bloodPressure">Blood Pressure</string>
     <string name="BMI">BMI (weight)</string>
     <string name="lyphedema">Lyphedema</string>
@@ -131,13 +132,13 @@
     <string name="thyroidDisease">Thyroid Disease</string>
     <string name="diabetes">Diabetes</string>
     <string name="kidneyDisease">Kidney Disease</string>
-    <string name="highCholesterol">High Cholesterol</string>
+    <string name="highCholesterol">Cholesterol</string>
     <string name="celiacDisease">Celiac Disease</string>
     <string name="cardiacExamination">Cardiac Examination</string>
     <string name="ECG">ECG</string>
     <string name="Echo">Echo</string>
     <string name="CTMRI">CT/MRI if necessary</string>
-    <string name="prophAnti">Antibiotic prophylaxis?</string>
+    <string name="prophAnti">Antibiotic prophylaxis</string>
     <string name="Other">Other</string>
     <string name="vision">Vision</string>
     <string name="hearing">Hearing</string>

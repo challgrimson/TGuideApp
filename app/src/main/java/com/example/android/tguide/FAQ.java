@@ -1,9 +1,6 @@
 package com.example.android.tguide;
 // Code for questions
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,11 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.RelativeLayout;
-import android.widget.GridLayout.LayoutParams;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +29,10 @@ public class FAQ extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    // Set variables
+    TextView tv1, tv2, tv3, tv4, tv5, tv6;
+    Boolean state1, state2, state3, state4, state5, state6;
 
     public FAQ() {
         // Required empty public constructor
@@ -87,58 +84,92 @@ public class FAQ extends Fragment {
         final Button btn5 = (Button) view.findViewById(R.id.button5);
         final Button btn6 = (Button) view.findViewById(R.id.button6);
 
-        final TextView tv1 = (TextView) view.findViewById(R.id.text1);
-        final TextView tv2 = (TextView) view.findViewById(R.id.text2);
-        final TextView tv3 = (TextView) view.findViewById(R.id.text3);
-        final TextView tv4 = (TextView) view.findViewById(R.id.text4);
-        final TextView tv5 = (TextView) view.findViewById(R.id.text5);
-        final TextView tv6 = (TextView) view.findViewById(R.id.text6);
+        tv1 = (TextView) view.findViewById(R.id.text1);
+        tv2 = (TextView) view.findViewById(R.id.text2);
+        tv3 = (TextView) view.findViewById(R.id.text3);
+        tv4 = (TextView) view.findViewById(R.id.text4);
+        tv5 = (TextView) view.findViewById(R.id.text5);
+        tv6 = (TextView) view.findViewById(R.id.text6);
 
-        final LinearLayout LL = view.findViewById(R.id.LL);
-        final Button[] btnArray = {btn1, btn2, btn3, btn4, btn5, btn6};
-        final TextView[] tvArray = {tv1, tv2, tv3, tv4, tv5, tv6};
+        state1 = false;
+        state2 = false;
+        state3 = false;
+        state4 = false;
+        state5 = false;
+        state6 = false;
 
         btn1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if (state1) {
+                    tv1.setVisibility(View.GONE);
+                    state1 = false;
+                } else {
+                    tv1.setVisibility(View.VISIBLE);
+                    state1 = true;
+                }
 
-                for (int i = 0; i < btnArray.length - 1; i++)
-                    btnArray[i].setEnabled(false);
-                buttonResponse(1, btnArray, tvArray, LL);
             }
         });
 
         btn2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                for (int i = 0; i < btnArray.length - 1; i++)
-                    btnArray[i].setEnabled(false);
-                buttonResponse(2, btnArray, tvArray, LL);
+                if (state2) {
+                    tv2.setVisibility(View.GONE);
+                    state2 = false;
+                } else {
+                    tv2.setVisibility(View.VISIBLE);
+                    state2 = true;
+                }
+
             }
         });
 
         btn3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                for (int i = 0; i < btnArray.length - 1; i++)
-                    btnArray[i].setEnabled(false);
-                buttonResponse(3, btnArray, tvArray, LL);
+                if (state3) {
+                    tv3.setVisibility(View.GONE);
+                    state3 = false;
+                } else {
+                    tv3.setVisibility(View.VISIBLE);
+                    state3 = true;
+                }
+
             }
         });
         btn4.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                for (int i = 0; i < btnArray.length - 1; i++)
-                    btnArray[i].setEnabled(false);
-                buttonResponse(4, btnArray, tvArray, LL);
+                if (state4) {
+                    tv4.setVisibility(View.GONE);
+                    state4 = false;
+                } else {
+                    tv4.setVisibility(View.VISIBLE);
+                    state4 = true;
+                }
+
             }
         });
         btn5.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                for (int i = 0; i < btnArray.length - 1; i++)
-                    btnArray[i].setEnabled(false);
-                buttonResponse(5, btnArray, tvArray, LL);
+                if (state5) {
+                    tv5.setVisibility(View.GONE);
+                    state5 = false;
+                } else {
+                    tv5.setVisibility(View.VISIBLE);
+                    state5 = true;
+                }
+
             }
         });
         btn6.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                buttonResponse(6, btnArray, tvArray, LL);
+                if (state6) {
+                    tv6.setVisibility(View.GONE);
+                    state6 = false;
+                } else {
+                    tv6.setVisibility(View.VISIBLE);
+                    state6 = true;
+                }
+
             }
         });
 
@@ -146,88 +177,6 @@ public class FAQ extends Fragment {
         return view;
     }
 
-    boolean[] posFlag = {false, false, false, false, false, false};
-    boolean[] isCollapsed = {false, false, false, false, false, false};
-    int[] btnPosC = {0,0,0,0,0,0};
-    public void buttonResponse(final int id, final Button[] btnArray, final TextView[] tvArray, View view) {
-       // final ScrollView myScrollView = view.findViewById(R.id.SV);
-            int trans;
-        //myScrollView.setLayoutParams(new ViewGroup.LayoutParams(480, 8000));
-        // myScrollView.setLayoutParams(new RelativeLayout.LayoutParams(
-        // LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        for (int i = id; i < btnArray.length; i++) {
-            if (posFlag[id-1] == true) {
-                btnPosC[i] -= 468;
-               // view.getLayoutParams().height -=468;
-            } else {
-                btnPosC[i] += 468;
-               // view.getLayoutParams().height +=468;
-            }
-            ObjectAnimator animX = ObjectAnimator.ofFloat(btnArray[i], "translationY",  btnPosC[i]).setDuration(300);
-            ObjectAnimator animXT = ObjectAnimator.ofFloat(tvArray[i], "translationY",  btnPosC[i]).setDuration(300);
-            animX.start();
-            animXT.start();
-
-           animX.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    for (int i = 0; i < btnArray.length - 1; i++)
-                        btnArray[i].setEnabled(true);
-
-                    //myScrollView.removeAllViews();
-                    //myScrollView.addView(view);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-                }
-            });
-        }
-
-
-       if (posFlag[id-1] == false) {
-           posFlag[id-1] = true;
-       } else {
-            posFlag[id-1] = false;
-       }
-
-        if (!isCollapsed[id - 1]) {
-            ValueAnimator va = ValueAnimator.ofInt(0, 432);
-            va.setDuration(300);
-            va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    Integer value = (Integer) animation.getAnimatedValue();
-                    tvArray[id - 1].getLayoutParams().height = value.intValue();
-                    tvArray[id - 1].requestLayout();
-                }
-            });
-            va.start();
-            isCollapsed[id - 1] = true;
-        } else {
-            ValueAnimator va = ValueAnimator.ofInt(432, 0);
-            va.setDuration(300);
-            va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    Integer value = (Integer) animation.getAnimatedValue();
-                    tvArray[id - 1].getLayoutParams().height = value.intValue();
-                    tvArray[id - 1].requestLayout();
-                }
-            });
-            va.start();
-            isCollapsed[id - 1] = false;
-        }
-
-
-    }
 
     @Override
     public void onAttach(Context context) {

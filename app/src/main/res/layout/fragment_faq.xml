@@ -1,19 +1,16 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LL"
+    android:id="@+id/SV"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context="com.example.android.tguide.FAQ">
-    <!-- TODO: Update blank fragment layout -->
-    <ScrollView
-        android:id="@+id/SV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/LL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/button1"
@@ -26,11 +23,20 @@
             android:text="@string/button1Title"
             android:textColor="@color/mdtp_white"/>
 
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:text="@string/button1Text"
+            android:visibility="gone"/>
+
         <Button
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/button1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
@@ -38,11 +44,20 @@
             android:text="@string/button2Title"
             android:textColor="@color/mdtp_white"/>
 
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:text="@string/button2Text"
+            android:visibility="gone"/>
+
         <Button
             android:id="@+id/button3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/button2"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
@@ -50,11 +65,20 @@
             android:text="@string/button3Title"
             android:textColor="@color/mdtp_white"/>
 
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:text="@string/button3Text"
+            android:visibility="gone"/>
+
         <Button
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/button3"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
@@ -62,11 +86,20 @@
             android:text="@string/button4Title"
             android:textColor="@color/mdtp_white"/>
 
+        <TextView
+            android:id="@+id/text4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:text="@string/button4Text"
+            android:visibility="gone"/>
+
         <Button
             android:id="@+id/button5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/button4"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
@@ -74,11 +107,20 @@
             android:text="@string/button5Title"
             android:textColor="@color/mdtp_white"/>
 
+        <TextView
+            android:id="@+id/text5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:text="@string/button5Text"
+            android:visibility="gone"/>
+
         <Button
             android:id="@+id/button6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/button5"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
@@ -87,77 +129,13 @@
             android:textColor="@color/mdtp_white"/>
 
         <TextView
-            android:id="@+id/text1"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/button1"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border"
-            android:gravity="center"
-            android:text="@string/button1Text"
-            android:layout_alignStart="@+id/button2"
-            android:layout_alignEnd="@+id/button2"/>
-
-        <TextView
-            android:id="@+id/text2"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/button2"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border"
-            android:gravity="center"
-            android:text="@string/button2Text"
-            android:layout_alignStart="@+id/button3"
-            android:layout_alignEnd="@+id/button3"/>
-
-        <TextView
-            android:id="@+id/text3"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/button3"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border"
-            android:gravity="center"
-            android:text="@string/button3Text"
-            android:layout_alignStart="@+id/button3"
-            android:layout_alignEnd="@+id/button3"/>
-
-        <TextView
-            android:id="@+id/text4"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/button4"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border"
-            android:gravity="center"
-            android:text="@string/button4Text"
-            android:layout_alignStart="@+id/button3"
-            android:layout_alignEnd="@+id/button3"/>
-
-        <TextView
-            android:id="@+id/text5"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/button5"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border"
-            android:gravity="center"
-            android:text="@string/button5Text"
-            android:layout_alignStart="@+id/button3"
-            android:layout_alignEnd="@+id/button3"/>
-
-        <TextView
             android:id="@+id/text6"
             android:layout_width="match_parent"
-            android:layout_below="@+id/button6"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@drawable/border"
             android:gravity="center"
             android:text="@string/button6Text"
-            android:layout_alignStart="@+id/button3"
-            android:layout_alignEnd="@+id/button3"/>
-    </RelativeLayout>
-    </ScrollView>
-
-</LinearLayout>
+            android:visibility="gone"/>
+    </LinearLayout>
+</ScrollView>

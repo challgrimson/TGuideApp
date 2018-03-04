@@ -30,5 +30,4 @@
         <item name="android:textColor">@android:color/holo_green_dark</item>
         <item name="android:textSize">15sp</item>
     </style>
-
 </resources>

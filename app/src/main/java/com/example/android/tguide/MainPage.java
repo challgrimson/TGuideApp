@@ -81,7 +81,7 @@ public class MainPage extends Fragment {
         }
 
         // Update notepad based on saved data
-        editText =  (EditText) view.findViewById(R.id.notepad);
+        editText =  view.findViewById(R.id.notepad);
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         notepad_txt = sharedPref.getString("notepad","");
         editText.setText(notepad_txt);

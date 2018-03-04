@@ -4,6 +4,8 @@
     android:layout_height="wrap_content"
     android:fillViewport="true"
     tools:context="com.example.android.tguide.SurveillenceTimes">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,8 +55,9 @@
                 android:id="@+id/PAPtext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
-                android:gravity="center_vertical"/>
+                android:layout_weight="0.95"
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- Blood Pressure -->
@@ -91,9 +94,10 @@
                 android:id="@+id/bloodPressuretext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- BMI -->
@@ -130,9 +134,10 @@
                 android:id="@+id/BMItext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- Lymphedema -->
@@ -169,9 +174,10 @@
                 android:id="@+id/lymphedemaText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- Mole Assessment -->
@@ -208,9 +214,10 @@
                 android:id="@+id/moleAssesstext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- SCREENING BLOOD WORK -->
@@ -258,9 +265,10 @@
                 android:id="@+id/thyroidDiseasetext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- Diabetes -->
@@ -297,9 +305,10 @@
                 android:id="@+id/diabetestext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- Kidney Disease -->
@@ -336,9 +345,10 @@
                 android:id="@+id/kidneyDiseasetext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- High Cholesterol -->
@@ -375,9 +385,10 @@
                 android:id="@+id/highCholesteroltext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- Celiac Disease -->
@@ -414,9 +425,10 @@
                 android:id="@+id/celiacDiseasetext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- CARDIAC EVALUATION -->
@@ -464,9 +476,10 @@
                 android:id="@+id/ECGtext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- ECHO -->
@@ -503,9 +516,10 @@
                 android:id="@+id/Echotext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- CT/MRI -->
@@ -542,9 +556,10 @@
                 android:id="@+id/CTMRItext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- Prophylaxis Need -->
@@ -581,9 +596,10 @@
                 android:id="@+id/prophylaxisAntitext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- OTHER -->
@@ -631,9 +647,10 @@
                 android:id="@+id/visiontext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- Hearing -->
@@ -670,9 +687,10 @@
                 android:id="@+id/hearingtext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- Bone Density -->
@@ -709,9 +727,10 @@
                 android:id="@+id/boneDensitytext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1.0"
+                android:layout_weight="0.95"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
         </LinearLayout>
 
     </LinearLayout>

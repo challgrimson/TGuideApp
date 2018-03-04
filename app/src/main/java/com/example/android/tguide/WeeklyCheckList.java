@@ -1,13 +1,18 @@
 package com.example.android.tguide;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 
 /**
@@ -35,7 +40,6 @@ public class WeeklyCheckList extends Fragment {
     CheckBox box2;
     CheckBox box3;
     CheckBox box4;
-    ImageButton refresh;
 
     public WeeklyCheckList() {
         // Required empty public constructor
@@ -80,22 +84,26 @@ public class WeeklyCheckList extends Fragment {
         }
 
         // Grab views
-        box1 = (CheckBox) view.findViewById(R.id.checkBox1);
-        box2 = (CheckBox) view.findViewById(R.id.checkBox2);
-        box3 = (CheckBox) view.findViewById(R.id.checkBox3);
-        box4 = (CheckBox) view.findViewById(R.id.checkBox4);
-        refresh = (ImageButton) view.findViewById(R.id.refreshChecklist);
+        box1 = view.findViewById(R.id.checkBox1);
+        box2 = view.findViewById(R.id.checkBox2);
+        box3 = view.findViewById(R.id.checkBox3);
+        box4 = view.findViewById(R.id.checkBox4);
 
-        // If touch refresh, uncheck all checkBoxes
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                box1.setChecked(false);
-                box2.setChecked(false);
-                box3.setChecked(false);
-                box4.setChecked(false);
-            }
-        });
+        // To change menu
+        setHasOptionsMenu(true);
+
+        // Save current state of checked items
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        Boolean state1 = sharedPref.getBoolean("box1",false);
+        Boolean state2 = sharedPref.getBoolean("box2",false);
+        Boolean state3 = sharedPref.getBoolean("box3",false);
+        Boolean state4 = sharedPref.getBoolean("box4",false);
+
+        box1.setChecked(state1);
+        box2.setChecked(state2);
+        box3.setChecked(state3);
+        box4.setChecked(state4);
 
         return view;
     }
@@ -115,6 +123,47 @@ public class WeeklyCheckList extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu options from the res/menu/menu_editor.xml file.
+        // This adds menu items to the app bar.
+        menu.clear();
+        inflater.inflate(R.menu.checklistmenu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    // If select refresh button then refresh list
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        box1.setChecked(false);
+        box2.setChecked(false);
+        box3.setChecked(false);
+        box4.setChecked(false);
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Save data on pause
+    @Override
+    public void onPause(){
+        super.onPause();
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        Boolean state1 = box1.isChecked();
+        Boolean state2 = box2.isChecked();
+        Boolean state3 = box3.isChecked();
+        Boolean state4 = box4.isChecked();
+
+        editor.putBoolean("box1",state1);
+        editor.putBoolean("box2",state2);
+        editor.putBoolean("box3",state3);
+        editor.putBoolean("box4",state4);
+
+        editor.apply();
     }
 
     /**
