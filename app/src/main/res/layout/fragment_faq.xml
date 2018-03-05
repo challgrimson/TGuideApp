@@ -20,16 +20,20 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="#a281c7"
+            android:drawableRight="@android:drawable/arrow_down_float"
+            android:gravity="left|center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:text="@string/button1Title"
-            android:textColor="@color/mdtp_white"/>
+            android:textColor="@color/mdtp_white" />
 
         <TextView
             android:id="@+id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
             android:background="@drawable/border"
-            android:gravity="center"
             android:text="@string/button1Text"
             android:visibility="gone"/>
 
@@ -133,6 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/border"
             android:gravity="center"
             android:text="@string/button6Text"

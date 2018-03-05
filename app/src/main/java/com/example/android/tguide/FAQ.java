@@ -2,8 +2,11 @@ package com.example.android.tguide;
 // Code for questions
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,7 @@ public class FAQ extends Fragment {
     // Set variables
     TextView tv1, tv2, tv3, tv4, tv5, tv6;
     Boolean state1, state2, state3, state4, state5, state6;
+    Drawable drawdown, drawup;
 
     public FAQ() {
         // Required empty public constructor
@@ -103,9 +107,11 @@ public class FAQ extends Fragment {
                 if (state1) {
                     tv1.setVisibility(View.GONE);
                     state1 = false;
+                    btn1.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.arrow_down_float, 0);
                 } else {
                     tv1.setVisibility(View.VISIBLE);
                     state1 = true;
+                    btn1.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.arrow_up_float, 0);
                 }
 
             }

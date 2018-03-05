@@ -9,18 +9,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
 
         <!-- PHYSICAL EXAM TIMES -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
             android:paddingStart="10dp"
             android:text="@string/physicalExam"
-            android:textColor="@color/colorTint"
+            android:textColor="@color/colorAccent"
             android:textSize="17sp"
             android:textStyle="bold" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#afafaf"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
         <!-- PAP -->
         <LinearLayout
@@ -33,9 +42,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/PAP"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -48,7 +55,7 @@
                 android:layout_weight="0.9"
                 android:paddingLeft="10dp"
                 android:textStyle="italic"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical" />
 
             <TextView
                 style="@style/overdueText"
@@ -57,7 +64,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.95"
                 android:gravity="center_vertical"
-                android:paddingEnd="5dp"/>
+                android:paddingEnd="5dp" />
         </LinearLayout>
 
         <!-- Blood Pressure -->
@@ -71,9 +78,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/bloodPressure"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -87,7 +92,7 @@
                 android:textSize="15sp"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
-                android:textStyle="italic"/>
+                android:textStyle="italic" />
 
             <TextView
                 style="@style/overdueText"
@@ -97,7 +102,7 @@
                 android:layout_weight="0.95"
                 android:textSize="15sp"
                 android:gravity="center_vertical"
-                android:paddingEnd="5dp"/>
+                android:paddingEnd="5dp" />
         </LinearLayout>
 
         <!-- BMI -->
@@ -111,9 +116,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/BMI"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -127,7 +130,7 @@
                 android:textSize="15sp"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
-                android:textStyle="italic"/>
+                android:textStyle="italic" />
 
             <TextView
                 style="@style/overdueText"
@@ -137,7 +140,7 @@
                 android:layout_weight="0.95"
                 android:textSize="15sp"
                 android:gravity="center_vertical"
-                android:paddingEnd="5dp"/>
+                android:paddingEnd="5dp" />
         </LinearLayout>
 
         <!-- Lymphedema -->
@@ -151,9 +154,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/lyphedema"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -191,9 +192,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/moleAssessment"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -220,16 +219,33 @@
                 android:paddingEnd="5dp"/>
         </LinearLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#afafaf"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
         <!-- SCREENING BLOOD WORK -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
             android:paddingStart="10dp"
             android:text="@string/screeningWork"
-            android:textColor="@color/colorTint"
+            android:textColor="@color/colorAccent"
             android:textSize="17sp"
             android:textStyle="bold" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#afafaf"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
         <!-- Thyroid Disease -->
         <LinearLayout
@@ -242,9 +258,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/thyroidDisease"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -282,9 +296,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/diabetes"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -322,9 +334,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/kidneyDisease"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -362,9 +372,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/highCholesterol"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -402,9 +410,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/celiacDisease"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -431,16 +437,33 @@
                 android:paddingEnd="5dp"/>
         </LinearLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#afafaf"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
         <!-- CARDIAC EVALUATION -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
             android:paddingStart="10dp"
             android:text="@string/cardiacExamination"
-            android:textColor="@color/colorTint"
+            android:textColor="@color/colorAccent"
             android:textSize="17sp"
             android:textStyle="bold" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#afafaf"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
         <!-- ECG -->
         <LinearLayout
@@ -453,9 +476,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/ECG"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -493,9 +514,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/Echo"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -533,9 +552,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/CTMRI"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -573,9 +590,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/prophAnti"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -602,16 +617,33 @@
                 android:paddingEnd="5dp"/>
         </LinearLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#afafaf"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
+
         <!-- OTHER -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
             android:paddingStart="10dp"
             android:text="@string/Other"
-            android:textColor="@color/colorTint"
+            android:textColor="@color/colorAccent"
             android:textSize="17sp"
             android:textStyle="bold" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#afafaf"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 
         <!-- Vision -->
         <LinearLayout
@@ -624,9 +656,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/vision"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -664,9 +694,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/hearing"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -699,14 +727,13 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_weight="2.7"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple"
                 android:text="@string/boneDensity"
-                android:textColor="@color/mdtp_white"
                 android:textSize="15sp"
                 android:layout_weight="0.7"
                 android:paddingLeft="10dp"
@@ -730,7 +757,8 @@
                 android:layout_weight="0.95"
                 android:textSize="15sp"
                 android:gravity="center_vertical"
-                android:paddingEnd="5dp"/>
+                android:paddingEnd="5dp"
+                android:layout_marginBottom="10dp"/>
         </LinearLayout>
 
     </LinearLayout>
