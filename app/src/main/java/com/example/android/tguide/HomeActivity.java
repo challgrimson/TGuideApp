@@ -336,6 +336,6 @@ public class HomeActivity extends AppCompatActivity
     public void welcomeAlarm () {
         // Creat alarm: SET FOR 5 MINUTS
         Log.i("Alarm","Creating welcome alarm;");
-        begin_notifications(1, getString(R.string.welcomeNotificationTitle), getString(R.string.welcomeNotificationDescrip), System.currentTimeMillis() + 5 * 60 * 1000, 5 * 60 * 1000, "true");
+        begin_notifications(1, getString(R.string.welcomeNotificationTitle), getString(R.string.welcomeNotificationDescrip), System.currentTimeMillis() + 60 * 1000, 5 * 60 * 1000, "true");
     }
 }

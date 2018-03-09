@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/surveillance_menu"
-        android:icon="@android:drawable/ic_menu_info_details"
+        android:icon="@android:drawable/ic_dialog_info"
         android:title="@string/surveillance_infoTitle"
         app:showAsAction="ifRoom" />
 

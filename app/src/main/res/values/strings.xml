@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/tools">
     <string name="app_name">TGuide</string>
     <string name="turnersyndromesocietyofcanada">Turner Syndrome Society of Canada</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -155,4 +155,28 @@
     appointment. \n\nYou can download a PDF version of the table below. </string>
     <string name="surveillance_tableDownload">View Table</string>
     <string name="dialog_close">Close</string>
+
+    <!-- String for emergency aortic dissection card -->
+    <string name="emergencyTitle">I have Turner Syndrome and I am at risk of Aortic Dissection. I have;</string>
+    <string name="emergencyItem1">Bicupsid Aortic Valve</string>
+    <string name="emergencyItem2">Hx of Aortic Coarctation</string>
+    <string name="emergencyItem3">High Blood Pressure</string>
+    <string name="checkedBAV">To check bicupsid aortic valve please type in;</string>
+    <string name="checkedAC">To check aortic coarctation please type in;</string>
+    <string name="checkedHP">To check high blood pressure please type in;</string>
+    <string name="emergConfirm">Confirm</string>
+    <string name="emergCancel">Cancel</string>
+    <string name="symptomsbutton">Show Symptoms</string>
+    <string name="symbuttonmessage">- Sudden severe chest or upper back bain
+        \n- Shortness of breath, difficult speaking
+        \n- Dizzy, weak, sweaty, anxious, pale
+        \n- Fast pulse</string>
+    <string name="symptombuttonexit">Close</string>
+    <string name="incorrectconfirmtion">Input Incorrect</string>
+    <string name="cardinfo">Females with Turner Syndrome have an increased likelihood of an
+    aortic dissection which can be life threatening due to these items. If you suspect the aortic
+    dissection symptoms then present to the emergency department immediately and present this card
+    to help them guide your treatment. It is also best to keep a physical, paper card with this
+    information on you too.</string>
+    <string name="cardinfocontentdesp">Information about this card.</string>
 </resources>

@@ -21,6 +21,8 @@
         android:background="@color/colorTint"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_home"
+        app:itemIconTint="@color/common_google_signin_btn_text_dark_focused"
+        app:itemTextColor="@color/common_google_signin_btn_text_dark_focused"
         app:menu="@menu/activity_home_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

@@ -10,30 +10,36 @@
         android:id="@+id/LL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/faqbackground">
 
         <Button
-            android:id="@+id/button1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="#a281c7"
-            android:drawableRight="@android:drawable/arrow_down_float"
-            android:gravity="left|center_vertical"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/button1Title"
-            android:textColor="@color/mdtp_white" />
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#a281c7"
+        android:drawableRight="@android:drawable/arrow_down_float"
+        android:gravity="left|center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/button1Title"
+        android:textColor="@color/mdtp_white" />
 
         <TextView
             android:id="@+id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="0dp"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/border"
+            android:layout_marginRight="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@color/colorWhite"
             android:text="@string/button1Text"
             android:visibility="gone"/>
 
@@ -45,16 +51,25 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="#a281c7"
+            android:drawableRight="@android:drawable/arrow_down_float"
+            android:gravity="left|center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:text="@string/button2Title"
-            android:textColor="@color/mdtp_white"/>
+            android:textColor="@color/mdtp_white" />
 
         <TextView
             android:id="@+id/text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border"
-            android:gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@color/colorWhite"
             android:text="@string/button2Text"
             android:visibility="gone"/>
 
@@ -66,16 +81,25 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="#a281c7"
+            android:drawableRight="@android:drawable/arrow_down_float"
+            android:gravity="left|center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:text="@string/button3Title"
-            android:textColor="@color/mdtp_white"/>
+            android:textColor="@color/mdtp_white" />
 
         <TextView
             android:id="@+id/text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border"
-            android:gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@color/colorWhite"
             android:text="@string/button3Text"
             android:visibility="gone"/>
 
@@ -87,16 +111,25 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="#a281c7"
+            android:drawableRight="@android:drawable/arrow_down_float"
+            android:gravity="left|center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:text="@string/button4Title"
-            android:textColor="@color/mdtp_white"/>
+            android:textColor="@color/mdtp_white" />
 
         <TextView
             android:id="@+id/text4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border"
-            android:gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@color/colorWhite"
             android:text="@string/button4Text"
             android:visibility="gone"/>
 
@@ -108,16 +141,25 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="#a281c7"
+            android:drawableRight="@android:drawable/arrow_down_float"
+            android:gravity="left|center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:text="@string/button5Title"
-            android:textColor="@color/mdtp_white"/>
+            android:textColor="@color/mdtp_white" />
 
         <TextView
             android:id="@+id/text5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border"
-            android:gravity="center"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@color/colorWhite"
             android:text="@string/button5Text"
             android:visibility="gone"/>
 
@@ -129,18 +171,28 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:background="#a281c7"
+            android:drawableRight="@android:drawable/arrow_down_float"
+            android:gravity="left|center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:text="@string/button6Title"
-            android:textColor="@color/mdtp_white"/>
+            android:textColor="@color/mdtp_white" />
 
         <TextView
             android:id="@+id/text6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="0dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/border"
-            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@color/colorWhite"
             android:text="@string/button6Text"
             android:visibility="gone"/>
+
     </LinearLayout>
 </ScrollView>

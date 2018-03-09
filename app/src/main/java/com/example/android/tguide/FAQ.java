@@ -122,9 +122,11 @@ public class FAQ extends Fragment {
                 if (state2) {
                     tv2.setVisibility(View.GONE);
                     state2 = false;
+                    btn2.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.arrow_down_float, 0);
                 } else {
                     tv2.setVisibility(View.VISIBLE);
                     state2 = true;
+                    btn2.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.arrow_up_float, 0);
                 }
 
             }
@@ -135,9 +137,11 @@ public class FAQ extends Fragment {
                 if (state3) {
                     tv3.setVisibility(View.GONE);
                     state3 = false;
+                    btn3.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.arrow_down_float, 0);
                 } else {
                     tv3.setVisibility(View.VISIBLE);
                     state3 = true;
+                    btn3.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.arrow_down_float, 0);
                 }
 
             }
@@ -147,9 +151,11 @@ public class FAQ extends Fragment {
                 if (state4) {
                     tv4.setVisibility(View.GONE);
                     state4 = false;
+                    btn4.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.arrow_down_float, 0);
                 } else {
                     tv4.setVisibility(View.VISIBLE);
                     state4 = true;
+                    btn4.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.arrow_down_float, 0);
                 }
 
             }
@@ -159,9 +165,11 @@ public class FAQ extends Fragment {
                 if (state5) {
                     tv5.setVisibility(View.GONE);
                     state5 = false;
+                    btn5.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.arrow_down_float, 0);
                 } else {
                     tv5.setVisibility(View.VISIBLE);
                     state5 = true;
+                    btn5.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.arrow_down_float, 0);
                 }
 
             }
@@ -171,14 +179,15 @@ public class FAQ extends Fragment {
                 if (state6) {
                     tv6.setVisibility(View.GONE);
                     state6 = false;
+                    btn6.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.arrow_down_float, 0);
                 } else {
                     tv6.setVisibility(View.VISIBLE);
                     state6 = true;
+                    btn6.setCompoundDrawablesWithIntrinsicBounds(0, 0, android.R.drawable.arrow_down_float, 0);
                 }
 
             }
         });
-
 
         return view;
     }

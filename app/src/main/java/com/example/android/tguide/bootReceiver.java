@@ -49,7 +49,7 @@ public class bootReceiver extends BroadcastReceiver {
         //Log.i(TAG, time);
 
         //Reset welcomeAlarm
-        begin_notifications(1, mContext.getString(R.string.welcomeNotificationTitle), mContext.getString(R.string.welcomeNotificationDescrip), determineNextTime(), 5* 60 * 1000, "true");
+        begin_notifications(1, mContext.getString(R.string.welcomeNotificationTitle), mContext.getString(R.string.welcomeNotificationDescrip), determineNextTime(), 60 * 1000, "true");
 
         // Initilize calendar
         mCalendar = Calendar.getInstance();
@@ -140,13 +140,14 @@ public class bootReceiver extends BroadcastReceiver {
                 int dash1 = date.indexOf("/");
                 int dash2 = date.indexOf("/", dash1 + 1);
 
-                Log.i("TIME",date);
-                Log.i("TIME",date);
-                Log.i("TIME",date.substring(dash2 + 1));
-                Log.i("TIME",date.substring(dash1 + 1, dash2));
-                Log.i("TIME",date.substring(0, dash1));
-                Log.i("TIME",time.substring(0,2));
-                Log.i("TIME",time.substring(3));
+                Log.i(TAG, uniqueID);
+                Log.i(TAG,date);
+                Log.i(TAG,date);
+                Log.i(TAG,date.substring(dash2 + 1));
+                Log.i(TAG,date.substring(dash1 + 1, dash2));
+                Log.i(TAG,date.substring(0, dash1));
+                Log.i(TAG,time.substring(0,2));
+                Log.i(TAG,time.substring(3));
 
                 mCalendar.set(Calendar.YEAR, Integer.valueOf(date.substring(dash2 + 1)));
                 mCalendar.set(Calendar.MONTH, Integer.valueOf(date.substring(dash1 +1, dash2)) - 1); //-1 b/c one month behind

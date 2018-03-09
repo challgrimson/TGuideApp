@@ -1,18 +1,30 @@
 package com.example.android.tguide;
 
+import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import static android.R.id.edit;
+import java.util.Random;
 
 
 /**
@@ -31,7 +43,15 @@ public class HomePage extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    ListView list;
+
     private OnFragmentInteractionListener mListener;
+
+    // grab view to to used in setting emergency checklist
+    View checkitem1, checkitem2, checkitem3;
+    TextView checktext1, checktext2, checktext3;
+    CheckBox box1, box2, box3;
+    Button symptomsbut;
 
     public HomePage() {
         // Required empty public constructor
@@ -73,6 +93,132 @@ public class HomePage extends Fragment {
             mListener.onFragmentInteraction("Home");
         }
 
+        // Grab checklist views
+        View checkitem1 = view.findViewById(R.id.item1);
+        View checkitem2 = view.findViewById(R.id.item2);
+        View checkitem3 = view.findViewById(R.id.item3);
+
+        // Grab symptoms
+        symptomsbut = view.findViewById(R.id.sympButton);
+
+        // Grab textViews
+        TextView checkText1 = checkitem1.findViewById(R.id.checktext);
+        TextView checkText2 = checkitem2.findViewById(R.id.checktext);
+        TextView checkText3 = checkitem3.findViewById(R.id.checktext);
+
+        // Set texts
+        checkText1.setText(R.string.emergencyItem1);
+        checkText2.setText(R.string.emergencyItem2);
+        checkText3.setText(R.string.emergencyItem3);
+
+        // Grab check box
+        box1 = checkitem1.findViewById(R.id.checkbox);
+        box2 = checkitem2.findViewById(R.id.checkbox);
+        box3 = checkitem3.findViewById(R.id.checkbox);
+
+        // Save current state of checked items
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        Boolean state1 = sharedPref.getBoolean("emergbox1",false);
+        Boolean state2 = sharedPref.getBoolean("emergbox2",false);
+        Boolean state3 = sharedPref.getBoolean("emergbox3",false);
+
+        box1.setChecked(state1);
+        box2.setChecked(state2);
+        box3.setChecked(state3);
+
+        // Send confirmation before changing
+        box1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    changeConfirmation(getString(R.string.checkedBAV), box1);
+            }
+        });
+
+        box2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeConfirmation(getString(R.string.checkedAC), box2);
+            }
+        });
+
+        box3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeConfirmation(getString(R.string.checkedBAV), box3);
+            }
+        });
+
+        // If clicked show list of symptoms
+        symptomsbut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create alert dialoog showing symptoms
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(R.string.symbuttonmessage);
+                builder.setNeutralButton(R.string.symptombuttonexit, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Dismess on button click
+                        if (dialog != null) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                // Create and show the AlertDialog
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
+        // Grab Image Button
+        ImageButton info = view.findViewById(R.id.cardinfo);
+
+        // Set to explanation when clicked
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Create alert dialoog showing symptoms
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(R.string.cardinfo);
+                builder.setNeutralButton(R.string.symptombuttonexit, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Dismess on button click
+                        if (dialog != null) {
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                // Create and show the AlertDialog
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
+        /*
+        // Grab list view
+        list = view.findViewById(android.R.id.list);
+
+        Log.d("TWITTER","running twitter");
+
+
+        // Initilize Twitter feed
+        TwitterConfig config = new TwitterConfig.Builder(getActivity())
+                .logger(new DefaultLogger(Log.DEBUG))
+                .twitterAuthConfig(new TwitterAuthConfig("DbiYTJs0BCJyK4Q6Q6K7Zjyuz", "nawlqnzP5hoWHIwa4vZ314GTCjhOpnvJvdHrTLY3I7FfWrWMhS"))
+                .debug(true)
+                .build();
+        Twitter.initialize(config);
+        new Thread(() TweetUi.getInstance()).start();
+
+        final UserTimeline userTimeline = new UserTimeline.Builder()
+                .screenName("twitterdev")
+                .build();
+        final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(getActivity())
+                .setTimeline(userTimeline)
+                .build();
+        list.setAdapter(adapter);
+        */
+
         return view;
     }
 
@@ -93,6 +239,24 @@ public class HomePage extends Fragment {
         mListener = null;
     }
 
+    // Save data on pause
+    @Override
+    public void onPause(){
+        super.onPause();
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        Boolean state1 = box1.isChecked();
+        Boolean state2 = box2.isChecked();
+        Boolean state3 = box3.isChecked();
+
+        editor.putBoolean("emergbox1",state1);
+        editor.putBoolean("emergbox2",state2);
+        editor.putBoolean("emergbox3",state3);
+
+        editor.apply();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -106,5 +270,55 @@ public class HomePage extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(String title);
     }
+
+    // To determine if true or false;
+    CheckBox temp;
+
+    public void changeConfirmation(String message, CheckBox box) {
+        final String passcode = randomString();
+        temp = box;
+        // Set confirmation dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(message + " " + passcode);
+
+        // Crete edit text to input value
+        final EditText input = new EditText(getActivity());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        builder.setPositiveButton(R.string.emergConfirm, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+               // Determine if correct
+                if (!input.getText().toString().equals(passcode)){
+                    temp.toggle();
+                    Toast.makeText(getContext(),R.string.incorrectconfirmtion,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.emergCancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                temp.toggle();
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    // Method to generate random string for passcode
+    public String randomString(){
+        String letnum = "abcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder passcode = new StringBuilder();
+        Random rand = new Random();
+
+        while (passcode.length() < 8) {
+            passcode.append(letnum.charAt(rand.nextInt(letnum.length())));
+        }
+
+        return passcode.toString();
+    }
+
 
 }

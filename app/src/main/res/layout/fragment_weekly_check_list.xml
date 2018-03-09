@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.android.tguide.WeeklyCheckList"
-    android:background="@drawable/checkbackground">
+    android:background="@drawable/checkbackground"
+    android:gravity="center">
 
         <!-- Create layouts for list -->
 
@@ -14,7 +15,7 @@
         android:orientation="horizontal"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:weightSum="1"
         android:background="@color/mdtp_white">
