@@ -13,9 +13,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <!-- OverDue theme -->
     <style name="overdueText" parent="@style/TextAppearance.AppCompat">
         <item name="android:text">@string/overdue</item>
@@ -33,7 +33,9 @@
 
     <!-- Create mainpage style -->
     <style name="MainPageCheckBox" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorControlNormal">@color/colorWhite</item>   <!-- normal border color change as you wish -->
-        <item name="colorControlActivated">@android:color/holo_green_light</item> <!-- activated color change as you wish -->
+        <item name="colorControlNormal">@color/colorWhite
+        </item>   <!-- normal border color change as you wish -->
+        <item name="colorControlActivated">@android:color/holo_green_light
+        </item> <!-- activated color change as you wish -->
     </style>
 </resources>

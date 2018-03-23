@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "675327140281",
-    "firebase_url": "https://tguide-4d702.firebaseio.com",
-    "project_id": "tguide-4d702",
-    "storage_bucket": "tguide-4d702.appspot.com"
+    "project_number": "537489919799",
+    "firebase_url": "https://tguide-d15dc.firebaseio.com",
+    "project_id": "tguide-d15dc",
+    "storage_bucket": "tguide-d15dc.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:675327140281:android:0b8890ac1acf18ec",
+        "mobilesdk_app_id": "1:537489919799:android:0b8890ac1acf18ec",
         "android_client_info": {
           "package_name": "com.example.android.tguide"
         }
       },
       "oauth_client": [
         {
-          "client_id": "675327140281-k8degcjs91sdge7t3nb0kidt9n0k5vsm.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.android.tguide",
-            "certificate_hash": "6badd5a476178b3262498677e87d788b18267f46"
-          }
-        },
-        {
-          "client_id": "675327140281-bqk0jo30urlvesu4p9b3i5jtbn1pte9o.apps.googleusercontent.com",
+          "client_id": "537489919799-0g0rns0j6bif4b49lj8fhasviolhpomh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDOe66UymRq1g-hNff2qspYd2N5j07m-TU"
+          "current_key": "AIzaSyAVchKVhVzDcgGlTkU8BJZDsJYUL0auURc"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "675327140281-bqk0jo30urlvesu4p9b3i5jtbn1pte9o.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
