@@ -27,6 +27,8 @@ import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.ListView;
+import android.widget.Toast;
 
 public class HomeActivity extends AppCompatActivity
 
@@ -52,6 +54,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -82,11 +85,8 @@ public class HomeActivity extends AppCompatActivity
         NOTIFICATION_UNIQUE_ID = sharedPref.getInt("uniqueIDValue",1);
 
         // Check if first time opening app: if so then run introduction dialog
-        if (sharedPref.getBoolean("firstTime", true)) {
-            // Set to not first time
-            editor.putBoolean("firstTime",false);
-            editor.apply();
-
+        if (sharedPref.getBoolean("firstvisit", true)) {
+            Log.i("HomeActivity","Start Welcome");
             // Set introduction dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.welcomeDialog);
@@ -112,8 +112,13 @@ public class HomeActivity extends AppCompatActivity
             //Log.i("bootReceiver", String.valueOf(System.currentTimeMillis()) + 10000);
             //ReminderDBHelper handler = new ReminderDBHelper(this);
             //handler.insertAlarmTime(String.valueOf(System.currentTimeMillis()) + 10000);
+
+            // Set to not first time
+            editor.putBoolean("firstvisit",false);
+            editor.apply();
         }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -207,6 +212,9 @@ public class HomeActivity extends AppCompatActivity
         // Set sound for notification
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
+        Intent resultIntent = new Intent(this, HomeActivity.class);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         if (mActive.equals("true")) {
             // Builder Object for notification sound on
             return new Notification.Builder(this)
@@ -214,6 +222,7 @@ public class HomeActivity extends AppCompatActivity
                     .setContentTitle(notificationTitle)
                     .setContentText(notificationDesp)
                     .setSound(soundUri)
+                    .setContentIntent(resultPendingIntent)
                     .build();
         } else {
             // Builder Object for notification sound off
@@ -221,15 +230,9 @@ public class HomeActivity extends AppCompatActivity
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(notificationTitle)
                     .setContentText(notificationDesp)
+                    .setContentIntent(resultPendingIntent)
                     .build();
         }
-
-        // Create intent for this notification
-        //Intent resultIntent = new Intent(this, Reminders.class);
-        //PendingIntent resultPendingIntnt = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        // Add intent to notification builder object
-        //mBuilder.setContentIntent(resultPendingIntnt);
     }
 
     // Create notification
@@ -326,7 +329,7 @@ public class HomeActivity extends AppCompatActivity
         //fragobj.newInstance("true", title, description, date, time, repeat, repeatNu, repeatTy, active, reminderID);
         fragmentTransaction.replace(R.id.mainFrame,fragobj);
         fragmentTransaction.commit();
-    }
+}
 
     public String generateUniqueID() {
         ++NOTIFICATION_UNIQUE_ID;
@@ -338,4 +341,5 @@ public class HomeActivity extends AppCompatActivity
         Log.i("Alarm","Creating welcome alarm;");
         begin_notifications(1, getString(R.string.welcomeNotificationTitle), getString(R.string.welcomeNotificationDescrip), System.currentTimeMillis() + 60 * 1000, 5 * 60 * 1000, "true");
     }
+
 }

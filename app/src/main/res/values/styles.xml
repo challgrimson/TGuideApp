@@ -38,4 +38,9 @@
         <item name="colorControlActivated">@android:color/holo_green_light
         </item> <!-- activated color change as you wish -->
     </style>
+
+    <style name="splashtheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/splashscreengradient</item>
+    </style>
+
 </resources>

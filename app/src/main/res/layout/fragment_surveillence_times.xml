@@ -13,14 +13,31 @@
         android:layout_marginTop="10dp">
 
         <!-- PHYSICAL EXAM TIMES -->
-        <TextView
+        <LinearLayout
+            android:id="@+id/PAP"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="10dp"
-            android:text="@string/physicalExam"
-            android:textColor="@color/colorAccent"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="10dp"
+                android:text="@string/physicalExam"
+                android:textColor="@color/colorAccent"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/PAPtext"
+                style="@style/overdueText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:paddingStart="0dp"
+                android:paddingEnd="5dp"
+                android:layout_marginStart="153dp" />
+        </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
@@ -33,10 +50,9 @@
 
         <!-- PAP -->
         <LinearLayout
-            android:id="@+id/PAP"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_weight="2.6"
+            android:layout_weight="1.28"
             android:orientation="horizontal">
 
             <TextView
@@ -52,19 +68,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/onetwoyears"
-                android:layout_weight="0.9"
+                android:layout_weight="0.58"
                 android:paddingLeft="10dp"
                 android:textStyle="italic"
                 android:gravity="center_vertical" />
-
-            <TextView
-                style="@style/overdueText"
-                android:id="@+id/PAPtext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.95"
-                android:gravity="center_vertical"
-                android:paddingEnd="5dp" />
         </LinearLayout>
 
         <!-- Blood Pressure -->
@@ -72,7 +79,7 @@
             android:id="@+id/bloodPressure"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_weight="2.6"
+            android:layout_weight="1.28"
             android:orientation="horizontal">
 
             <TextView
@@ -88,21 +95,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/yearly"
-                android:layout_weight="0.9"
+                android:layout_weight="0.58"
                 android:textSize="15sp"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
                 android:textStyle="italic" />
-
-            <TextView
-                style="@style/overdueText"
-                android:id="@+id/bloodPressuretext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.95"
-                android:textSize="15sp"
-                android:gravity="center_vertical"
-                android:paddingEnd="5dp" />
         </LinearLayout>
 
         <!-- BMI -->
@@ -110,7 +107,7 @@
             android:id="@+id/BMI"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_weight="2.6"
+            android:layout_weight="1.28"
             android:orientation="horizontal">
 
             <TextView
@@ -126,21 +123,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/yearly"
-                android:layout_weight="0.9"
+                android:layout_weight="0.58"
                 android:textSize="15sp"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
                 android:textStyle="italic" />
-
-            <TextView
-                style="@style/overdueText"
-                android:id="@+id/BMItext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.95"
-                android:textSize="15sp"
-                android:gravity="center_vertical"
-                android:paddingEnd="5dp" />
         </LinearLayout>
 
         <!-- Lymphedema -->
@@ -148,7 +135,7 @@
             android:id="@+id/lymphedema"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_weight="2.6"
+            android:layout_weight="1.28"
             android:orientation="horizontal">
 
             <TextView
@@ -164,21 +151,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/yearly"
-                android:layout_weight="0.9"
+                android:layout_weight="0.58"
                 android:textSize="15sp"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
                 android:textStyle="italic"/>
-
-            <TextView
-                style="@style/overdueText"
-                android:id="@+id/lymphedemaText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.95"
-                android:textSize="15sp"
-                android:gravity="center_vertical"
-                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- Mole Assessment -->
@@ -186,7 +163,7 @@
             android:id="@+id/moleAssess"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_weight="2.6"
+            android:layout_weight="1.28"
             android:orientation="horizontal">
 
             <TextView
@@ -202,21 +179,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/yearly"
-                android:layout_weight="0.9"
+                android:layout_weight="0.58"
                 android:textSize="15sp"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
                 android:textStyle="italic"/>
-
-            <TextView
-                style="@style/overdueText"
-                android:id="@+id/moleAssesstext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.95"
-                android:textSize="15sp"
-                android:gravity="center_vertical"
-                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <View
@@ -229,14 +196,34 @@
             android:layout_marginRight="10dp"/>
 
         <!-- SCREENING BLOOD WORK -->
+    <LinearLayout
+        android:id="@+id/thyroidDisease"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingStart="10dp"
+            android:paddingEnd="0dp"
             android:text="@string/screeningWork"
             android:textColor="@color/colorAccent"
             android:textSize="17sp"
             android:textStyle="bold" />
+
+        <TextView
+            style="@style/overdueText"
+            android:id="@+id/thyroidDiseasetext"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.95"
+            android:textSize="15sp"
+            android:gravity="center_vertical"
+            android:paddingStart="0dp"
+            android:paddingEnd="5dp"
+            android:layout_marginStart="92dp"/>
+    </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
@@ -249,10 +236,9 @@
 
         <!-- Thyroid Disease -->
         <LinearLayout
-            android:id="@+id/thyroidDisease"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_weight="2.6"
+            android:layout_weight="1.28"
             android:orientation="horizontal">
 
             <TextView
@@ -268,21 +254,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/yearly"
-                android:layout_weight="0.9"
+                android:layout_weight="0.58"
                 android:textSize="15sp"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
                 android:textStyle="italic"/>
-
-            <TextView
-                style="@style/overdueText"
-                android:id="@+id/thyroidDiseasetext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.95"
-                android:textSize="15sp"
-                android:gravity="center_vertical"
-                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- Diabetes -->
@@ -290,7 +266,7 @@
             android:id="@+id/diabetes"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_weight="2.7"
+            android:layout_weight="1.28"
             android:orientation="horizontal">
 
             <TextView
@@ -306,21 +282,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/yearly"
-                android:layout_weight="0.9"
+                android:layout_weight="0.58"
                 android:textSize="15sp"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
                 android:textStyle="italic"/>
-
-            <TextView
-                style="@style/overdueText"
-                android:id="@+id/diabetestext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.95"
-                android:textSize="15sp"
-                android:gravity="center_vertical"
-                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- Kidney Disease -->
@@ -328,7 +294,7 @@
             android:id="@+id/kidneyDisease"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_weight="2.7"
+            android:layout_weight="1.28"
             android:orientation="horizontal">
 
             <TextView
@@ -344,21 +310,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/yearly"
-                android:layout_weight="0.9"
+                android:layout_weight="0.58"
                 android:textSize="15sp"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
                 android:textStyle="italic"/>
-
-            <TextView
-                style="@style/overdueText"
-                android:id="@+id/kidneyDiseasetext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.95"
-                android:textSize="15sp"
-                android:gravity="center_vertical"
-                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <!-- High Cholesterol -->
@@ -366,7 +322,7 @@
             android:id="@+id/highCholesterol"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_weight="2.7"
+            android:layout_weight="1.28"
             android:orientation="horizontal">
 
             <TextView
@@ -382,59 +338,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="@string/yearly"
-                android:layout_weight="0.9"
+                android:layout_weight="0.58"
                 android:textSize="15sp"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
                 android:textStyle="italic"/>
-
-            <TextView
-                style="@style/overdueText"
-                android:id="@+id/highCholesteroltext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.95"
-                android:textSize="15sp"
-                android:gravity="center_vertical"
-                android:paddingEnd="5dp"/>
-        </LinearLayout>
-
-        <!-- Celiac Disease -->
-        <LinearLayout
-            android:id="@+id/celiacDisease"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_weight="2.7"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/celiacDisease"
-                android:textSize="15sp"
-                android:layout_weight="0.7"
-                android:paddingLeft="10dp"
-                android:gravity="center_vertical" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/twofiveyears"
-                android:layout_weight="0.9"
-                android:textSize="15sp"
-                android:paddingLeft="10dp"
-                android:gravity="center_vertical"
-                android:textStyle="italic"/>
-
-            <TextView
-                style="@style/overdueText"
-                android:id="@+id/celiacDiseasetext"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.95"
-                android:textSize="15sp"
-                android:gravity="center_vertical"
-                android:paddingEnd="5dp"/>
         </LinearLayout>
 
         <View
@@ -644,6 +552,44 @@
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"/>
+
+        <!-- Celiac Disease -->
+        <LinearLayout
+            android:id="@+id/celiacDisease"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="2.7"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/celiacDisease"
+                android:textSize="15sp"
+                android:layout_weight="0.7"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/twofiveyears"
+                android:layout_weight="0.9"
+                android:textSize="15sp"
+                android:paddingLeft="10dp"
+                android:gravity="center_vertical"
+                android:textStyle="italic"/>
+
+            <TextView
+                style="@style/overdueText"
+                android:id="@+id/celiacDiseasetext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.95"
+                android:textSize="15sp"
+                android:gravity="center_vertical"
+                android:paddingEnd="5dp"/>
+        </LinearLayout>
 
         <!-- Vision -->
         <LinearLayout

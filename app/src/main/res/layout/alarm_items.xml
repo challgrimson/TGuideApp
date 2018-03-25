@@ -12,7 +12,7 @@
         android:layout_height="40dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true" />
 
     <!-- Linear Layout holding distription of actiivty -->
     <LinearLayout
@@ -22,8 +22,8 @@
         android:layout_marginTop="4dp"
         android:padding="4dp"
         android:layout_marginBottom="4dp"
-        android:layout_toRightOf="@+id/reminder_thumbnail_image"
-        android:layout_toLeftOf="@+id/reminder_sound_icon"
+        android:layout_toEndOf="@+id/reminder_thumbnail_image"
+        android:layout_toStartOf="@+id/reminder_sound_icon"
         android:orientation="vertical">
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
-            android:maxLines="1"
+            android:singleLine="true"
             android:text="Date and Time"
             android:textSize="15sp"/>
         <TextView
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
-            android:maxLines="1"
+            android:singleLine="true"
             android:text="Repeat Details"
             android:textSize="15sp"/>
         <TextView
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
-            android:maxLines="1"
+            android:singleLine="true"
             android:text="Description"
             android:textSize="15sp"/>
     </LinearLayout>
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:srcCompat="@android:drawable/ic_lock_silent_mode" />
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:src="@drawable/mute"/>
 </RelativeLayout>

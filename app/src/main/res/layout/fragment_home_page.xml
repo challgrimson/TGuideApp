@@ -4,14 +4,16 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.tguide.HomePage"
     android:orientation="vertical"
-    android:layout_weight="1"
-    android:background="@color/homeBackground">
-    
-    <TextView
+    android:background="@color/homeBackground"
+    android:gravity="center">
+
+    <WebView
+        android:id="@+id/twitterfeed"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:text="TWEET HERE?????"
-        android:gravity="center"/>
+        android:layout_height="240dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,7 +50,7 @@
             android:id="@+id/cardinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:src="@android:drawable/ic_dialog_info"
             android:background="@null"
             android:contentDescription="@string/cardinfocontentdesp"/>
@@ -60,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:background="@color/colorWhite"
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
@@ -68,19 +70,6 @@
         android:textColor="@color/mdtp_date_picker_month_day"
         android:textStyle="bold" />
 
-    <!-- TextView android:id="@id/android:empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="No Tweets"/>
-
-    <ListView android:id="@id/android:list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:divider="#e1e8ed"
-        android:dividerHeight="1dp"
-        android:drawSelectorOnTop="false"/-->
 
     <!--FrameLayout
         android:layout_width="match_parent"

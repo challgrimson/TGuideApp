@@ -115,7 +115,7 @@ public class Reminders extends Fragment {
             }
         });
 
-        // Set Floating Action Button to switch fragment
+        // Set Floating Action Button to switch LOADERfragment
         mAddReminderButton = (FloatingActionButton) view.findViewById(R.id.floatingActionButton2);
 
         mAddReminderButton.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +127,7 @@ public class Reminders extends Fragment {
         });
 
         // Add loader to LoaderManager
-        //LOADER
+        //
         //getLoaderManager().initLoader(VEHICLE_LOADER, null, this);
 
         return view;

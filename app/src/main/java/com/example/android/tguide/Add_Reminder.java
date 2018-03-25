@@ -17,9 +17,13 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +49,7 @@ public class Add_Reminder extends Fragment implements
 
     // Create Values
     private EditText mTitleText;
-    private TextView mDateText, mTimeText, mRepeatText, mRepeatNoText, mRepeatTypeText, mDescription;
+    private TextView mDateText, mTimeText, mRepeatText, mDescription;
     private FloatingActionButton mFAB1;
     private FloatingActionButton mFAB2;
     private Calendar mCalendar;
@@ -81,9 +85,14 @@ public class Add_Reminder extends Fragment implements
     private static final long milDay = 86400000L;
     private static final long milWeek = 604800000L;
     private static final long milMonth = 2592000000L;
+    private static final long milYear = (milMonth *12L);
 
     // For alarm ID
     long alarmID;
+
+    // Set dialog variables
+    EditText dialogText;
+    Spinner dialogSpinner;
 
     // Do something when touched
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
@@ -123,8 +132,6 @@ public class Add_Reminder extends Fragment implements
         mDateText = (TextView) view.findViewById(R.id.reminder_set_date);
         mTimeText = (TextView) view.findViewById(R.id.reminder_time_date);
         mRepeatText = (TextView) view.findViewById(R.id.reminder_repeat_time);
-        mRepeatNoText = (TextView) view.findViewById(R.id.reminder_interval_time);
-        mRepeatTypeText = (TextView) view.findViewById(R.id.reminder_typeRepition_time);
         mRepeatSwitch = (Switch) view.findViewById(R.id.repeat_switch);
         // Floating action button for when sound is off
         mFAB1 = (FloatingActionButton) view.findViewById(R.id.fab_soundOff);
@@ -135,7 +142,7 @@ public class Add_Reminder extends Fragment implements
         mActive = "true";
         mRepeat = "true";
         mRepeatNo = Integer.toString(1);
-        mRepeatType = "Hour";
+        mRepeatType = getString(R.string.repeatDefault);
 
         // Initialize date value so that they first appear as current data
         mCalendar = Calendar.getInstance();
@@ -147,9 +154,15 @@ public class Add_Reminder extends Fragment implements
         // Create the date layout to be displayed
         mDate = mDay + "/" + (mMonth + 1) + "/" + mYear;
         if (mMinute < 10) {
-            mTime = mHour + ":" + "0" + mMinute;
+            mTime = (((mHour - 1) % 12) + 1) + ":" + "0" + mMinute;
         } else {
-            mTime = mHour + ":" + mMinute;
+            mTime = (((mHour - 1) % 12) + 1) + ":" + mMinute;
+        }
+
+        if (mHour >= 12) {
+            mTime = mTime + " " + "PM";
+        } else {
+            mTime = mTime + " " + "AM";
         }
 
         // Setup Reminder Title To Inputted Title Text
@@ -188,9 +201,7 @@ public class Add_Reminder extends Fragment implements
         // Setup TextViews using default reminder values
         mDateText.setText(mDate);
         mTimeText.setText(mTime);
-        mRepeatNoText.setText(mRepeatNo);
-        mRepeatTypeText.setText(mRepeatType);
-        mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType + "(s)");
+        mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType);
 
         // Initilize floating action buttons to sound on
         mFAB1.setVisibility(View.GONE);
@@ -224,7 +235,7 @@ public class Add_Reminder extends Fragment implements
                 // On clicking the repeat switch
                 if (isChecked) {
                         mRepeat = "true";
-                        mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType + "(s)");
+                        mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType);
                 } else {
                         mRepeat = "false";
                         mRepeatText.setText(R.string.reminder_switch_off);
@@ -233,21 +244,12 @@ public class Add_Reminder extends Fragment implements
                 }
         });
 
-        // Give repetition interval layout functionality
-        RelativeLayout intervalRelative = (RelativeLayout) view.findViewById(R.id.reminder_repeat_interval);
-        intervalRelative.setOnClickListener(new View.OnClickListener() {
+        // Give repeat text functionality if click
+        LinearLayout repeatlayout = view.findViewById(R.id.repeat_layout);
+        repeatlayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                setRepeatNo(v);
-            }
-        });
-
-        // Give repetition type layout functionality
-        RelativeLayout typeRelative = (RelativeLayout) view.findViewById(R.id.reminder_type_repitiion);
-        typeRelative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                selectRepeatType(v);
+            public void onClick(View view) {
+                setRepeat(view);
             }
         });
 
@@ -276,9 +278,7 @@ public class Add_Reminder extends Fragment implements
                 uniqueID = getArguments().getString("uniqueID");
                 String isRepeat = getArguments().getString("repeat");
                 if (isRepeat.equals("true")) {
-                    mRepeatText.setText("Every " + getArguments().getString("repeatNu") + " " + getArguments().getString("repeatTy") + "(s)");
-                    mRepeatNoText.setText(getArguments().getString("repeatNu"));
-                    mRepeatTypeText.setText(getArguments().getString("repeatTy"));
+                    mRepeatText.setText("Every " + getArguments().getString("repeatNu") + " " + getArguments().getString("repeatTy"));
                 }else {
                     mRepeatText.setText("Repeat Off");
                     mRepeatSwitch.setChecked(false);
@@ -390,9 +390,15 @@ public class Add_Reminder extends Fragment implements
         mHour = hourOfDay;
         mMinute = minute;
         if (minute < 10) {
-            mTime = hourOfDay + ":" + "0" + minute;
+            mTime = (((hourOfDay - 1) % 12) + 1)  + ":" + "0" + minute;
         } else {
-            mTime = hourOfDay + ":" + minute;
+            mTime = (((hourOfDay - 1) % 12) + 1) + ":" + minute;
+        }
+
+        if (mHour >= 12) {
+            mTime = mTime + " " + "PM";
+        } else {
+            mTime = mTime + " " + "AM";
         }
         mTimeText.setText(mTime);
     }
@@ -412,6 +418,7 @@ public class Add_Reminder extends Fragment implements
     }
 
     // On clicking repeat type button
+    /*
     public void selectRepeatType(View v){
         final String[] items = new String[5];
 
@@ -436,11 +443,69 @@ public class Add_Reminder extends Fragment implements
         AlertDialog alert = builder.create();
         alert.show();
     }
+    */
 
+    // Show alert dialog for repeat
+    public void setRepeat(View view) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+
+        // Get layout inflater
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        // Create view for dialog
+        View dialogView = inflater.inflate(R.layout.repeatdialog, null);
+
+        // Set dialog views
+        dialogText = dialogView.findViewById(R.id.repeatInput);
+        dialogSpinner = dialogView.findViewById(R.id.repeatSpinner);
+
+        // Create spinner adapter
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.repeatInterval, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dialogSpinner.setAdapter(adapter);
+
+        // Add custom layout to dialog
+        alert.setView(dialogView)
+                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        if (dialogText.getText().toString().length() == 0) {
+                            mRepeatNo = Integer.toString(1);
+                        }
+                        else {
+                            mRepeatNo = dialogText.getText().toString().trim();
+                        }
+
+                        mRepeatType = dialogSpinner.getSelectedItem().toString();
+
+                        mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType);
+
+                        if (dialog != null) {
+                            dialog.dismiss();
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // do nothing
+                        if (dialogInterface != null) {
+                            dialogInterface.dismiss();
+                        }
+                    }
+                });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = alert.create();
+
+        alertDialog.show();
+    }
+
+    /*
     // On clicking repeat interval button
     public void setRepeatNo(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-        alert.setTitle("Enter Repition Interval Number");
 
         // Create EditText box to input repeat number
         // MAY CREATE ISSUE
@@ -470,6 +535,7 @@ public class Add_Reminder extends Fragment implements
         });
         alert.show();
     }
+    */
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -608,16 +674,18 @@ public class Add_Reminder extends Fragment implements
 
         // Check repeat type
         if (mRepeat.equals("true")) {
-            if (mRepeatType.equals("Minute")) {
+            if (mRepeatType.equals("Minute(s)")) {
                 mRepeatTime = Integer.parseInt(mRepeatNo) * milMinute;
-            } else if (mRepeatType.equals("Hour")) {
+            } else if (mRepeatType.equals("Hour(s)")) {
                 mRepeatTime = Integer.parseInt(mRepeatNo) * milHour;
-            } else if (mRepeatType.equals("Day")) {
+            } else if (mRepeatType.equals("Day(s)")) {
                 mRepeatTime = Integer.parseInt(mRepeatNo) * milDay;
-            } else if (mRepeatType.equals("Week")) {
+            } else if (mRepeatType.equals("Week(s)")) {
                 mRepeatTime = Integer.parseInt(mRepeatNo) * milWeek;
-            } else if (mRepeatType.equals("Month")) {
+            } else if (mRepeatType.equals("Month(s)")) {
                 mRepeatTime = Integer.parseInt(mRepeatNo) * milMonth;
+            } else if (mRepeatType.equals("Year(s)")) {
+                mRepeatTime = Integer.parseInt(mRepeatNo) * milYear;
             }
         }
 

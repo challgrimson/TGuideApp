@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -23,6 +25,16 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+/*
+import com.twitter.sdk.android.core.DefaultLogger;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterConfig;
+import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
+import com.twitter.sdk.android.tweetui.TweetUi;
+import com.twitter.sdk.android.tweetui.UserTimeline;
+*/
 
 import java.util.Random;
 
@@ -194,21 +206,30 @@ public class HomePage extends Fragment {
             }
         });
 
+
+        //Grab list view
         /*
-        // Grab list view
         list = view.findViewById(android.R.id.list);
 
         Log.d("TWITTER","running twitter");
 
-
+        //mListener.twitterfeed(list);
         // Initilize Twitter feed
+
         TwitterConfig config = new TwitterConfig.Builder(getActivity())
                 .logger(new DefaultLogger(Log.DEBUG))
                 .twitterAuthConfig(new TwitterAuthConfig("DbiYTJs0BCJyK4Q6Q6K7Zjyuz", "nawlqnzP5hoWHIwa4vZ314GTCjhOpnvJvdHrTLY3I7FfWrWMhS"))
                 .debug(true)
                 .build();
         Twitter.initialize(config);
-        new Thread(() TweetUi.getInstance()).start();
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                TweetUi.getInstance();
+            }
+        };
+        thread.start();
 
         final UserTimeline userTimeline = new UserTimeline.Builder()
                 .screenName("twitterdev")
@@ -218,6 +239,18 @@ public class HomePage extends Fragment {
                 .build();
         list.setAdapter(adapter);
         */
+
+        // String data taken from twitter publish
+        // MIGHT HAVE TO CHANGE FOR FRENCH
+        //String data = "<a class=\"twitter-timeline\" href=\"https://twitter.com/TSSCCanada?ref_src=twsrc%5Etfw\">Tweets by TSSCCanada</a> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>";
+        String data = "<a class=\"twitter-timeline\" data-link-color=\"#981CEB\" href=\"https://twitter.com/TSSCCanada?ref_src=twsrc%5Etfw\">Tweets by TSSCCanada</a> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>";
+        WebView webview = view.findViewById(R.id.twitterfeed);
+        webview.setWebViewClient(new WebViewClient());
+        webview.getSettings().setDomStorageEnabled(true);
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.setBackgroundColor(0);
+        //webview.loadUrl("https://twitter.com/TSSCCanada?ref_src=twsrc%5Etfw&ref_url=http%3A%2F%2Fwww.turnersyndrome.ca%2Fabout-turner-syndrome%2F");
+        webview.loadDataWithBaseURL("https://twitter.com",data,"text/html","UTF-8",null);
 
         return view;
     }
@@ -286,19 +319,31 @@ public class HomePage extends Fragment {
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(input);
 
+        // Keep in original position
+        temp.toggle();
+
         builder.setPositiveButton(R.string.emergConfirm, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                // Determine if correct
                 if (!input.getText().toString().equals(passcode)){
-                    temp.toggle();
                     Toast.makeText(getContext(),R.string.incorrectconfirmtion,Toast.LENGTH_SHORT).show();
+                } else {
+                    temp.toggle();
+                }
+
+                // Dismess on button click
+                if (dialog != null) {
+                    dialog.dismiss();
                 }
             }
         });
         builder.setNegativeButton(R.string.emergCancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                temp.toggle();
+                // Dismess on button click
+                if (dialogInterface != null) {
+                    dialogInterface.dismiss();
+                }
             }
         });
 
@@ -319,6 +364,5 @@ public class HomePage extends Fragment {
 
         return passcode.toString();
     }
-
 
 }

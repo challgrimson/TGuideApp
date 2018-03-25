@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 
 // To put in database
@@ -32,8 +33,11 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
     public static final String REMINDER_UNIQUE_ID = "uniqueID";
 
     // Welcome Notification Table
-    public static final String WALARM_TABLE_NAME = "welcomeAlarm";
-    public static final String WALARM_ALARN_DATE = "Alarmtime";
+    public static final String SURV_TABLE_NAME = "surveillance";
+    public static final String SURV_COLUMN_ID = "_sid";
+    public static final String SURV_ALARM_TIME = "surveillanceTime";
+    public static final String SURV_ALARM_ID = "alarmtype";
+    public static final String SURV_UNIQE_ID = "survuniqueid";
 
 
     public ReminderDBHelper(Context context) {
@@ -52,20 +56,22 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
                 REMINDER_COLUMN_REPEATNUM + " TEXT NOT NULL, " +
                 REMINDER_COLUMN_REPEATTYPE + " TEXT NOT NULL, " +
                 REMINDER_COLUMN_SOUND + " TEXT NOT NULL, " +
-                REMINDER_UNIQUE_ID+ " TEXT NOT NULL)"
+                REMINDER_UNIQUE_ID + " TEXT NOT NULL)"
         );
 
-        /*
-        db.execSQL("CREATE TABLE " + WALARM_TABLE_NAME + "(" +
-                WALARM_ALARN_DATE + " TEXT NOT NULL)"
+
+        db.execSQL("CREATE TABLE " + SURV_TABLE_NAME + "(" +
+                SURV_COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                SURV_ALARM_ID + " TEXT NOT NULL, " +
+                SURV_UNIQE_ID + " TEXT NOT NULL, " +
+                SURV_ALARM_TIME + " TEXT NOT NULL)"
         );
-        */
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + REMINDER_TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + WALARM_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SURV_TABLE_NAME);
         onCreate(db);
     }
 
@@ -124,9 +130,55 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
         contentValues.put(REMINDER_COLUMN_SOUND, sound);
 
         // Insert into database
-        db.update(REMINDER_TABLE_NAME, contentValues, REMINDER_COLUMN_ID + " = ? ", new String[] { Integer.toString(reminderID) } );
+        db.update(REMINDER_TABLE_NAME, contentValues, REMINDER_COLUMN_ID + " = ?", new String[] { Integer.toString(reminderID) } );
         return true;
     }
+
+    // Grab all reminders for reseting them in reboot
+    public Cursor fetchAllReminders() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(REMINDER_TABLE_NAME, new String[] {REMINDER_COLUMN_TITLE, REMINDER_COLUMN_DESCRIPTION, REMINDER_COLUMN_DATE,
+            REMINDER_COLUMN_TIME, REMINDER_COLUMN_REPEAT, REMINDER_COLUMN_REPEATNUM, REMINDER_COLUMN_REPEATTYPE, REMINDER_COLUMN_SOUND, REMINDER_UNIQUE_ID},
+                null, null, null, null, null);
+    }
+
+    // Insert Reminder time
+    // Insert Surveillance times into database
+    public void insertSurveillance(String id, String time, String uniqueid) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        if (exists(id)) {
+            contentValues.put(SURV_ALARM_TIME, time);
+            contentValues.put(SURV_UNIQE_ID, uniqueid);
+            // Update existent time
+            db.update(SURV_TABLE_NAME, contentValues, SURV_ALARM_ID + " = ?", new String[] { id } );
+        } else {
+            contentValues.put(SURV_ALARM_ID, id);
+            contentValues.put(SURV_ALARM_TIME, time);
+            contentValues.put(SURV_UNIQE_ID, uniqueid);
+            // Insert into database
+            db.insert(SURV_TABLE_NAME, null, contentValues);}
+    }
+
+    // Check to see if alread inserted
+    public boolean exists(String id) {
+        SQLiteDatabase db = getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + SURV_ALARM_ID + " FROM " + SURV_TABLE_NAME + " WHERE " +
+                        SURV_ALARM_ID + " = ?",
+                new String[] { id });
+        boolean exists = (cursor.getCount() > 0);
+        cursor.close();
+        return exists;
+    }
+
+    // Grab all surveillance times
+    public Cursor fetchsurveillance() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(SURV_TABLE_NAME, new String[] {SURV_ALARM_ID, SURV_ALARM_TIME, SURV_UNIQE_ID},
+                null, null, null, null, null);
+    }
+
 
     /*
     // Insert welcome alarm time into database - alarm time in ms

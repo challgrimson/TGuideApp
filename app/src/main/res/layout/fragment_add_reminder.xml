@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,28 +6,21 @@
     tools:context="com.example.android.tguide.Add_Reminder">
 
     <!-- For Title Section -->
-
-    <EditText
-        android:id="@+id/reminder_add_titleText"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:layout_alignParentTop="true"
-        android:hint="@string/reminder_titleText"
-        android:inputType="text"
-        android:maxLines="1"
-        android:textSize="40sp"
-        android:padding="7dp"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true">
 
-    <!-- For handling the Details of the Alarm -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/reminder_add_titleText">
-
-        <LinearLayout
+        <EditText
+            android:id="@+id/reminder_add_titleText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="72dp"
+            android:hint="@string/reminder_titleText"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textSize="40sp"
+            android:paddingStart="10dp" />
 
             <!-- Adding Description -->
             <EditText
@@ -36,28 +29,32 @@
                 android:layout_height="72dp"
                 android:hint="@string/reminder_descripHint"
                 android:background="@android:color/transparent"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:textSize="30sp"/>
 
             <!-- Adding Date -->
             <RelativeLayout
                 android:id="@+id/reminder_date"
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"
+                android:focusable="true"
                 android:clickable="true">
 
                 <ImageView
                     android:id="@+id/add_date_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:src="@android:drawable/ic_menu_month" />
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/calendar" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/add_date_icon"
+                    android:layout_toEndOf="@+id/add_date_icon"
                     android:orientation="vertical">
 
                     <TextView
@@ -65,13 +62,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/reminder_date"
-                        android:textSize="15dp" />
+                        android:textSize="25sp" />
 
                     <TextView
                         android:id="@+id/reminder_set_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp" />
+                        android:textSize="25sp" />
                 </LinearLayout>
 
             </RelativeLayout>
@@ -81,71 +78,80 @@
                 android:id="@+id/reminder_time"
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"
-                android:clickable="true">
+                android:focusable="true"
+                android:clickable="true"
+                android:layout_marginTop="10dp">
 
                 <ImageView
                     android:id="@+id/add_time_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:src="@android:drawable/ic_menu_recent_history" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="22dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:src="@drawable/time" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_toRightOf="@+id/add_time_icon"
+                    android:layout_toEndOf="@+id/add_time_icon"
                     android:layout_centerVertical="true">
 
                     <TextView
                         android:id="@+id/reminder_time_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
+                        android:textSize="25sp"
                         android:text="@string/reminder_time"/>
 
                     <TextView
                         android:id="@+id/reminder_time_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp" />
+                        android:textSize="25sp" />
                </LinearLayout>
             </RelativeLayout>
 
-            <!-- Set Repeat Switch -->
+            <!-- Set Repeat -->
             <RelativeLayout
                 android:id="@+id/reminder_repeat_switch"
                 android:layout_width="match_parent"
-                android:layout_height="72dp">
+                android:layout_height="72dp"
+                android:layout_marginTop="10dp">
 
                 <ImageView
                     android:id="@+id/reminder_repeat_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:src="@android:drawable/ic_popup_sync" />
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="0dp"
+                    android:src="@drawable/repeat" />
 
                 <LinearLayout
+                    android:id="@+id/repeat_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_toRightOf="@+id/reminder_repeat_icon"
+                    android:layout_toEndOf="@+id/reminder_repeat_icon"
                     android:layout_centerVertical="true">
 
                     <TextView
                         android:id="@+id/reminder_repeat_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
+                        android:textSize="25sp"
                         android:text="@string/reminder_repeat_switch"/>
 
                     <TextView
                         android:id="@+id/reminder_repeat_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp" />
+                        android:textSize="25sp" />
                 </LinearLayout>
 
                     <Switch
@@ -153,92 +159,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginLeft="8dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp"
+                        android:layout_toEndOf="@+id/repeat_layout"
                         android:checked="true"
                         android:textOn="@string/reminder_switch_on"
                         android:textOff="@string/reminder_switch_off"/>
             </RelativeLayout>
-
-            <!-- Set Repitiion Interval -->
-            <RelativeLayout
-                android:id="@+id/reminder_repeat_interval"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:clickable="true">
-
-                <ImageView
-                    android:id="@+id/reminder_interval_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:src="@android:drawable/ic_menu_rotate" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/reminder_interval_icon"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/reminder_interval_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/reminder_interval_time"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/reminder_interval_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp" />
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <!-- Type of Repition -->
-            <RelativeLayout
-                android:id="@+id/reminder_type_repitiion"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:clickable="true">
-
-                <ImageView
-                    android:id="@+id/reminder_typeRepition_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:src="@android:drawable/ic_menu_sort_by_size" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/reminder_typeRepition_icon"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/reminder_typeRepition_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/reminder_type_repitition"
-                        android:textSize="15dp" />
-
-                    <TextView
-                        android:id="@+id/reminder_typeRepition_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp" />
-                </LinearLayout>
-
-            </RelativeLayout>
-
         </LinearLayout>
-    </ScrollView>
 
     <!-- Create Floating Action Buttons to turn notification sound on or off -->
     <!-- Sound On -->
@@ -246,24 +174,28 @@
         android:id="@+id/fab_soundOn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:clickable="true"
-        android:src="@android:drawable/ic_lock_silent_mode_off"
+        android:src="@drawable/sound"
         android:tint="@color/colorTint"
+        android:focusable="true"
+        android:layout_marginEnd="10dp"
         app:backgroundTint="@android:color/darker_gray"
-        app:fabSize="normal" />
+        app:fabSize="normal"
+        app:layout_anchor="@id/reminder_add_titleText"
+        app:layout_anchorGravity="bottom|right"/>
 
     <!-- Sound Off -->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_soundOff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
         android:clickable="true"
-        android:src="@android:drawable/ic_lock_silent_mode"
+        android:src="@drawable/mute"
         android:tint="@color/colorTint"
+        android:focusable="true"
+        android:layout_marginEnd="10dp"
         app:backgroundTint="@android:color/darker_gray"
-        app:fabSize="normal" />
-</RelativeLayout>
+        app:fabSize="normal"
+        app:layout_anchor="@id/reminder_add_titleText"
+        app:layout_anchorGravity="bottom|right"/>
+</android.support.design.widget.CoordinatorLayout>

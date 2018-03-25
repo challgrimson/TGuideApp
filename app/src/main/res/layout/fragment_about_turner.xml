@@ -22,15 +22,21 @@
             android:textSize="24sp"
             android:paddingTop="5dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
+            android:paddingRight="10dp"
+            android:textColor="@color/colorAccent"
+            android:background="@color/aboutTurner" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/whatTurnerAns"
-            android:textSize="16sp"
-            android:paddingTop="5dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:text="@string/whatTurnerAns"
+            android:textColor="@color/mdtp_ampm_text_color"
+            android:textSize="16sp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="5dp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -41,7 +47,9 @@
             android:textSize="24sp"
             android:paddingTop="5dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
+            android:paddingRight="10dp"
+            android:textColor="@color/colorAccent"
+            android:background="@color/aboutTurner"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +57,10 @@
             android:textSize="16sp"
             android:paddingTop="5dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
+            android:paddingRight="10dp"
+            android:textColor="@color/mdtp_ampm_text_color"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="5dp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -60,7 +71,9 @@
             android:textSize="24sp"
             android:paddingTop="5dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
+            android:paddingRight="10dp"
+            android:textColor="@color/colorAccent"
+            android:background="@color/aboutTurner"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,7 +81,10 @@
             android:textSize="16sp"
             android:paddingTop="5dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
+            android:paddingRight="10dp"
+            android:textColor="@color/mdtp_ampm_text_color"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="5dp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -79,7 +95,9 @@
             android:textSize="24sp"
             android:paddingTop="5dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
+            android:paddingRight="10dp"
+            android:textColor="@color/colorAccent"
+            android:background="@color/aboutTurner"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,7 +105,10 @@
             android:textSize="16sp"
             android:paddingTop="5dp"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
+            android:paddingRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/mdtp_ampm_text_color"
+            android:layout_marginTop="0dp" />
     </LinearLayout>
     </ScrollView>
 

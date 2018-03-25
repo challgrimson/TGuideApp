@@ -37,15 +37,17 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-/*        if(firebaseAuth.getCurrentUser() != null){
-            finish();
-            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-        }*/
+       if(firebaseAuth.getCurrentUser() != null){
+           startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+           finish();
+
+        }
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword =  findViewById(R.id.editTextPassword);
@@ -83,8 +85,8 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if(task.isSuccessful()){
-                            finish();
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                            finish();
                         }
                         else{
                             AlertDialog alertDialog = new AlertDialog.Builder(loginActivity.this).create();

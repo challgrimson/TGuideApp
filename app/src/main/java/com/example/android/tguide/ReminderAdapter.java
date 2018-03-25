@@ -93,7 +93,7 @@ public class ReminderAdapter extends CursorAdapter {
     // Set repeat views
     public void setReminderRepeatInfo(String repeat, String repeatNo, String repeatType) {
         if(repeat.equals("true")){
-            mRepeatInfoText.setText("Every " + repeatNo + " " + repeatType + "(s)");
+            mRepeatInfoText.setText("Every " + repeatNo + " " + repeatType);
         }else if (repeat.equals("false")) {
             mRepeatInfoText.setText("Repeat Off");
         }
@@ -102,9 +102,9 @@ public class ReminderAdapter extends CursorAdapter {
     // Set active image as on or off
     public void setActiveImage(String active){
         if(active.equals("true")){
-            mActiveImage.setImageResource(android.R.drawable.ic_lock_silent_mode_off);
+            mActiveImage.setImageResource(R.drawable.sound);
         }else if (active.equals("false")) {
-            mActiveImage.setImageResource(android.R.drawable.ic_lock_silent_mode);
+            mActiveImage.setImageResource(R.drawable.mute);
         }
     }
 }

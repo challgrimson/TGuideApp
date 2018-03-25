@@ -36,14 +36,14 @@ public class registerAct extends AppCompatActivity implements View.OnClickListen
 
         firebaseAuth = FirebaseAuth.getInstance(); //intialize firebase object
 
- /*       if(firebaseAuth.getCurrentUser() != null){
+       if(firebaseAuth.getCurrentUser() != null){
             //that means user is already logged in
             //so close this activity
             finish();
 
             //and open profile activity
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-        }*/
+        }
 
         //initializing views
         editTextEmail = findViewById(R.id.editTextEmail);

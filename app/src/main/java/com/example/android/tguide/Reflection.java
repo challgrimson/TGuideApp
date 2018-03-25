@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,11 +83,11 @@ public class Reflection extends Fragment {
         reflectionTrack = MediaPlayer.create(getContext(), R.raw.guided_reflection);
 
         // Grab button and seek bar
-        final ImageButton playSound = (ImageButton) view.findViewById(R.id.playAudio);
-        final ImageButton pauseSound = (ImageButton) view.findViewById(R.id.pauseAudio);
+        final FloatingActionButton playSound = (FloatingActionButton) view.findViewById(R.id.playAudio);
+        final FloatingActionButton pauseSound = (FloatingActionButton) view.findViewById(R.id.pauseAudio);
         seekBar = (SeekBar) view.findViewById(R.id.seekBar);
-        displayTime = (TextView) view.findViewById(R.id.timeDisplay);
 
+        displayTime = (TextView) view.findViewById(R.id.timeDisplay);
         // Set max value of seek bar
         seekBar.setMax(reflectionTrack.getDuration());
 

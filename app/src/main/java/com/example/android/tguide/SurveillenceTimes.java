@@ -30,29 +30,28 @@ public class SurveillenceTimes extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     // Set Variables for layouts
-    LinearLayout mPAP, mBP, mBMI, mLYPH, mMOLE, mTHY, mDIA, mKID, mCHOL, mCEL, mECG, mECH, mCT, mPRO, mVIS, mHEA, mBON ;
+    LinearLayout mPAP, mTHY, mCEL, mECG, mECH, mCT, mPRO, mVIS, mHEA, mBON ;
 
     // Set text view variables
-    TextView mPAPtext, mBPtext, mBMItext, mLYPHtext, mMOLEtext,
-            mTHYtext, mDIAtext, mKIDtext, mCHOLtext, mCELtext, mECGtext, mECHtext, mCTtext, mPROtext, mVIStext, mHEAtext, mBONtext;
+    TextView mPAPtext, mTHYtext,mCELtext, mECGtext, mECHtext, mCTtext, mPROtext, mVIStext, mHEAtext, mBONtext;
 
     // Set save state variables
-    String PAPsave, BPsave, BMIsave, LYPHsave, MOLEsave,
-        THYsave, DIAsave, KIDsave, CHOLsave, CELsave, ECGsave, ECHsave, CTsave, PROsave, VISsave, HEAsave, BONsave;
+    String PAPsave, THYsave, CELsave, ECGsave, ECHsave, CTsave, PROsave, VISsave, HEAsave, BONsave;
 
     // Variables to hold states
-    Boolean PAPstate, BPstate, BMIstate, LYPHstate, MOLEstate, THYstate, DIAstate, KIDstate, CHOLstate,
-            CELstate, ECGstate, ECHstate, CTstate, PROstate, VISstate, HEAstate, BONstate;
+    Boolean PAPstate, THYstate, CELstate, ECGstate, ECHstate, CTstate, PROstate, VISstate, HEAstate, BONstate;
 
     // Hold time set
-    long mPAPtime, mBPtime, mBMItime, mLYPHtime, mMOLEtime, mTHYtime, mDIAtime,
-            mKIDtime, mCHOLtime, mCELtime, mECGtime, mECHtime, mCTtime, mPROtime, mVIStime, mHEAtime, mBONtime;
+    long mPAPtime, mTHYtime, mCELtime, mECGtime, mECHtime, mCTtime, mPROtime, mVIStime, mHEAtime, mBONtime;
 
     // Create Calendar to set dates
     Calendar mCalendar;
 
     // temp variables for inputting date
     int mYear, mMonth, mDay;
+
+    // Handler to put times in DB database
+    ReminderDBHelper handler;
 
     // Service
     //private  static final String TAG = "SurveillenceTimes";
@@ -81,14 +80,7 @@ public class SurveillenceTimes extends Fragment {
         }
         // Set LinearLayout variables
         mPAP = view.findViewById(R.id.PAP);
-        mBP = view.findViewById(R.id.bloodPressure);
-        mBMI = view.findViewById(R.id.BMI);
-        mLYPH = view.findViewById(R.id.lymphedema);
-        mMOLE = view.findViewById(R.id.moleAssess);
         mTHY = view.findViewById(R.id.thyroidDisease);
-        mDIA = view.findViewById(R.id.diabetes);
-        mKID = view.findViewById(R.id.kidneyDisease);
-        mCHOL = view.findViewById(R.id.highCholesterol);
         mCEL = view.findViewById(R.id.celiacDisease);
         mECG = view.findViewById(R.id.ECG);
         mECH = view.findViewById(R.id.Echo);
@@ -100,14 +92,7 @@ public class SurveillenceTimes extends Fragment {
 
         // Set Text variables
         mPAPtext = view.findViewById(R.id.PAPtext);
-        mBPtext = view.findViewById(R.id.bloodPressuretext);
-        mBMItext = view.findViewById(R.id.BMItext);
-        mLYPHtext = view.findViewById(R.id.lymphedemaText);
-        mMOLEtext = view.findViewById(R.id.moleAssesstext);
         mTHYtext = view.findViewById(R.id.thyroidDiseasetext);
-        mDIAtext = view.findViewById(R.id.diabetestext);
-        mKIDtext = view.findViewById(R.id.kidneyDiseasetext);
-        mCHOLtext = view.findViewById(R.id.highCholesteroltext);
         mCELtext = view.findViewById(R.id.celiacDiseasetext);
         mECGtext = view.findViewById(R.id.ECGtext);
         mECHtext = view.findViewById(R.id.Echotext);
@@ -123,14 +108,7 @@ public class SurveillenceTimes extends Fragment {
 
         // Set text
         mPAPtext.setText(sharedPref.getString("PAP", getString(R.string.overdue)));
-        mBPtext.setText(sharedPref.getString("BP", getString(R.string.overdue)));
-        mBMItext.setText(sharedPref.getString("BMI", getString(R.string.overdue)));
-        mLYPHtext.setText(sharedPref.getString("LYPH", getString(R.string.overdue)));
-        mMOLEtext.setText(sharedPref.getString("MOLE", getString(R.string.overdue)));
         mTHYtext.setText(sharedPref.getString("THY", getString(R.string.overdue)));
-        mDIAtext.setText(sharedPref.getString("DIA", getString(R.string.overdue)));
-        mKIDtext.setText(sharedPref.getString("KID", getString(R.string.overdue)));
-        mCHOLtext.setText(sharedPref.getString("CHOL", getString(R.string.overdue)));
         mCELtext.setText(sharedPref.getString("CEL", getString(R.string.overdue)));
         mECGtext.setText(sharedPref.getString("ECG", getString(R.string.overdue)));
         mECHtext.setText(sharedPref.getString("ECH", getString(R.string.overdue)));
@@ -141,14 +119,7 @@ public class SurveillenceTimes extends Fragment {
         mBONtext.setText(sharedPref.getString("BON", getString(R.string.overdue)));
         // Set time
         mPAPtime = sharedPref.getLong("PAPtime", -1);
-        mBPtime = sharedPref.getLong("BPtime", -1);
-        mBMItime = sharedPref.getLong("BMItime", -1);
-        mLYPHtime = sharedPref.getLong("LYPHtime", -1);
-        mMOLEtime = sharedPref.getLong("MOLEtime", -1);
         mTHYtime = sharedPref.getLong("THYtime", -1);
-        mDIAtime = sharedPref.getLong("DIAtime", -1);
-        mKIDtime = sharedPref.getLong("KIDtime", -1);
-        mCHOLtime = sharedPref.getLong("CHOLtime", -1);
         mCELtime = sharedPref.getLong("CELtime", -1);
         mECGtime = sharedPref.getLong("ECGtime", -1);
         mECHtime = sharedPref.getLong("ECHtime", -1);
@@ -184,62 +155,6 @@ public class SurveillenceTimes extends Fragment {
             }
         });
 
-        mBP.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // To turn green on reload
-                BPstate = true;
-
-                // Call date setter
-                setDate(v, mBPtext, 2);
-
-                //getActivity().startService(intent);
-                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
-            }
-        });
-
-        mBMI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // To turn green on reload
-                BMIstate = true;
-
-                // Call date setter
-                setDate(v, mBMItext, 3);
-
-                //getActivity().startService(intent);
-                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
-            }
-        });
-
-        mLYPH.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // To turn green on reload
-                LYPHstate = true;
-
-                // Call date setter
-                setDate(v, mLYPHtext, 4);
-
-                //getActivity().startService(intent);
-                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
-            }
-        });
-
-        mMOLE.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // To turn green on reload
-                MOLEstate = true;
-
-                // Call date setter
-                setDate(v, mMOLEtext, 5);
-
-                //getActivity().startService(intent);
-                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
-            }
-        });
-
         mTHY.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -248,48 +163,6 @@ public class SurveillenceTimes extends Fragment {
 
                 // Call date setter
                 setDate(v, mTHYtext, 6);
-
-                //getActivity().startService(intent);
-                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
-            }
-        });
-
-        mDIA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // To turn green on reload
-                DIAstate = true;
-
-                // Call date setter
-                setDate(v, mDIAtext, 7);
-
-                //getActivity().startService(intent);
-                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
-            }
-        });
-
-        mKID.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // To turn green on reload
-                KIDstate = true;
-
-                // Call date setter
-                setDate(v, mKIDtext, 8);
-
-                //getActivity().startService(intent);
-                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
-            }
-        });
-
-        mCHOL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // To turn green on reload
-                CHOLstate = true;
-
-                // Call date setter
-                setDate(v, mCHOLtext, 9);
 
                 //getActivity().startService(intent);
                 //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
@@ -412,6 +285,9 @@ public class SurveillenceTimes extends Fragment {
         // To change menu
         setHasOptionsMenu(true);
 
+        // Grab DB handler to put in information
+        handler = new ReminderDBHelper(getContext());
+
         return view;
     }
 
@@ -436,6 +312,8 @@ public class SurveillenceTimes extends Fragment {
     public interface OnFragmentInteractionListener {
         //Passed needed title for fragment to MainActivity
         void onFragmentInteraction(String title);
+        boolean begin_notifications(int ID, String notificationTitle, String notificationDesp, long alarmTime, long repeatTime, String mActive);
+        String generateUniqueID();
     }
 
     // Saving Date when Paused
@@ -448,14 +326,7 @@ public class SurveillenceTimes extends Fragment {
 
         // Grab text
         PAPsave = mPAPtext.getText().toString();
-        BPsave = mBPtext.getText().toString();
-        LYPHsave = mLYPHtext.getText().toString();
-        BMIsave = mBMItext.getText().toString();
-        MOLEsave = mMOLEtext.getText().toString();
         THYsave = mTHYtext.getText().toString();
-        DIAsave = mDIAtext.getText().toString();
-        KIDsave = mKIDtext.getText().toString();
-        CHOLsave = mCHOLtext.getText().toString();
         CELsave = mCELtext.getText().toString();
         ECGsave = mECGtext.getText().toString();
         ECHsave = mECHtext.getText().toString();
@@ -467,14 +338,7 @@ public class SurveillenceTimes extends Fragment {
 
         // Save string
         editor.putString("PAP",PAPsave);
-        editor.putString("BP",BPsave);
-        editor.putString("LYPH",LYPHsave);
-        editor.putString("BMI",BMIsave);
-        editor.putString("MOLE",MOLEsave);
         editor.putString("THY",THYsave);
-        editor.putString("DIA",DIAsave);
-        editor.putString("KID",KIDsave);
-        editor.putString("CHOL",CHOLsave);
         editor.putString("CEL",CELsave);
         editor.putString("ECG",ECGsave);
         editor.putString("ECH",ECHsave);
@@ -487,14 +351,7 @@ public class SurveillenceTimes extends Fragment {
 
         // Sve bool
         editor.putLong("PAPtime",mPAPtime);
-        editor.putLong("BPtime",mBPtime);
-        editor.putLong("LYPHtime",mLYPHtime);
-        editor.putLong("BMItime",mBMItime);
-        editor.putLong("MOLEtime",mMOLEtime);
         editor.putLong("THYtime",mTHYtime);
-        editor.putLong("DIAtime",mDIAtime);
-        editor.putLong("KIDtime",mKIDtime);
-        editor.putLong("CHOLtime",mCHOLtime);
         editor.putLong("CELtime",mCELtime);
         editor.putLong("ECGtime",mECGtime);
         editor.putLong("ECHtime",mECHtime);
@@ -551,57 +408,69 @@ public class SurveillenceTimes extends Fragment {
                         Log.i("Month",String.valueOf(mMonth));
                         Log.i("Day",String.valueOf(mDay));
 
+                        // REMINDER TO ALSO SWTICH IN bootReceiver
+                        Integer uniqueid = Integer.parseInt(mListener.generateUniqueID());
                         switch (timeView) {
                             case 1:
                                 mPAPtime = mCalendar.getTimeInMillis();
-                                break;
-                            case 2:
-                                mBPtime = mCalendar.getTimeInMillis();
-                                break;
-                            case 3:
-                                mBMItime = mCalendar.getTimeInMillis();
-                                break;
-                            case 4:
-                                mLYPHtime = mCalendar.getTimeInMillis();
-                                break;
-                            case 5:
-                                mMOLEtime = mCalendar.getTimeInMillis();
+                                // Set notification
+                                mListener.begin_notifications(uniqueid,getString(R.string.physicalexamTitle),
+                                        getString(R.string.physicalexamdesp),mPAPtime + 60*60*1000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mPAPtime), String.valueOf(uniqueid));
                                 break;
                             case 6:
                                 mTHYtime = mCalendar.getTimeInMillis();
-                                break;
-                            case 7:
-                                mDIAtime = mCalendar.getTimeInMillis();
-                                break;
-                            case 8:
-                                mKIDtime = mCalendar.getTimeInMillis();
-                                break;
-                            case 9:
-                                mCHOLtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.screenbloodTitle),
+                                        getString(R.string.physicalexamdesp),mTHYtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mTHYtime), String.valueOf(uniqueid));
                                 break;
                             case 10:
                                 mCELtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.celiacTitle),
+                                        getString(R.string.physicalexamdesp),mCELtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mCELtime), String.valueOf(uniqueid));
                                 break;
                             case 11:
                                 mECGtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.ECGTitle),
+                                        getString(R.string.physicalexamdesp),mECGtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mECGtime), String.valueOf(uniqueid));
                                 break;
                             case 12:
                                 mECHtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.ECHOTitle),
+                                        getString(R.string.physicalexamdesp),mECHtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mECHtime), String.valueOf(uniqueid));
                                 break;
                             case 13:
                                 mCTtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.CTMRITitle),
+                                        getString(R.string.physicalexamdesp),mCTtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mCTtime), String.valueOf(uniqueid));
                                 break;
                             case 14:
                                 mPROtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.antiproTitle),
+                                        getString(R.string.physicalexamdesp),mPROtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mPROtime), String.valueOf(uniqueid));
                                 break;
                             case 15:
                                 mVIStime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.visionTitle),
+                                        getString(R.string.physicalexamdesp),mVIStime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mVIStime), String.valueOf(uniqueid));
                                 break;
                             case 16:
                                 mHEAtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.hearingTitle),
+                                        getString(R.string.physicalexamdesp),mHEAtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mHEAtime), String.valueOf(uniqueid));
                                 break;
                             case 17:
                                 mBONtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.bonedensityTitle),
+                                        getString(R.string.physicalexamdesp),mBONtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mBONtime), String.valueOf(uniqueid));
                                 break;
                         }
 
@@ -622,55 +491,11 @@ public class SurveillenceTimes extends Fragment {
         } else {
             TextViewCompat.setTextAppearance(mPAPtext, R.style.overdueText);
         }
-
-        if (BPstate) {
-            TextViewCompat.setTextAppearance(mBPtext, R.style.DateInsert);
-        } else {
-            TextViewCompat.setTextAppearance(mBPtext, R.style.overdueText);
-        }
-
-        if (BMIstate) {
-            TextViewCompat.setTextAppearance(mBMItext, R.style.DateInsert);
-        } else {
-            TextViewCompat.setTextAppearance(mBMItext, R.style.overdueText);
-        }
-
-        if (LYPHstate) {
-            TextViewCompat.setTextAppearance(mLYPHtext, R.style.DateInsert);
-        } else {
-            TextViewCompat.setTextAppearance(mLYPHtext, R.style.overdueText);
-        }
-
-        if (MOLEstate) {
-            TextViewCompat.setTextAppearance(mMOLEtext, R.style.DateInsert);
-        } else {
-            TextViewCompat.setTextAppearance(mMOLEtext, R.style.overdueText);
-        }
-
         if (THYstate) {
             TextViewCompat.setTextAppearance(mTHYtext, R.style.DateInsert);
         } else {
             TextViewCompat.setTextAppearance(mTHYtext, R.style.overdueText);
         }
-
-        if (DIAstate) {
-            TextViewCompat.setTextAppearance(mDIAtext, R.style.DateInsert);
-        } else {
-            TextViewCompat.setTextAppearance(mDIAtext, R.style.overdueText);
-        }
-
-        if (KIDstate) {
-            TextViewCompat.setTextAppearance(mKIDtext, R.style.DateInsert);
-        } else {
-            TextViewCompat.setTextAppearance(mKIDtext, R.style.overdueText);
-        }
-
-        if (CHOLstate) {
-            TextViewCompat.setTextAppearance(mCHOLtext, R.style.DateInsert);
-        } else {
-            TextViewCompat.setTextAppearance(mCHOLtext, R.style.overdueText);
-        }
-
         if (CELstate) {
             TextViewCompat.setTextAppearance(mCELtext, R.style.DateInsert);
         } else {
@@ -725,111 +550,70 @@ public class SurveillenceTimes extends Fragment {
         Log.i("PAP time", String.valueOf(mPAPtime));
         Log.i("Current time", String.valueOf(Calendar.getInstance().getTimeInMillis()));
 
-        //1-2 Years
-        if (Calendar.getInstance().getTimeInMillis() - mPAPtime > 2*24*60*1000 || mPAPtime == -1) {
+        //Yearly
+        if (Calendar.getInstance().getTimeInMillis() - mPAPtime > 10000 || mPAPtime == -1) {
             PAPstate = false;
         } else {
             PAPstate = true;
         }
 
         // Yearly
-        if (Calendar.getInstance().getTimeInMillis() - mBPtime > 24*60*1000 || mBPtime == -1) {
-            BPstate = false;
-        } else {
-            BPstate = true;
-        }
-
-        if (Calendar.getInstance().getTimeInMillis() - mBMItime > 24*60*1000 || mBMItime == -1) {
-            BMIstate = false;
-        } else {
-            BMIstate = true;
-        }
-
-        if (Calendar.getInstance().getTimeInMillis() - mLYPHtime > 24*60*1000 || mLYPHtime == -1) {
-            LYPHstate = false;
-        } else {
-            LYPHstate = true;
-        }
-
-        if (Calendar.getInstance().getTimeInMillis() - mMOLEtime > 24*60*1000 || mMOLEtime == -1) {
-            MOLEstate = false;
-        } else {
-            MOLEstate = true;
-        }
-
-        if (Calendar.getInstance().getTimeInMillis() - mTHYtime > 24*60*1000 || mTHYtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mTHYtime > 10000 || mTHYtime == -1) {
             THYstate = false;
         } else {
             THYstate = true;
         }
 
-        if (Calendar.getInstance().getTimeInMillis() - mDIAtime > 24*60*1000 || mDIAtime == -1) {
-            DIAstate = false;
-        } else {
-            DIAstate = true;
-        }
-
-        if (Calendar.getInstance().getTimeInMillis() - mKIDtime > 24*60*1000 || mKIDtime == -1) {
-            KIDstate = false;
-        } else {
-            KIDstate = true;
-        }
-
-        if (Calendar.getInstance().getTimeInMillis() - mCHOLtime > 24*60*1000 || mCHOLtime == -1) {
-            CHOLstate = false;
-        } else {
-            CHOLstate = true;
-        }
 
         // 2-5 Years
-        if (Calendar.getInstance().getTimeInMillis() - mCELtime > 5*24*60*1000 || mCELtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mCELtime > 10000 || mCELtime == -1) {
             CELstate = false;
         } else {
             CELstate = true;
         }
 
         //3-5 Years
-        if (Calendar.getInstance().getTimeInMillis() - mECGtime > 5*24*60*1000 || mECGtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mECGtime > 10000 || mECGtime == -1) {
             ECGstate = false;
         } else {
             ECGstate = true;
         }
 
 
-        if (Calendar.getInstance().getTimeInMillis() - mECHtime > 5*24*60*1000 || mECHtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mECHtime > 10000 || mECHtime == -1) {
             ECHstate = false;
         } else {
             ECHstate = true;
         }
 
-        if (Calendar.getInstance().getTimeInMillis() - mCTtime > 5*24*60*1000 || mCTtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mCTtime > 10000 || mCTtime == -1) {
             CTstate = false;
         } else {
             CTstate = true;
         }
 
-        if (Calendar.getInstance().getTimeInMillis() - mPROtime > 24*60*1000 || mPROtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mPROtime > 10000 || mPROtime == -1) {
             PROstate = false;
         } else {
             PROstate = true;
         }
 
         // 1-2 Years
-        if (Calendar.getInstance().getTimeInMillis() - mVIStime > 2*24*60*1000 || mVIStime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mVIStime > 10000 || mVIStime == -1) {
             VISstate = false;
         } else {
             VISstate = true;
         }
 
         // 2-3 Years
-        if (Calendar.getInstance().getTimeInMillis() - mHEAtime > 3*24*60*1000 || mHEAtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mHEAtime > 10000 || mHEAtime == -1) {
             HEAstate = false;
         } else {
             HEAstate = true;
         }
 
         //3-5 Years
-        if (Calendar.getInstance().getTimeInMillis() - mBONtime > 5*24*60*1000 || mBONtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mBONtime > 10000 || mBONtime == -1) {
             BONstate = false;
         } else {
             BONstate = true;

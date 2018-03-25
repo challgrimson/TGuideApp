@@ -94,7 +94,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/reflectCheclist"
+            android:text="@string/medChecklist"
             android:paddingStart="15dp"
             android:paddingEnd="0dp"
             android:textSize="18sp"
@@ -133,7 +133,7 @@
             android:gravity="center_vertical"
             android:paddingEnd="0dp"
             android:paddingStart="15dp"
-            android:text="@string/medChecklist"
+            android:text="@string/reflectCheclist"
             android:textColor="@color/mdtp_ampm_text_color"
             android:textSize="18sp"
             android:layout_gravity="center"/>
