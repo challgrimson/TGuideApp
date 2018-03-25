@@ -43,6 +43,8 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:onClick="onClick"
+            android:clickable="true"
             android:textAlignment="center"
             android:text="Sign in"
             android:id="@+id/textViewSignin"

@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +28,8 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView textViewSignup;
-
+    private TextView forgotPass;
+    private String m_Text = "";
     private FirebaseAuth firebaseAuth;
 
     private ProgressDialog progressDialog;
@@ -48,7 +51,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
         editTextPassword =  findViewById(R.id.editTextPassword);
         buttonSignIn =  findViewById(R.id.buttonSignin);
         textViewSignup  =  findViewById(R.id.textViewSignUp);
-
+        forgotPass =  findViewById(R.id.forgotPass);
         progressDialog = new ProgressDialog(this);
 
         buttonSignIn.setOnClickListener(this);
@@ -107,9 +110,45 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if(view == textViewSignup){
+
             finish();
             startActivity(new Intent(this, registerAct.class));
         }
+
+        if(view == forgotPass){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Please enter account email");
+
+            // Set up the input
+            final EditText input = new EditText(this);
+            // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+            input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT);
+            builder.setView(input);
+
+            // Set up the buttons
+            builder.setPositiveButton("Send Email", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    m_Text = input.getText().toString();
+                    firebaseAuth.getInstance().sendPasswordResetEmail(m_Text)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("loginActivity", "Email sent.");
+                                    }
+                                }
+                            });
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            builder.show();
     }
-}
+} }
 

@@ -110,7 +110,7 @@ public class registerAct extends AppCompatActivity implements View.OnClickListen
 
         if(view == textViewSignin){
             finish();
-            startActivity(new Intent(this, loginActivity.class));
+            startActivity(new Intent(registerAct.this, loginActivity.class));
         }
 
     }
