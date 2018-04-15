@@ -38,6 +38,9 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:11.8.0'
     compile 'com.google.firebase:firebase-storage:11.8.0'
 
+    // GIF Repository to show gif
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.10'
+
     // Include all the Twitter UI to display timeline
     //compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
 

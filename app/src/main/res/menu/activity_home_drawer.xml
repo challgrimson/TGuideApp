@@ -5,30 +5,34 @@
     <group android:checkableBehavior="single" android:id="@+id/home1">
         <item
             android:id="@+id/frag_homepage"
-            android:title="Home" />
+            android:title="@string/home" />
         <item
             android:id="@+id/frag_aboutTurner"
-            android:title="About Turner Syndrome" />
+            android:title="@string/aboutturnersyndrome" />
         <item
             android:id="@+id/frag_checklist"
-            android:title="Checklist"/>
+            android:title="@string/checklist"/>
         <item
             android:id="@+id/fraq_surv"
-            android:title="Surveillance Times" />
+            android:title="@string/surveillancetimes" />
         <item
             android:id="@+id/fraq_reflect"
-            android:title="Reflection"/>
+            android:title="@string/reflection"/>
     </group>
 
     <group android:checkableBehavior="single" android:id="@+id/home2">
         <item
             android:id="@+id/frag_reminders"
-            android:title="Reminders" />
+            android:title="@string/reminders" />
         <item
             android:id="@+id/frag_mainPage"
-            android:title="Notepad"/>
+            android:title="@string/notepaddrawer"/>
         <item
             android:id="@+id/frag_faq"
-            android:title="FAQ" />
+            android:title="@string/faqdrawer" />
+
+        <item
+            android:id="@+id/frag_accountinfo"
+            android:title="@string/accountinfo"/>
     </group>
 </menu>

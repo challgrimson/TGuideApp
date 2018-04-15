@@ -76,7 +76,7 @@ public class SurveillenceTimes extends Fragment {
 
         // Send Main Page as a title parameter
         if (mListener != null){
-            mListener.onFragmentInteraction("Surveillance Times");
+            mListener.onFragmentInteraction(getString(R.string.surveillancetimes));
         }
         // Set LinearLayout variables
         mPAP = view.findViewById(R.id.PAP);
@@ -415,13 +415,14 @@ public class SurveillenceTimes extends Fragment {
                                 mPAPtime = mCalendar.getTimeInMillis();
                                 // Set notification
                                 mListener.begin_notifications(uniqueid,getString(R.string.physicalexamTitle),
-                                        getString(R.string.physicalexamdesp),mPAPtime + 60*60*1000,-1,"false");
+                                        getString(R.string.physicalexamdesp),mPAPtime + 11*60*60*1000,-1,"false");
+                                Log.i("bootReceiver", String.valueOf(mPAPtime));
                                 handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mPAPtime), String.valueOf(uniqueid));
                                 break;
                             case 6:
                                 mTHYtime = mCalendar.getTimeInMillis();
                                 mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.screenbloodTitle),
-                                        getString(R.string.physicalexamdesp),mTHYtime + 30000,-1,"false");
+                                        getString(R.string.physicalexamdesp),mTHYtime + 11*60*60*1000,-1,"false");
                                 handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mTHYtime), String.valueOf(uniqueid));
                                 break;
                             case 10:

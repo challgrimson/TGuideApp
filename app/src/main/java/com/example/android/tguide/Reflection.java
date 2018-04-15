@@ -76,7 +76,7 @@ public class Reflection extends Fragment {
 
         // Send Main Page as a title parameter
         if (mListener != null){
-            mListener.onFragmentInteraction("Reflection");
+            mListener.onFragmentInteraction(getString(R.string.reflection));
         }
 
         // Grab mp3 file

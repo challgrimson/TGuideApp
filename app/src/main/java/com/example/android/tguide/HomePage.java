@@ -102,7 +102,7 @@ public class HomePage extends Fragment {
 
         // Send Main Page as a title parameter
         if (mListener != null){
-            mListener.onFragmentInteraction("Home");
+            mListener.onFragmentInteraction(getString(R.string.home));
         }
 
         // Grab checklist views
@@ -316,7 +316,7 @@ public class HomePage extends Fragment {
 
         // Crete edit text to input value
         final EditText input = new EditText(getActivity());
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS |  InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         builder.setView(input);
 
         // Keep in original position

@@ -77,7 +77,7 @@ public class MainPage extends Fragment {
 
         // Send Main Page as a title parameter
         if (mListener != null){
-            mListener.onFragmentInteraction("Notepad");
+            mListener.onFragmentInteraction(getString(R.string.notepaddrawer));
         }
 
         // Update notepad based on saved data

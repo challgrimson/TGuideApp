@@ -7,7 +7,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="notpad_hint"> Welcome to TGuide!\nUse this space to keep your notes.</string>
     <string name="txt_notepad">Use this space to keep any notes you may have.</string>
-    <string name="reminder_Hint">Click on the button bellow to create a reminder!</string>
+    <string name="reminder_Hint">Click on the button below to create a reminder!</string>
     <string name="reminder_titleText">Reminder Title</string>
     <string name="reminder_descripHint">Description</string>
     <string name="reminder_date">Date</string>
@@ -49,13 +49,15 @@
         <item>Month(s)</item>
         <item>Year(s)</item>
     </string-array>
-    <string name="repeatDefault">Minute(s)</string>]
+    <string name="repeatDefault">Minute(s)</string>
 
 
     <!-- Strings for home view -->
     <string name="welcome">Welcome to TGuide!</string>
-    <string name="welcomeDialog">Welcome to TGuide! An app designed to help you manage turner syndrome. Go to the FAQ
-    section for a guide on the different aspects of this app. Lets begin!</string>
+    <string name="welcomeDialog">Welcome to TGuide! The TGuide Team hopes this app can be a way to help you. When you enter the app, click on the button in the
+    top left of the screen to begin exploring what this app has to offer. Visit the FAQ page for a serious of commonly asked questions and for a
+        couple other resources that may help you! Please note that TGuide is only meant to aid you in manage your condition and is not
+        responsible for any missed appointments or other issues that may arise when using this app. Lets get started!</string>
     <string name="welcomeDialogBegin">Let\'s Begin!</string>
     <string name="welcomeNotificationTitle">How are you doing?</string>
     <string name="welcomeNotificationDescrip">Remember to complete your checklist!</string>
@@ -65,54 +67,62 @@
 
     <!--String for About Turner Syndrom -->
     <string name="whatTurner">What is Turner Syndrome?</string>
-    <string name="whatTurnerAns">Turner Syndrome is a condition that affects only girls and women.
-    Most people have 23 pairs of chromosomes, with 1 pair being sex chromoses. Most males have
-    an X and Y sex chromosome and most females have two X chromosomes. In turner syndrome, there
+    <string name="whatTurnerAns">Turner Syndrome (TS) is a condition that affects only girls and women.
+    Most people have 23 pairs of chromosomes, with 1 pair being sex chromosomes. Most males have
+    an X and Y sex chromosome and most females have two X chromosomes. In TS, there
     is an absence of all or part of the second X chromosome in some or all of the cells of the body.
     </string>
     <string name="typesTurner">Are there different types of Turner Syndrome?</string>
-    <string name="typesTurnerAns">There are multiple types of Turner Syndrome. Females who
-    are completely missing an X chromosome have "classic" Turner Syndrom. Others are missing only
+    <string name="typesTurnerAns">There are multiple types of TS. Females who
+    are completely missing an X chromosome have "classic" TS. Others are missing only
     part of the second X chromosome or have structural rearrangements of the chromosome. In some
     females, only some cells are missing the X chromosome, known as a mosaic karyotype. Knowing your
-    type is important because each type is assocaited with different health issues.</string>
+    type is important because each type is associated with different health issues.</string>
+
     <string name="impTurner">Why is it important to know if someone has Turner Syndrome?</string>
     <string name="impTurnerAns">Missing part of or all of one X chromosome is associated with a
-    range of health, development, social and learning challenges which affects females with Turner
-    Syndrome to different extends. It is important to diagnosis Turner Syndrome as early as possible
+    range of health, development, social and learning challenges which affects females with TS
+        to different extends. It is important to diagnosis TS as early as possible
     so that your health care provider can determine whether you have health issues that need to be
     treated or watched.</string>
+
     <string name="treatTurner">Can Turner Syndrome be treated?</string>
-    <string name="treatTurnerAns">Turner Syndrome is not a disease, but a genetic condition that is
-    associated with a range of health concerns. Turner Syndrome is not directly treated by a health
-    care provider, but the individual health concerns that arive are monitered and treated. New
-    medical developments allow women with TS who are interested in starting a family to seek the help
-    of an obstetrician who specializes in in-vitro fertilization. A girl with Turner Syndrome may get
+    <string name="treatTurnerAns">TS is not a disease, but a genetic condition that is
+    associated with a range of health concerns. TS is not directly treated by a health
+    care provider, but the individual health concerns that arise are monitored and treated. New
+    medical developments allow women with TS who are interested in starting a family seek the help
+    of an obstetrician who specializes in-vitro fertilization. A girl with TS may get
     growth horomone under the supervision of a pediartric endocrinologist.</string>
 
     <!--String for FAQ-->
     <string name="button1Title">What is TGuide?</string>
-    <string name="button1Text">TGuide is an app to help you manage turner syndrome. It provides some information about turner syndrome as well as some
-    helpful information regarding the condition.</string>
+    <string name="button1Text">TGuide is an app to help you manage your condition. It provides a framework to help you keep track of when to schedule appointments. Please note that
+    TGuide is only meant to aid you in managing your condition and is not responsible for any missed appointments or other issues that may arise
+    when using this app.</string>
 
     <string name="button2Title">Why should I complete the checklist?</string>
-    <string name="button2Text">Managing a chronic condition can be difficult. Completing a checklist every couple of months can be good to help
-    you stay on track and see how you are doing. As well as helpin you to keep up to data with all of your doctors appointments and medications.</string>
+    <string name="button2Text">Managing a chronic condition can be difficult. Completing a checklist every couple of months can help
+    you stay on track and see how you are doing.</string>
 
     <string name="button3Title">What are surveillance times?</string>
-    <string name="button3Text">To help manage your condition, doctors appointments need to be set periodically. The surveillance times table provides you with
-    a table to input the date of your appointment and it will turn to red when it is time to book your next one. In screening time, click on the information
-    button for a table that provides you with more information for each appointment and speak to your family doctor as well to set up each one.</string>
+    <string name="button3Text">The surveillance times outline when you see your physcian or other health care provider. The surveillance times table
+        provides you with  place to keep track of when you need to make appointments and will remind you when you are due!</string>
 
     <string name="button4Title">I keep getting reminders every few months, can I get rid of them?</string>
-    <string name="button4Text">Unfortunately not. They are meant to help you to keep track of your condition by reminding you to set up doctors
-    appointments and medications.</string>
+    <string name="button4Text">Unfortunately not, they are meant to remind you to fill out your checklist to help you keep track of how you are doing!</string>
 
     <string name="button5Title">Where can I go for more information?</string>
-    <string name="button5Text">You can go for more information at the following locations;</string>
+    <string name="button5Text">Great question!;
+        \n\nTo learn more about the Turner Society of Canada and the resources it has visit; www.turnersyndrome.ca
+        \n\nA great place to learn about sexual health is; www.sexualityandu.ca
+        \n\nMost importantly, your health care provider can be a great resource for any questions you may have!
+    </string>
 
-    <string name="button6Title">Where can I go if I need help?</string>
-    <string name="button6Text">You can find help at the following locations;</string>
+    <string name="button6Title">Can I contact TGuide?</string>
+    <string name="button6Text">Of course, ff you are interested in providing feedback or have any questions/concerns about TGuide,
+        please feel free to email us at contacttguide@gmail.com or leave a comment on the app store. We are always looking for
+        new ways to improve the app to better help you! \n If you have any questions about the Turner Society of Canada or other questions/concerns,
+        please contact info@turnersyndrome.ca.</string>
 
     <!-- Strings for Checklist -->
     <string name="titleChecklist">Checklist Description</string>
@@ -123,16 +133,16 @@
     <string name="refreshDesp">Refresh Checklist</string>
 
     <!-- Self-reflection description -->
-    <string name="selfReflection">Reflection and meditation can help to reduce stress and anxiety. It is a great way to see how you are doing and
-        how you are doing. Try to find a quite room and take a few minutes out of your day to see how you are doing. Some questions to think about are;
+    <string name="selfReflection">Reflection and meditation can help to reduce stress and anxiety. It is a great way to reflect on your daily life.
+        Try to find a quite room and take a few minutes out of your day for yourself. Some questions to think about are:
         \n\t - How have you been doing recently?
         \n\t - Are you taking care of yourself physically?
-        \n\t - What about Mentally?
+        \n\t - What about mentally?
         \n\t - Do you feel stressed? How come?
         \n\t - Do you feel supported?
         \n\t - Do changes need to be made in your life?
         \n\t - Are you content?
-        \n\nTry using the audio as a guide to help you with your reflection and medititation practice.
+        \n\nTry using the audio as a guide to help you with your reflection and meditation practice.
     </string>
     <string name="PlayAudio">Play Audio</string>
     <string name="PauseAudio">Stop Audio</string>
@@ -167,26 +177,28 @@
     <string name="twothreeyears">2&#8211;3 Years</string>
     <string name="overdue">Overdue</string>
     <string name="surveillance_infoTitle">Information</string>
-    <string name="surveillance_dialogDescrip"> Use this space as a way to keep track of when you need to schedule appoints. Just
-    click on the appointment and enter when your appointment is or was. Then text will turn red when it is time to book another
-    appointment. \n\nYou can download a PDF version of the table with a full decription of the tests below. </string>
+    <string name="surveillance_dialogDescrip"> Use this space as a way to keep track of when you need to schedule appointments. Just
+    click on the appointment and enter when your appointment is or was. The text will turn red when it is time to book another
+    appointment and you will also receive a reminder! \n\nYou can download a PDF version of the
+        table with a full description of the tests below. </string>
     <string name="surveillance_tableDownload">View Table</string>
     <string name="dialog_close">Close</string>
+
     <!-- Notifications for surveillance times -->
     <string name="physicalexamTitle">Time to book your physical exam!</string>
-    <string name="physicalexamdesp">Go to surveillance times tab.</string>
-    <string name="screenbloodTitle">Time for screening blood work.</string>
-    <string name="ECGTitle">Time to book ECG!</string>
-    <string name="ECHOTitle">Time to book ECHO!</string>
-    <string name="CTMRITitle">Time to book CT/MRI!</string>
+    <string name="physicalexamdesp">Go to surveillance times for more information.</string>
+    <string name="screenbloodTitle">Time for screening blood work!</string>
+    <string name="ECGTitle">Time for an ECG!</string>
+    <string name="ECHOTitle">Time to book an ECHO!</string>
+    <string name="CTMRITitle">Time to book a CT/MRI!</string>
     <string name="antiproTitle">Time to check antibiotics!</string>
-    <string name="celiacTitle">Time for celiac screen!</string>
-    <string name="visionTitle">Time to check vision!</string>
+    <string name="celiacTitle">Time for your celiac screen!</string>
+    <string name="visionTitle">Time to check your vision!</string>
     <string name="hearingTitle">Time for hearing exam!</string>
-    <string name="bonedensityTitle">Time to for bone density exam!</string>
+    <string name="bonedensityTitle">Time for your bone density exam!</string>
 
     <!-- String for emergency aortic dissection card -->
-    <string name="emergencyTitle">I have Turner Syndrome and I am at risk of Aortic Dissection. I have;</string>
+    <string name="emergencyTitle">I have Turner Syndrome and I am at risk of Aortic Dissection. I have:</string>
     <string name="emergencyItem1">Bicupsid Aortic Valve</string>
     <string name="emergencyItem2">Hx of Aortic Coarctation</string>
     <string name="emergencyItem3">High Blood Pressure</string>
@@ -196,17 +208,17 @@
     <string name="emergConfirm">Confirm</string>
     <string name="emergCancel">Cancel</string>
     <string name="symptomsbutton">Show Symptoms</string>
-    <string name="symbuttonmessage">- Sudden severe chest or upper back bain
-        \n- Shortness of breath, difficult speaking
+    <string name="symbuttonmessage">- Sudden severe chest or upper back pain
+        \n- Shortness of breath, difficulty speaking
         \n- Dizzy, weak, sweaty, anxious, pale
         \n- Fast pulse</string>
     <string name="symptombuttonexit">Close</string>
     <string name="incorrectconfirmtion">Input Incorrect</string>
     <string name="cardinfo">Females with Turner Syndrome have an increased likelihood of an
-    aortic dissection which can be life threatening due to these items. If you suspect the aortic
+    aortic dissection which can be life threatening. If you are experiencing the aortic
     dissection symptoms then present to the emergency department immediately and present this card
-    to help them guide your treatment. It is also best to keep a physical, paper card with this
-    information on you too.</string>
+    to help the emergency room staff to help guide your treatment. It is also best to keep a physical, paper card with this
+    information on you as well.</string>
     <string name="cardinfocontentdesp">Information about this card.</string>
     <string name="title_activity_login">Sign in</string>
 
@@ -223,4 +235,35 @@
         completions."
     </string>
     <string name="title_activity_profile">profileActivity</string>
+    <string name="username">Username (email)</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="forgetpassword">Forgot Password?</string>
+    <string name="password">Password</string>
+    <string name="enteremail">Enter Email</string>
+    <string name="enterpassword">Password</string>
+
+    <!-- Activity Drawer Strings -->
+    <string name="home">Home</string>
+    <string name="aboutturnersyndrome">About Turner Syndrome</string>
+    <string name="checklist">Checklist</string>
+    <string name="surveillancetimes">Surveillance Times</string>
+    <string name="reflection">Reflection</string>
+    <string name="reminders">Reminders</string>
+    <string name="notepaddrawer">Notepad</string>
+    <string name="faqdrawer">FAQ</string>
+    <string name="accountinfo">Account Information</string>
+    <string name="addreminder">Add Reminder</string>
+
+    <!-- Account Information -->
+    <string name="changeemaildialog">Enter Email</string>
+    <string name="confirm">Confirm</string>
+    <string name="emailchangeconfirm">Email Changed</string>
+    <string name="emailchangeerror">Error. Please try again.</string>
+    <string name="changepassword">Change Password</string>
+    <string name="oldpassword">Enter Old Password</string>
+    <string name="newpassword">Enter New Password</string>
+    <string name="confirmnewpassword">Confirm New Password</string>
+    <string name="passwordnomatch">Error. Passwords do not match.</string>
+    <string name="passwordnotupdated">Error. Please try again.</string>
 </resources>

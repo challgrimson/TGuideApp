@@ -42,6 +42,8 @@ public class HomeActivity extends AppCompatActivity
         WeeklyCheckList.OnFragmentInteractionListener,
         Reflection.OnFragmentInteractionListener,
         SurveillenceTimes.OnFragmentInteractionListener,
+        accountinfo.OnFragmentInteractionListener,
+
 
         NavigationView.OnNavigationItemSelectedListener {
 
@@ -101,6 +103,8 @@ public class HomeActivity extends AppCompatActivity
 
             // Create and show the AlertDialog
             AlertDialog alertDialog = builder.create();
+            alertDialog.setCancelable(false);
+            alertDialog.setCanceledOnTouchOutside(false);
             alertDialog.show();
 
             // Create welcome alarm
@@ -126,7 +130,10 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Fragment fragment = new HomePage();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.mainFrame, fragment);
+            ft.commit();
         }
     }
 
@@ -192,6 +199,8 @@ public class HomeActivity extends AppCompatActivity
             fragment = new Reflection();
         } else if (id == R.id.fraq_surv) {
             fragment = new SurveillenceTimes();
+        } else if (id == R.id.frag_accountinfo) {
+            fragment = new accountinfo();
         }
 
         // Change Fragment

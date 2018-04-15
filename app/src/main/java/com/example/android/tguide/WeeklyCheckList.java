@@ -80,7 +80,7 @@ public class WeeklyCheckList extends Fragment {
 
         // Send Main Page as a title parameter
         if (mListener != null){
-            mListener.onFragmentInteraction("Weekly Checklist");
+            mListener.onFragmentInteraction(getString(R.string.checklist));
         }
 
         // Grab views

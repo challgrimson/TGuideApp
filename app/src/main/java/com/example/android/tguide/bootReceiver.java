@@ -250,43 +250,43 @@ public class bootReceiver extends BroadcastReceiver {
                 switch (Integer.valueOf(idvalue)) {
                     case 1:
                         begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.physicalexamTitle),
-                                mContext.getString(R.string.physicalexamdesp), Integer.valueOf(timevalue) + 30000, -1, "false");
+                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue), -1, "false");
                         break;
                     case 6:
                         begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.screenbloodTitle),
-                                mContext.getString(R.string.physicalexamdesp), Integer.valueOf(timevalue) + 30000, -1, "false");
+                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue), -1, "false");
                         break;
                     case 10:
                         begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.celiacTitle),
-                                mContext.getString(R.string.physicalexamdesp), Integer.valueOf(timevalue) + 30000, -1, "false");
+                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
                         break;
                     case 11:
                         begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.ECGTitle),
-                                mContext.getString(R.string.physicalexamdesp), Integer.valueOf(timevalue) + 30000, -1, "false");
+                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
                         break;
                     case 12:
                         begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.ECHOTitle),
-                                mContext.getString(R.string.physicalexamdesp), Integer.valueOf(timevalue) + 30000, -1, "false");
+                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
                         break;
                     case 13:
                         begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.CTMRITitle),
-                                mContext.getString(R.string.physicalexamdesp), Integer.valueOf(timevalue) + 30000, -1, "false");
+                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
                         break;
                     case 14:
                         begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.antiproTitle),
-                                mContext.getString(R.string.physicalexamdesp), Integer.valueOf(timevalue) + 30000, -1, "false");
+                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
                         break;
                     case 15:
                         begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.visionTitle),
-                                mContext.getString(R.string.physicalexamdesp), Integer.valueOf(timevalue) + 30000, -1, "false");
+                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
                         break;
                     case 16:
                         begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.hearingTitle),
-                                mContext.getString(R.string.physicalexamdesp), Integer.valueOf(timevalue) + 30000, -1, "false");
+                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
                         break;
                     case 17:
                         begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.bonedensityTitle),
-                                mContext.getString(R.string.physicalexamdesp), Integer.valueOf(timevalue) + 30000, -1, "false");
+                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
                         break;
                 }
                 cursor.moveToNext();

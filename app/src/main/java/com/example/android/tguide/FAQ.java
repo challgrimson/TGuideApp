@@ -76,7 +76,7 @@ public class FAQ extends Fragment {
 
         // Send Main Page as a title parameter
         if (mListener != null) {
-            mListener.onFragmentInteraction("FAQ");
+            mListener.onFragmentInteraction(getString(R.string.faqdrawer));
         }
 
         //current implementation of setting clicking for FAQ buttons, sure will be changed

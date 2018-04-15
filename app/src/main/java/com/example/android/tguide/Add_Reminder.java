@@ -123,7 +123,7 @@ public class Add_Reminder extends Fragment implements
 
         // Send Add Reminder as a title parameter
         if (mListener != null){
-            mListener.onFragmentInteraction("Add Reminder");
+            mListener.onFragmentInteraction(getString(R.string.addreminder));
         }
 
         // Initialize Views
@@ -154,9 +154,21 @@ public class Add_Reminder extends Fragment implements
         // Create the date layout to be displayed
         mDate = mDay + "/" + (mMonth + 1) + "/" + mYear;
         if (mMinute < 10) {
-            mTime = (((mHour - 1) % 12) + 1) + ":" + "0" + mMinute;
+            if (mHour == 0) {
+                mTime = (mHour + 12) + ":" + "0" + mMinute;
+            } else if (mHour <= 12) {
+                mTime = mHour + ":" + "0" + mMinute;
+            } else {
+                mTime = (mHour - 12) + ":" + "0" + mMinute;
+            }
         } else {
-            mTime = (((mHour - 1) % 12) + 1) + ":" + mMinute;
+            if (mHour == 0) {
+                mTime = (mHour + 12) + ":" + mMinute;
+            } else if (mHour <= 12) {
+                mTime = mHour + ":" + mMinute;
+            } else {
+                mTime = (mHour - 12) + ":" + mMinute;
+            }
         }
 
         if (mHour >= 12) {
@@ -390,9 +402,21 @@ public class Add_Reminder extends Fragment implements
         mHour = hourOfDay;
         mMinute = minute;
         if (minute < 10) {
-            mTime = (((hourOfDay - 1) % 12) + 1)  + ":" + "0" + minute;
+            if (mHour == 0) {
+                mTime = (mHour + 12) + ":" + "0" + mMinute;
+            } else if (mHour <= 12) {
+                mTime = mHour + ":" + "0" + mMinute;
+            } else {
+                mTime = (mHour - 12) + ":" + "0" + mMinute;
+            }
         } else {
-            mTime = (((hourOfDay - 1) % 12) + 1) + ":" + minute;
+            if (mHour == 0) {
+                mTime = (mHour + 12) + ":" + mMinute;
+            } else if (mHour <= 12) {
+                mTime = mHour + ":" + mMinute;
+            } else {
+                mTime = (mHour - 12) + ":" + mMinute;
+            }
         }
 
         if (mHour >= 12) {

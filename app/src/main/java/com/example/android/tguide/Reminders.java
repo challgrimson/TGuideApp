@@ -83,7 +83,7 @@ public class Reminders extends Fragment {
 
         // Send Main Page as a title parameter
         if (mListener != null){
-            mListener.onFragmentInteraction("Reminders");
+            mListener.onFragmentInteraction(getString(R.string.reminders));
         }
 
         // Connect to SQL database

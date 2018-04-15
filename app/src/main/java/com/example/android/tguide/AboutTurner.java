@@ -66,7 +66,7 @@ public class AboutTurner extends Fragment {
 
         // Send Main Page as a title parameter
         if (mListener != null){
-            mListener.onFragmentInteraction("About Turner Syndrome");
+            mListener.onFragmentInteraction(getString(R.string.aboutturnersyndrome));
         }
 
         return view;

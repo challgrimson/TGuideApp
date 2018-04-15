@@ -33,5 +33,8 @@
     <string name="updateFailed">Reminder Update Failed</string>
     <string name="saved">Reminder Saved</string>
     <string name="savedFailed">Reminder Save Failed</string>
+    <string name="repeathint">1</string>
+    <string name="repeatEvery">Chaque</string>
+    <string name="save">Enregistrer</string>
 
 </resources>
