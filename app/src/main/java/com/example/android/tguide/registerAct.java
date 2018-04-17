@@ -45,7 +45,7 @@ public class registerAct extends AppCompatActivity implements View.OnClickListen
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
         }
 
-        //initializing views
+        //initializing view
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         textViewSignin = findViewById(R.id.textViewSignin);
