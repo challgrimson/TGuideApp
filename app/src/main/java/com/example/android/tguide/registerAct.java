@@ -65,12 +65,12 @@ public class registerAct extends AppCompatActivity implements View.OnClickListen
 
         //checking if email and passwords are empty
         if(TextUtils.isEmpty(email)){
-            Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.requestemaillogin),Toast.LENGTH_LONG).show();
             return;
         }
 
         if(TextUtils.isEmpty(password)){
-            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.requestpassword),Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -88,12 +88,12 @@ public class registerAct extends AppCompatActivity implements View.OnClickListen
                         //checking if success
                         if(task.isSuccessful()){
                             //display some message here
-                            Toast.makeText(registerAct.this,"Successfully registered",Toast.LENGTH_LONG).show();
+                            Toast.makeText(registerAct.this,getString(R.string.registersucess),Toast.LENGTH_LONG).show();
                             finish();
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                         }else{
                             //display some message here
-                            Toast.makeText(registerAct.this,"Registration Error",Toast.LENGTH_LONG).show();
+                            Toast.makeText(registerAct.this,getString(R.string.registerrorr),Toast.LENGTH_LONG).show();
                         }
                         progressDialog.dismiss();
                     }

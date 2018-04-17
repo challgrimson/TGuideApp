@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,55 +6,78 @@
     tools:context="com.example.android.tguide.accountinfo">
 
     <LinearLayout
+        android:id="@+id/linearbutton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_gravity="center_vertical">
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerInParent="true">
 
-        <TextView
-            android:id="@+id/emailaccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test@gmail.ca"
-            android:textSize="15dp"/>
-
-        <Button
-            android:id="@+id/changeemail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:text="Change"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/emailaccount"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_gravity="center_vertical">
+        android:textSize="25sp" />
 
-        <TextView
-            android:id="@+id/passwordaccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="password"
-            android:inputType=""
-            android:textSize="15dp"/>
+    <Button
+        android:id="@+id/changeemail"
+        android:text="@string/changeemail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        android:gravity="center"
+        android:background="@drawable/accountinfobutton"
+        android:textColor="@android:color/white"
+        android:textCursorDrawable="@null"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
-        <Button
-            android:id="@+id/changepassword"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
-            android:text="Change"/>
+    <Button
+        android:id="@+id/changepassword"
+        android:text="@string/changepassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        android:gravity="center"
+        android:background="@drawable/accountinfobutton"
+        android:textColor="@android:color/white"
+        android:textCursorDrawable="@null"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
 
+    <Button
+        android:id="@+id/resetpassword"
+        android:text="@string/resetemail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
+        android:gravity="center"
+        android:background="@drawable/accountinfobutton"
+        android:textColor="@android:color/white"
+        android:textCursorDrawable="@null"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
     </LinearLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/deleteaccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="@string/deleteaccount"
+        android:clickable="true"
+        android:focusable="true"
+        android:textSize="25sp"
+        android:textColor="@color/colorAccent"
+        android:gravity="bottom"
+        android:layout_below="@+id/linearbutton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

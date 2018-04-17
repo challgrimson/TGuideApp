@@ -67,16 +67,16 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
 
 
         if(TextUtils.isEmpty(email)){
-            Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.requestemaillogin),Toast.LENGTH_LONG).show();
             return;
         }
 
         if(TextUtils.isEmpty(password)){
-            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,getString(R.string.enterpassword),Toast.LENGTH_LONG).show();
             return;
         }
 
-        progressDialog.setMessage("Logining in...");
+        progressDialog.setMessage(getString(R.string.loggingin));
         progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -90,9 +90,9 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                         }
                         else{
                             AlertDialog alertDialog = new AlertDialog.Builder(loginActivity.this).create();
-                            alertDialog.setTitle("Error");
-                            alertDialog.setMessage("login error, please try again");
-                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            alertDialog.setTitle(getString(R.string.error));
+                            alertDialog.setMessage(getString(R.string.logingeorr));
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.ok),
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.dismiss();
@@ -119,7 +119,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
 
         if(view == forgotPass){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Please enter account email");
+            builder.setTitle(getString(R.string.requestemail));
 
             // Set up the input
             final EditText input = new EditText(this);
@@ -128,7 +128,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
             builder.setView(input);
 
             // Set up the buttons
-            builder.setPositiveButton("Send Email", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(getString(R.string.sendemail), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     m_Text = input.getText().toString();
@@ -143,7 +143,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                             });
                 }
             });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();

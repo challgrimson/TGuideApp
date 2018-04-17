@@ -260,10 +260,31 @@
     <string name="confirm">Confirm</string>
     <string name="emailchangeconfirm">Email Changed</string>
     <string name="emailchangeerror">Error. Please try again.</string>
-    <string name="changepassword">Change Password</string>
+    <string name="changepassword">Update Password</string>
     <string name="oldpassword">Enter Old Password</string>
     <string name="newpassword">Enter New Password</string>
     <string name="confirmnewpassword">Confirm New Password</string>
     <string name="passwordnomatch">Error. Passwords do not match.</string>
     <string name="passwordnotupdated">Error. Please try again.</string>
+    <string name="passwordchanged">Password Changed</string>
+    <string name="changeemail">Update Email</string>
+    <string name="resetemail">Reset Email</string>
+    <string name="deleteaccount">Delete Account</string>
+    <string name="removeaccountconfirm">We are sorry to see you go. If you have or had any questions or concerns,
+    please feel to contact us using the information found in the FAQ question. To confirm your account deactivation, please
+    type in the follow password:</string>
+    <string name="passwordnotcorrect">Error. Password not correct.</string>
+    <string name="incorrectcredentials">Error. Credentials incorrectl</string>
+    <string name="sendemail">Send Email</string>
+    <string name="requestemail">Please enter account email</string>
+
+    <!-- Login Info -->
+    <string name="requestemaillogin">Please enter email</string>
+    <string name="requestpassword">Please enter password</string>
+    <string name="error">Error</string>
+    <string name="loggingin">Logging in ...</string>
+    <string name="logingeorr">Login Error. Please try again.</string>
+    <string name="ok">Ok</string>
+    <string name="registersucess">Successfully Registered</string>
+    <string name="registerrorr">Registration Error</string>
 </resources>
