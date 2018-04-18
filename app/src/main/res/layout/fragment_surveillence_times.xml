@@ -17,7 +17,8 @@
             android:id="@+id/PAP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -26,17 +27,17 @@
                 android:text="@string/physicalExam"
                 android:textColor="@color/colorAccent"
                 android:textSize="17sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_weight="5.2"/>
 
             <TextView
                 android:id="@+id/PAPtext"
                 style="@style/overdueText"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:paddingStart="0dp"
+                android:layout_weight="1"
                 android:paddingEnd="5dp"
-                android:layout_marginStart="153dp" />
+                android:paddingStart="0dp" />
         </LinearLayout>
 
         <View
@@ -200,7 +201,8 @@
         android:id="@+id/thyroidDisease"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_weight="1">
 
         <TextView
             android:layout_width="wrap_content"
@@ -210,19 +212,19 @@
             android:text="@string/screeningWork"
             android:textColor="@color/colorAccent"
             android:textSize="17sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_weight="3"/>
 
         <TextView
             style="@style/overdueText"
             android:id="@+id/thyroidDiseasetext"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="0.95"
             android:textSize="15sp"
             android:gravity="center_vertical"
             android:paddingStart="0dp"
             android:paddingEnd="5dp"
-            android:layout_marginStart="92dp"/>
+            android:layout_weight="1"/>
     </LinearLayout>
 
         <View

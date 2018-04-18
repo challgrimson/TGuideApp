@@ -88,6 +88,7 @@ public class registerAct extends AppCompatActivity implements View.OnClickListen
                         //checking if success
                         if(task.isSuccessful()){
                             //display some message here
+                            firebaseAuth.getCurrentUser().sendEmailVerification();
                             Toast.makeText(registerAct.this,getString(R.string.registersucess),Toast.LENGTH_LONG).show();
                             finish();
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
