@@ -72,7 +72,7 @@ public class AboutTurner extends Fragment {
         return view;
     }
 
-
+    // Attach file
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
