@@ -43,6 +43,7 @@ public class HomeActivity extends AppCompatActivity
         Reflection.OnFragmentInteractionListener,
         SurveillenceTimes.OnFragmentInteractionListener,
         accountinfo.OnFragmentInteractionListener,
+        calendar.OnFragmentInteractionListener,
 
 
         NavigationView.OnNavigationItemSelectedListener {
@@ -126,6 +127,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -191,9 +193,11 @@ public class HomeActivity extends AppCompatActivity
             fragment = new FAQ();
         } else if (id == R.id.frag_aboutTurner) {
             fragment = new AboutTurner();
-        } else if (id == R.id.frag_reminders) {
+        }
+        // REMOVED FOR TESTING REMINDER
+        /*else if (id == R.id.frag_reminders) {
             fragment = new Reminders();
-        } else if (id == R.id.frag_checklist) {
+        }*/ else if (id == R.id.frag_checklist) {
             fragment = new WeeklyCheckList();
         } else if (id == R.id.fraq_reflect) {
             fragment = new Reflection();
@@ -201,6 +205,8 @@ public class HomeActivity extends AppCompatActivity
             fragment = new SurveillenceTimes();
         } else if (id == R.id.frag_accountinfo) {
             fragment = new accountinfo();
+        } else if (id == R.id.fraq_calendar) {
+            fragment = new calendar();
         }
 
         // Change Fragment
@@ -277,16 +283,31 @@ public class HomeActivity extends AppCompatActivity
     }
 
     // Change to add reminder fragment when clicked
-    public void change_AddReminder () {
+    public void change_AddReminder (String date) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.mainFrame, new Add_Reminder());
-        ft.commit();
+        // CHANGED FOR CALENDAR
+        //ft.replace(R.id.mainFrame, new Reminders());
+
+        // Send date so that starts with correct date
+        Bundle bundle = new Bundle();
+        bundle.putString("date",date);
+
+        // Change Fragmentow();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Add_Reminder fragobj = new Add_Reminder();
+        fragobj.setArguments(bundle);
+        //fragobj.newInstance("true", title, description, date, time, repeat, repeatNu, repeatTy, active, reminderID);
+        fragmentTransaction.replace(R.id.mainFrame,fragobj);
+        fragmentTransaction.commit();
     }
 
     // Change to reminder activity when clicked
     public void change_Reminder () {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.mainFrame, new Reminders());
+        // CHANGED FOR CALENDAR
+        //ft.replace(R.id.mainFrame, new Reminders());
+        ft.replace(R.id.mainFrame, new calendar());
         ft.commit();
     }
 
@@ -342,7 +363,8 @@ public class HomeActivity extends AppCompatActivity
 
     public String generateUniqueID() {
         ++NOTIFICATION_UNIQUE_ID;
-        return String.valueOf(NOTIFICATION_UNIQUE_ID);
+        //return String.valueOf(NOTIFICATION_UNIQUE_ID);
+        return String.valueOf((int) System.currentTimeMillis());
     }
 
     public void welcomeAlarm () {

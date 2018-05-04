@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -110,9 +111,8 @@ public class Add_Reminder extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (getArguments() != null && getArguments().containsKey("title")) {
             mRestore = true;
-
         }
     }
 
@@ -145,37 +145,16 @@ public class Add_Reminder extends Fragment implements
         mRepeatType = getString(R.string.repeatDefault);
 
         // Initialize date value so that they first appear as current data
+        // Hour and time are set later
+        String currentDate = getArguments().getString("date");
         mCalendar = Calendar.getInstance();
-        mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
-        mMinute = mCalendar.get(Calendar.MINUTE);
+        mCalendar.set(Calendar.DAY_OF_MONTH, Integer.valueOf(currentDate.substring(0,2)));
+        mCalendar.set(Calendar.MONTH, Integer.valueOf(currentDate.substring(3,5))-1);
+        mCalendar.set(Calendar.YEAR, Integer.valueOf(currentDate.substring(6)));
+
         mYear = mCalendar.get(Calendar.YEAR);
         mMonth = mCalendar.get(Calendar.MONTH);
         mDay = mCalendar.get(Calendar.DATE);
-        // Create the date layout to be displayed
-        mDate = mDay + "/" + (mMonth + 1) + "/" + mYear;
-        if (mMinute < 10) {
-            if (mHour == 0) {
-                mTime = (mHour + 12) + ":" + "0" + mMinute;
-            } else if (mHour <= 12) {
-                mTime = mHour + ":" + "0" + mMinute;
-            } else {
-                mTime = (mHour - 12) + ":" + "0" + mMinute;
-            }
-        } else {
-            if (mHour == 0) {
-                mTime = (mHour + 12) + ":" + mMinute;
-            } else if (mHour <= 12) {
-                mTime = mHour + ":" + mMinute;
-            } else {
-                mTime = (mHour - 12) + ":" + mMinute;
-            }
-        }
-
-        if (mHour >= 12) {
-            mTime = mTime + " " + "PM";
-        } else {
-            mTime = mTime + " " + "AM";
-        }
 
         // Setup Reminder Title To Inputted Title Text
         mTitleText.addTextChangedListener(new TextWatcher() {
@@ -209,11 +188,6 @@ public class Add_Reminder extends Fragment implements
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-        // Setup TextViews using default reminder values
-        mDateText.setText(mDate);
-        mTimeText.setText(mTime);
-        mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType);
 
         // Initilize floating action buttons to sound on
         mFAB1.setVisibility(View.GONE);
@@ -288,7 +262,10 @@ public class Add_Reminder extends Fragment implements
                 mDateText.setText(getArguments().getString("date"));
                 mTimeText.setText(getArguments().getString("time"));
                 uniqueID = getArguments().getString("uniqueID");
+                mDate = getArguments().getString("date");
+                mTime = getArguments().getString("time");
                 String isRepeat = getArguments().getString("repeat");
+
                 if (isRepeat.equals("true")) {
                     mRepeatText.setText("Every " + getArguments().getString("repeatNu") + " " + getArguments().getString("repeatTy"));
                 }else {
@@ -301,7 +278,89 @@ public class Add_Reminder extends Fragment implements
                     mFAB1.setVisibility(View.VISIBLE);
                     mFAB2.setVisibility(View.GONE);
                 }
+
+                // Set mcalendar to correct time
+                // Set hour time for calendar
+                String hour;
+                // Grab time values
+                if (mTimeText.length() == 7) {
+                    hour = mTimeText.getText().toString().substring(0,1);
+                } else {
+                    hour = mTimeText.getText().toString().substring(0,2);
+                }
+
+                String minute = mTimeText.getText().toString().substring(mTimeText.length()-5, mTimeText.length()-3);
+                // Set times in calendar
+                mCalendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(hour));
+                mCalendar.set(Calendar.MINUTE, Integer.valueOf(minute));
+
+                Log.i("Add_Reminder", String.valueOf(mCalendar.get(Calendar.HOUR_OF_DAY)));
+                // Set am or pm
+                int ampm;
+                if (mTimeText.getText().toString().substring(mTimeText.length() - 2).equals("AM")) {
+                    ampm = 0;
+                } else {
+                    ampm = 1;
+                }
+                mCalendar.set(Calendar.AM_PM, ampm);
+
+                Log.i("Add_Reminders", String.valueOf(mTimeText.length()));
+                Log.i("Add_Reminder", String.valueOf(mCalendar.get(Calendar.HOUR_OF_DAY)));
+                Log.i("Add_Reminder", minute);
+                Log.i("Add_Reminder", String.valueOf(ampm));
+
+                // Change default values to new ones
+                mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
+                mMinute = mCalendar.get(Calendar.MINUTE);
+
+                Log.i("Add_Reminder", String.valueOf(mHour));
+                Log.i("Add_Reminder", String.valueOf(mMinute));
+        } else {
+            // Not restored to set current values
+            mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
+            mMinute = mCalendar.get(Calendar.MINUTE);
+
+            // Set it such that have 0 if month less then certain time
+            if (mMonth < 10) {
+                mDate = mDay + "/0" + (mMonth + 1) + "/" + mYear;
+
+            } else {
+                mDate = mDay + "/" + (mMonth + 1) + "/" + mYear;
+            }
+
+            if (mDay < 10) {mDate = "0" + mDate;};
+
+            if (mMinute < 10) {
+                if (mHour == 0) {
+                    mTime = (mHour + 12) + ":" + "0" + mMinute;
+                } else if (mHour <= 12) {
+                    mTime = mHour + ":" + "0" + mMinute;
+                } else {
+                    mTime = (mHour - 12) + ":" + "0" + mMinute;
+                }
+            } else {
+                if (mHour == 0) {
+                    mTime = (mHour + 12) + ":" + mMinute;
+                } else if (mHour <= 12) {
+                    mTime = mHour + ":" + mMinute;
+                } else {
+                    mTime = (mHour - 12) + ":" + mMinute;
+                }
+            }
+
+            if (mHour >= 12) {
+                mTime = mTime + " " + "PM";
+            } else {
+                mTime = mTime + " " + "AM";
+            }
+
+            // Setup TextViews using default reminder values
+            mDateText.setText(mDate);
+            mTimeText.setText(mTime);
+            mRepeatText.setText("Every " + mRepeatNo + " " + mRepeatType);
         }
+
+
 
         return view;
     }
@@ -322,6 +381,7 @@ public class Add_Reminder extends Fragment implements
         super.onDetach();
         mListener = null;
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -363,11 +423,10 @@ public class Add_Reminder extends Fragment implements
 
     // On clicking Time picker
     public void setTime(View v){
-        Calendar now = Calendar.getInstance();
         TimePickerDialog tpd = TimePickerDialog.newInstance(
                 this,
-                now.get(Calendar.HOUR_OF_DAY),
-                now.get(Calendar.MINUTE),
+                mCalendar.get(Calendar.HOUR_OF_DAY),
+                mCalendar.get(Calendar.MINUTE),
                 false
         );
         tpd.setThemeDark(false);
@@ -376,22 +435,29 @@ public class Add_Reminder extends Fragment implements
 
     // On clicking Date picker
     public void setDate(View v){
-        Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
                 // UNSURE IF THIS WILL WORK
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePickerDialog v, int year, int monthOfYear, int dayOfMonth) {
-                        mDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        // Add 0 in front of appropiate section
+                        if (monthOfYear < 10) {
+                            mDate = dayOfMonth + "/0" + (monthOfYear + 1) + "/" + year;
+                        } else {
+                            mDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        }
+
+                        if (dayOfMonth < 10) {mDate = "0" + mDate;};
+
                         mDateText.setText(mDate);
                         mMonth = monthOfYear;
                         mYear = year;
                         mDay = dayOfMonth;
                     }
                 },
-                now.get(Calendar.YEAR),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH)
+                mCalendar.get(Calendar.YEAR),
+                mCalendar.get(Calendar.MONTH),
+                mCalendar.get(Calendar.DAY_OF_MONTH)
         );
         dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
     }
