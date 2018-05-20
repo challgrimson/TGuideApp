@@ -180,6 +180,19 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
                 null, null, null, null, null);
     }
 
+    // Fetch dates for cursor to set calendar events
+    public Cursor fetchEvents() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(REMINDER_TABLE_NAME, new String[] {REMINDER_COLUMN_DATE},
+                null, null, null, null, null);
+    }
+
+    // Fetch entries with corresponding date
+    public Cursor getDateEvents(String date) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return  db.rawQuery("SELECT * FROM " + REMINDER_TABLE_NAME +" WHERE " + REMINDER_COLUMN_DATE + " = ?", new String[] { date });
+    }
+
 
     /*
     // Insert welcome alarm time into database - alarm time in ms

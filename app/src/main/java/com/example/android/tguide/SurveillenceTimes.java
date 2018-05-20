@@ -20,13 +20,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -136,81 +129,6 @@ public class SurveillenceTimes extends Fragment {
         mHEAtime = sharedPref.getLong("HEAtime", -1);
         mBONtime = sharedPref.getLong("BONtime", -1);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-
-        ref.child("users").child(user.getUid()).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.child("users").exists()) {
-                            // Get user value
-                            User user = dataSnapshot.getValue(User.class);
-                            // Save current state of checked items
-                            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-
-                            Boolean state1 = sharedPref.getBoolean("box1",user.getClBox1());
-                            Boolean state2 = sharedPref.getBoolean("box2",user.getClBox2());
-                            Boolean state3 = sharedPref.getBoolean("box3",user.getClBox3());
-                            Boolean state4 = sharedPref.getBoolean("box4",user.getClBox4());
-
-                            mPAPtext.setText(user.getmPAPtext());
-                            mTHYtext.setText(user.getmTHYtext());
-                            mCELtext.setText(user.getmCELtext());
-                            mECGtext.setText(user.getmECGtext());
-                            mECHtext.setText(user.getmECHtext());
-                            mCTtext.setText(user.getmCTtext());
-                            mPROtext.setText(user.getmPROtext());
-                            mVIStext.setText(user.getmVIStext());
-                            mHEAtext.setText(user.getmHEAtext());
-                            mBONtext.setText(user.getmBONtext());
-                        } else  {
-                            // Set text
-                            mPAPtext.setText(getString(R.string.overdue));
-                            mTHYtext.setText(getString(R.string.overdue));
-                            mCELtext.setText(getString(R.string.overdue));
-                            mECGtext.setText(getString(R.string.overdue));
-                            mECHtext.setText(getString(R.string.overdue));
-                            mCTtext.setText(getString(R.string.overdue));
-                            mPROtext.setText(getString(R.string.overdue));
-                            mVIStext.setText(getString(R.string.overdue));
-                            mHEAtext.setText(getString(R.string.overdue));
-                            mBONtext.setText(getString(R.string.overdue));
-                            // Set time
-                            mPAPtime = -1;
-                            mTHYtime = -1;
-                            mCELtime = -1;
-                            mECGtime = -1;
-                            mECHtime = -1;
-                            mCTtime = -1;
-                            mPROtime = -1;
-                            mVIStime = -1;
-                            mHEAtime = -1;
-                            mBONtime = -1;
-
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-
-                            ref.child("users").child(user.getUid()).child("mPAPtext").setValue("Overdue");
-                            ref.child("users").child(user.getUid()).child("mTHYtext").setValue("Overdue");
-                            ref.child("users").child(user.getUid()).child("mCELtext").setValue("Overdue");
-                            ref.child("users").child(user.getUid()).child("mECGtext").setValue("Overdue");
-                            ref.child("users").child(user.getUid()).child("mECHtext").setValue("Overdue");
-                            ref.child("users").child(user.getUid()).child("mCTtext").setValue("Overdue");
-                            ref.child("users").child(user.getUid()).child("mPROtext").setValue("Overdue");
-                            ref.child("users").child(user.getUid()).child("mVIStext").setValue("Overdue");
-                            ref.child("users").child(user.getUid()).child("mHEAtext").setValue("Overdue");
-                            ref.child("users").child(user.getUid()).child("mBONtext").setValue("Overdue");
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-
-                    }
-                });
-
         // Initilize Calendar variables
         mCalendar = Calendar.getInstance();
         mYear = mCalendar.get(Calendar.YEAR);
@@ -231,11 +149,7 @@ public class SurveillenceTimes extends Fragment {
 
                 // Call date setter and grab time
                 setDate(v, mPAPtext, 1);
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                Calendar calendar = Calendar.getInstance();
-                String mDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + Calendar.YEAR;
-                ref.child("users").child(user.getUid()).child("mPAPtext").setValue(mDate);
+
                //getActivity().startService(intent);
                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
@@ -249,12 +163,7 @@ public class SurveillenceTimes extends Fragment {
 
                 // Call date setter
                 setDate(v, mTHYtext, 6);
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-                Calendar calendar = Calendar.getInstance();
-                String mDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + Calendar.YEAR;
-                ref.child("users").child(user.getUid()).child("THYstate").setValue(mDate);
                 //getActivity().startService(intent);
                 //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
@@ -268,12 +177,7 @@ public class SurveillenceTimes extends Fragment {
 
                 // Call date setter
                 setDate(v, mCELtext, 10);
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-                Calendar calendar = Calendar.getInstance();
-                String mDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + Calendar.YEAR;
-                ref.child("users").child(user.getUid()).child("CELstate").setValue(mDate);
                 //getActivity().startService(intent);
                 //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
@@ -287,12 +191,7 @@ public class SurveillenceTimes extends Fragment {
 
                 // Call date setter
                 setDate(v, mECGtext, 11);
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-                Calendar calendar = Calendar.getInstance();
-                String mDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + Calendar.YEAR;
-                ref.child("users").child(user.getUid()).child("ECGstate").setValue(mDate);
                 //getActivity().startService(intent);
                 //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
@@ -306,12 +205,7 @@ public class SurveillenceTimes extends Fragment {
 
                 // Call date setter
                 setDate(v, mECHtext, 12);
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-                Calendar calendar = Calendar.getInstance();
-                String mDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + Calendar.YEAR;
-                ref.child("users").child(user.getUid()).child("ECHstate").setValue(mDate);
                 //getActivity().startService(intent);
                 //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
@@ -325,12 +219,7 @@ public class SurveillenceTimes extends Fragment {
 
                 // Call date setter
                 setDate(v, mCTtext, 13);
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-                Calendar calendar = Calendar.getInstance();
-                String mDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + Calendar.YEAR;
-                ref.child("users").child(user.getUid()).child("CTstate").setValue(mDate);
                 //getActivity().startService(intent);
                 //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
@@ -344,12 +233,7 @@ public class SurveillenceTimes extends Fragment {
 
                 // Call date setter
                 setDate(v, mPROtext, 14);
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-                Calendar calendar = Calendar.getInstance();
-                String mDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + Calendar.YEAR;
-                ref.child("users").child(user.getUid()).child("PROstate").setValue(mDate);
                 //getActivity().startService(intent);
                 //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
@@ -363,12 +247,7 @@ public class SurveillenceTimes extends Fragment {
 
                 // Call date setter
                 setDate(v, mVIStext, 15);
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-                Calendar calendar = Calendar.getInstance();
-                String mDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + Calendar.YEAR;
-                ref.child("users").child(user.getUid()).child("VISstate").setValue(mDate);
                 //getActivity().startService(intent);
                 //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
@@ -382,12 +261,7 @@ public class SurveillenceTimes extends Fragment {
 
                 // Call date setter
                 setDate(v, mHEAtext, 16);
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-                Calendar calendar = Calendar.getInstance();
-                String mDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + Calendar.YEAR;
-                ref.child("users").child(user.getUid()).child("HEAstate").setValue(mDate);
                 //getActivity().startService(intent);
                 //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
@@ -401,12 +275,7 @@ public class SurveillenceTimes extends Fragment {
 
                 // Call date setter
                 setDate(v, mBONtext, 17);
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-                Calendar calendar = Calendar.getInstance();
-                String mDate = calendar.get(Calendar.DAY_OF_MONTH) + "/" + (calendar.get(Calendar.MONTH) + 1) + "/" + Calendar.YEAR;
-                ref.child("users").child(user.getUid()).child("BONstate").setValue(mDate);
                 //getActivity().startService(intent);
                 //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
@@ -521,8 +390,6 @@ public class SurveillenceTimes extends Fragment {
                     @Override
                     public void onDateSet(DatePickerDialog v, int year, int monthOfYear, int dayOfMonth) {
                         String mDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-
-
                         tv.setText(mDate);
                         TextViewCompat.setTextAppearance(tv, R.style.DateInsert);
 

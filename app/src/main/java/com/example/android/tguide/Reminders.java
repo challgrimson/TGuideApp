@@ -122,7 +122,7 @@ public class Reminders extends Fragment {
             @Override
             public void onClick(View v){
                 // Switch to Add_Reminder Fragment
-                mListener.change_AddReminder();
+                //mListener.change_AddReminder();
             }
         });
 
@@ -154,7 +154,7 @@ public class Reminders extends Fragment {
     public interface OnFragmentInteractionListener {
         //Passed needed title for fragment to MainActivity
         void onFragmentInteraction(String title);
-        void change_AddReminder();
+        //void change_AddReminder();
         void restoreReminder (AdapterView reminderListView, int position);
     }
 }

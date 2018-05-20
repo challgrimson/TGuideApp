@@ -67,7 +67,12 @@ public class bootReceiver extends BroadcastReceiver {
         restoreReminder();
 
         // Restore surveillance times
-        surveillancetimes();
+        ///
+        // SHOULD BE SET UNDER SURVEILLANCE TIMES BUT CONFIRM
+        ///
+        //
+        //
+        //surveillancetimes();
     }
 
     // Build notification
@@ -176,6 +181,14 @@ public class bootReceiver extends BroadcastReceiver {
                     hour = time.substring(0,2);
                 }
 
+                // Set am or pm
+                int ampm;
+                if (time.substring(time.length() - 2).equals("AM")) {
+                    ampm = 0;
+                } else {
+                    ampm = 1;
+                }
+
                 Log.i(TAG, uniqueID);
                 Log.i(TAG, date);
                 Log.i(TAG, date.substring(dash2 + 1));
@@ -194,6 +207,7 @@ public class bootReceiver extends BroadcastReceiver {
                 mCalendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(hour));
                 mCalendar.set(Calendar.MINUTE, Integer.valueOf(time.substring(time.length()-5, time.length()-3)));
                 mCalendar.set(Calendar.SECOND, 0);
+                mCalendar.set(Calendar.AM_PM, ampm);
 
                 long timeInMs = mCalendar.getTimeInMillis();
 

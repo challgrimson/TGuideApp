@@ -3,6 +3,8 @@
     <color name="colorPrimary">#C7B098</color>
     <color name="colorPrimaryDark">#b4a088</color>
     <color name="colorAccent">#CEA8EC</color>
+    <color name="colorSelect">#b190ca</color>
+    <color name="colorToday">#826994</color>
     <color name="colorTint">#f0f0f0</color>
     <color name="welcomeHome">#beafaf</color>
     <color name="colorWhite">#ffffff</color>

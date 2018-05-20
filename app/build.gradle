@@ -42,6 +42,11 @@ dependencies {
     // GIF Repository to show gif
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.10'
 
+    // Material design calendar
+    compile 'com.github.sundeepk:compact-calendar-view:2.0.2.3'
+
+
+
     // Include all the Twitter UI to display timeline
     //compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
 

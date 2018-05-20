@@ -7,7 +7,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="notpad_hint"> Welcome to TGuide!\nUse this space to keep your notes.</string>
     <string name="txt_notepad">Use this space to keep any notes you may have.</string>
-    <string name="reminder_Hint">Click on the button below to create a reminder!</string>
+    <string name="reminder_Hint">No Scheduled Events</string>
     <string name="reminder_titleText">Reminder Title</string>
     <string name="reminder_descripHint">Description</string>
     <string name="reminder_date">Date</string>
@@ -181,13 +181,16 @@
     click on the appointment and enter when your appointment is or was. The text will turn red when it is time to book another
     appointment and you will also receive a reminder! \n\nYou can download a PDF version of the
         table with a full description of the tests below. </string>
-    <string name="surveillance_tableDownload">View Table</string>
+    <string name="surveillance_tableDownload">Download Table</string>
     <string name="dialog_close">Close</string>
+    <string name="timetocalendar">Event added to calendar</string>
+    <string name="enterTimes">Click to enter date</string>
 
     <!-- Notifications for surveillance times -->
     <string name="physicalexamTitle">Time to book your physical exam!</string>
-    <string name="physicalexamdesp">Go to surveillance times for more information.</string>
-    <string name="screenbloodTitle">Time for screening blood work!</string>
+    <string name="physicalexamdesp">It looks like its time to book your appointment. Refer to
+    surveillance times for more information.</string>
+    <string name="screenbloodTitle">Time to book screening blood work!</string>
     <string name="ECGTitle">Time for an ECG!</string>
     <string name="ECHOTitle">Time to book an ECHO!</string>
     <string name="CTMRITitle">Time to book a CT/MRI!</string>
@@ -196,6 +199,19 @@
     <string name="visionTitle">Time to check your vision!</string>
     <string name="hearingTitle">Time for hearing exam!</string>
     <string name="bonedensityTitle">Time for your bone density exam!</string>
+    <string name="physicalExamApp">Physical Exam Appointment</string>
+    <string name="screenExamApp">Screening Blood Work Date</string>
+    <string name="ECGExamApp">ECG Date</string>
+    <string name="ECHOExamApp">ECHO Date</string>
+    <string name="CTMRIExamApp">CT/MRI Date</string>
+    <string name="antiproApp">Check Antibiotics Date</string>
+    <string name="celiacExamApp">Celiac Screen Date</string>
+    <string name="visionExamApp">Vision Exam Date</string>
+    <string name="hearingExamApp">Hearing Exam Date</string>
+    <string name="boneExamApp">Bone Density Exam Date</string>
+    <string name="examRemindDesp">Is your appointment today?</string>
+    <string name="enterDate">Enter Date</string>
+    <string name="enterTime">Enter Time</string>
 
     <!-- String for emergency aortic dissection card -->
     <string name="emergencyTitle">I have Turner Syndrome and I am at risk of Aortic Dissection. I have:</string>
@@ -254,6 +270,7 @@
     <string name="faqdrawer">FAQ</string>
     <string name="accountinfo">Account Information</string>
     <string name="addreminder">Add Reminder</string>
+    <string name="calendar">Calendar</string>
 
     <!-- Account Information -->
     <string name="changeemaildialog">Enter Email</string>
@@ -288,4 +305,7 @@
     <string name="registersucess">Successfully Registered</string>
     <string name="registerrorr">Registration Error</string>
     <string name="verifyfirst">Please verify your account first</string>
+
+    <!-- Calendar Stuff -->
+    <string name="printError">Error. Please close app and try again.</string>
 </resources>
