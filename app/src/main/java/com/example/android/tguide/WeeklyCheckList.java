@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,14 +13,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -101,60 +92,18 @@ public class WeeklyCheckList extends Fragment {
         // To change menu
         setHasOptionsMenu(true);
 
+        // Save current state of checked items
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
+        Boolean state1 = sharedPref.getBoolean("box1",false);
+        Boolean state2 = sharedPref.getBoolean("box2",false);
+        Boolean state3 = sharedPref.getBoolean("box3",false);
+        Boolean state4 = sharedPref.getBoolean("box4",false);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-
-        ref.child("users").child(user.getUid()).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.hasChild("clBox1")) {
-                            // Get user value
-                            User user = dataSnapshot.getValue(User.class);
-                            // Save current state of checked items
-                            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-
-                            Boolean state1 = sharedPref.getBoolean("box1",user.getClBox1());
-                            Boolean state2 = sharedPref.getBoolean("box2",user.getClBox2());
-                            Boolean state3 = sharedPref.getBoolean("box3",user.getClBox3());
-                            Boolean state4 = sharedPref.getBoolean("box4",user.getClBox4());
-
-                            box1.setChecked(state1);
-                            box2.setChecked(state2);
-                            box3.setChecked(state3);
-                            box4.setChecked(state4);
-                        } else  {
-                            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-
-                            Boolean state1 = sharedPref.getBoolean("box1",false);
-                            Boolean state2 = sharedPref.getBoolean("box2",false);
-                            Boolean state3 = sharedPref.getBoolean("box3",false);
-                            Boolean state4 = sharedPref.getBoolean("box4",false);
-
-                            box1.setChecked(state1);
-                            box2.setChecked(state2);
-                            box3.setChecked(state3);
-                            box4.setChecked(state4);
-
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-
-                            ref.child("users").child(user.getUid()).child("clBox1").setValue(false);
-                            ref.child("users").child(user.getUid()).child("clBox2").setValue(false);
-                            ref.child("users").child(user.getUid()).child("clBox3").setValue(false);
-                            ref.child("users").child(user.getUid()).child("clBox4").setValue(false);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-
-                    }
-                });
-
-
+        box1.setChecked(state1);
+        box2.setChecked(state2);
+        box3.setChecked(state3);
+        box4.setChecked(state4);
 
         return view;
     }
@@ -215,16 +164,7 @@ public class WeeklyCheckList extends Fragment {
         editor.putBoolean("box4",state4);
 
         editor.apply();
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-
-        ref.child("users").child(user.getUid()).child("clBox1").setValue(state1.booleanValue());
-        ref.child("users").child(user.getUid()).child("clBox2").setValue(state2.booleanValue());
-        ref.child("users").child(user.getUid()).child("clBox3").setValue(state3.booleanValue());
-        ref.child("users").child(user.getUid()).child("clBox4").setValue(state4.booleanValue());
     }
-
 
     /**
      * This interface must be implemented by activities that contain this

@@ -14,7 +14,6 @@ import android.widget.Toast;
  */
 
 public class ReminderDBHelper extends SQLiteOpenHelper {
-    //sql database android studio
 
     // Define table parameters
     public static final String DATABASE_NAME = "reminder_tguide.db";
