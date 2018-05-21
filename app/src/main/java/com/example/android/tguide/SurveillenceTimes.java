@@ -474,7 +474,7 @@ public class SurveillenceTimes extends Fragment {
                                 handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mBONtime), String.valueOf(uniqueid));
                                 break;
                         }
-
+//j
                     }
                 },
                 now.get(Calendar.YEAR),
