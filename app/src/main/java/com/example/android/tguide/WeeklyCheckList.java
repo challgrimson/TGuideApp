@@ -110,7 +110,7 @@ public class WeeklyCheckList extends Fragment {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.child("users").exists()) {
+                        if(dataSnapshot.hasChild("clBox1")) {
                             // Get user value
                             User user = dataSnapshot.getValue(User.class);
                             // Save current state of checked items

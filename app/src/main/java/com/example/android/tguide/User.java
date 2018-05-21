@@ -22,10 +22,13 @@ public class User {
     private String mVIStext;
     private String  mHEAtext;
     private String  mBONtext;
+
+    private long mPAPtime, mTHYtime, mCELtime, mECGtime, mECHtime, mCTtime, mPROtime, mVIStime, mHEAtime, mBONtime;
     public User(){
 
     }
-    public User(boolean clBox1, boolean clBox2, boolean clBox3, boolean clBox4, String mPAPtext,String mTHYtext,String mCELtext,String mECGtext, String mECHtext,String mCTtext,String mPROtext,String mVIStext,String mHEAtext,String mBONtext) {
+    public User(boolean clBox1, boolean clBox2, boolean clBox3, boolean clBox4, String mPAPtext,String mTHYtext,String mCELtext,String mECGtext, String mECHtext,String mCTtext,String mPROtext,String mVIStext,String mHEAtext,String mBONtext,
+                long mPAPtime,long  mTHYtime, long mCELtime, long mECGtime, long mECHtime,long  mCTtime,long  mPROtime,long  mVIStime,long  mHEAtime,long  mBONtime) {
         this.clBox1 = clBox1;
         this.clBox2 = clBox2;
         this.clBox3 = clBox3;
@@ -41,6 +44,18 @@ public class User {
         this.mVIStext = mVIStext;
         this.mHEAtext = mHEAtext;
         this.mBONtext = mBONtext;
+
+        this.mPAPtime = mPAPtime;
+        this.mTHYtime = mTHYtime;
+        this.mCELtime = mCELtime;
+        this.mECGtime = mECGtime;
+        this.mECHtime = mECHtime;
+        this.mCTtime = mCTtime;
+        this.mPROtime = mPROtime;
+        this.mVIStime = mVIStime;
+        this.mHEAtime = mHEAtime;
+        this.mBONtime = mBONtime;
+
     }
 
     public boolean getClBox1() {return clBox1;}
@@ -58,6 +73,17 @@ public class User {
     public String getmVIStext() {return mVIStext;}
     public String getmHEAtext() {return mHEAtext;}
     public String getmBONtext() {return mBONtext;}
+
+    public long getmPAPtime() {return mPAPtime;}
+    public long getmTHYtime() {return mTHYtime;}
+    public long getmCELtime() {return mCELtime;}
+    public long getmECGtime() {return mECGtime;}
+    public long getmECHtime() {return mECHtime;}
+    public long getmCTtime()  {return mCTtime; }
+    public long getmPROtime() {return mPROtime;}
+    public long getmVIStime() {return mVIStime;}
+    public long getmHEAtime() {return mHEAtime;}
+    public long getmBONtime() {return mBONtime;}
 
 
     public void setClBox1(boolean clBox1) {this.clBox1 = clBox1;}

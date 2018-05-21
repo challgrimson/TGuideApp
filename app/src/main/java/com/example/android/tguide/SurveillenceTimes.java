@@ -20,6 +20,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -106,28 +113,74 @@ public class SurveillenceTimes extends Fragment {
         // Load saved states
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-        // Set text
-        mPAPtext.setText(sharedPref.getString("PAP", getString(R.string.overdue)));
-        mTHYtext.setText(sharedPref.getString("THY", getString(R.string.overdue)));
-        mCELtext.setText(sharedPref.getString("CEL", getString(R.string.overdue)));
-        mECGtext.setText(sharedPref.getString("ECG", getString(R.string.overdue)));
-        mECHtext.setText(sharedPref.getString("ECH", getString(R.string.overdue)));
-        mCTtext.setText(sharedPref.getString("CT", getString(R.string.overdue)));
-        mPROtext.setText(sharedPref.getString("PRO", getString(R.string.overdue)));
-        mVIStext.setText(sharedPref.getString("VIS", getString(R.string.overdue)));
-        mHEAtext.setText(sharedPref.getString("HEA", getString(R.string.overdue)));
-        mBONtext.setText(sharedPref.getString("BON", getString(R.string.overdue)));
-        // Set time
-        mPAPtime = sharedPref.getLong("PAPtime", -1);
-        mTHYtime = sharedPref.getLong("THYtime", -1);
-        mCELtime = sharedPref.getLong("CELtime", -1);
-        mECGtime = sharedPref.getLong("ECGtime", -1);
-        mECHtime = sharedPref.getLong("ECHtime", -1);
-        mCTtime = sharedPref.getLong("CTtime", -1);
-        mPROtime = sharedPref.getLong("PROtime", -1);
-        mVIStime = sharedPref.getLong("VIStime", -1);
-        mHEAtime = sharedPref.getLong("HEAtime", -1);
-        mBONtime = sharedPref.getLong("BONtime", -1);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        ref.child("users").child(user.getUid()).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.hasChild("mCELtime")) {
+                            // Get user value
+                            User user = dataSnapshot.getValue(User.class);
+                            // Save current state of checked items
+                            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+
+                            mPAPtext.setText(user.getmPAPtext());
+                            mTHYtext.setText(user.getmTHYtext());
+                            mCELtext.setText(user.getmCELtext());
+                            mECGtext.setText(user.getmECGtext());
+                            mECHtext.setText(user.getmECHtext());
+                            mCTtext.setText(user.getmCTtext());
+                            mPROtext.setText(user.getmPROtext());
+                            mVIStext.setText(user.getmVIStext());
+                            mHEAtext.setText(user.getmHEAtext());
+                            mBONtext.setText(user.getmBONtext());
+
+                            mPAPtime = user.getmPAPtime();
+                            mTHYtime = user.getmTHYtime();
+                            mCELtime = user.getmCELtime();
+                            mECGtime = user.getmECGtime();
+                            mECHtime = user.getmECHtime();
+                            mCTtime = user.getmCTtime();
+                            mPROtime = user.getmPROtime();
+                            mVIStime = user.getmVIStime();
+                            mHEAtime = user.getmHEAtime();
+                            mBONtime = user.getmBONtime();
+
+                        } else  {
+                            // Set text
+                            mPAPtext.setText(getString(R.string.overdue));
+                            mTHYtext.setText(getString(R.string.overdue));
+                            mCELtext.setText(getString(R.string.overdue));
+                            mECGtext.setText(getString(R.string.overdue));
+                            mECHtext.setText(getString(R.string.overdue));
+                            mCTtext.setText(getString(R.string.overdue));
+                            mPROtext.setText(getString(R.string.overdue));
+                            mVIStext.setText(getString(R.string.overdue));
+                            mHEAtext.setText(getString(R.string.overdue));
+                            mBONtext.setText(getString(R.string.overdue));
+                            // Set time
+                            mPAPtime = -1;
+                            mTHYtime = -1;
+                            mCELtime = -1;
+                            mECGtime = -1;
+                            mECHtime = -1;
+                            mCTtime = -1;
+                            mPROtime = -1;
+                            mVIStime = -1;
+                            mHEAtime = -1;
+                            mBONtime = -1;
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+
+                    }
+                });
 
         // Initilize Calendar variables
         mCalendar = Calendar.getInstance();
@@ -363,6 +416,47 @@ public class SurveillenceTimes extends Fragment {
 
 
         editor.apply();
+        fireBaseSave();
+    }
+
+    public void fireBaseSave(){
+        PAPsave = mPAPtext.getText().toString();
+        THYsave = mTHYtext.getText().toString();
+        CELsave = mCELtext.getText().toString();
+        ECGsave = mECGtext.getText().toString();
+        ECHsave = mECHtext.getText().toString();
+        CTsave = mCTtext.getText().toString();
+        PROsave = mPROtext.getText().toString();
+        VISsave = mVIStext.getText().toString();
+        HEAsave = mHEAtext.getText().toString();
+        BONsave = mBONtext.getText().toString();
+
+
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("users").child(user.getUid()).child("mPAPtext").setValue(PAPsave);
+        ref.child("users").child(user.getUid()).child("mTHYtext").setValue(THYsave);
+        ref.child("users").child(user.getUid()).child("mCELtext").setValue(CELsave);
+        ref.child("users").child(user.getUid()).child("mECGtext").setValue(ECGsave);
+        ref.child("users").child(user.getUid()).child("mECHtext").setValue(ECHsave);
+        ref.child("users").child(user.getUid()).child("mCTtext").setValue(CTsave);
+        ref.child("users").child(user.getUid()).child("mPROtext").setValue(PROsave);
+        ref.child("users").child(user.getUid()).child("mVIStext").setValue(VISsave);
+        ref.child("users").child(user.getUid()).child("mHEAtext").setValue(HEAsave);
+        ref.child("users").child(user.getUid()).child("mBONtext").setValue(BONsave);
+
+        ref.child("users").child(user.getUid()).child("mPAPtime").setValue(mPAPtime);
+        ref.child("users").child(user.getUid()).child("mTHYtime").setValue(mTHYtime);
+        ref.child("users").child(user.getUid()).child("mCELtime").setValue(mCELtime);
+        ref.child("users").child(user.getUid()).child("mECGtime").setValue(mECGtime);
+        ref.child("users").child(user.getUid()).child("mECHtime").setValue(mECHtime);
+        ref.child("users").child(user.getUid()).child("mCTtime").setValue(mCTtime);
+        ref.child("users").child(user.getUid()).child("mPROtime").setValue(mPROtime);
+        ref.child("users").child(user.getUid()).child("mVIStime").setValue(mVIStime);
+        ref.child("users").child(user.getUid()).child("mHEAtime").setValue(mHEAtime);
+        ref.child("users").child(user.getUid()).child("mBONtime").setValue(mBONtime);
+
     }
 
     // Inflate the menu options from the res/menu/menu_editor.xml file.
