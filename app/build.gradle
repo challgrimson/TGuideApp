@@ -20,6 +20,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-database:11.8.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -43,8 +44,6 @@ dependencies {
 
     // Material design calendar
     compile 'com.github.sundeepk:compact-calendar-view:2.0.2.3'
-
-
 
     // Include all the Twitter UI to display timeline
     //compile 'com.twitter.sdk.android:tweet-ui:3.1.1'

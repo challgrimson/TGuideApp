@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TGuide.iml" filepath="$PROJECT_DIR$/TGuide.iml" />
-      <module fileurl="file://C:\Users\zacha_000\AndroidStudioProjects\TGuide\.idea\TGuideApp.iml" filepath="C:\Users\zacha_000\AndroidStudioProjects\TGuide\.idea\TGuideApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TGuideApp.iml" filepath="$PROJECT_DIR$/TGuideApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
