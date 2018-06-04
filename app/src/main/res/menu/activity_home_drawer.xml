@@ -35,7 +35,10 @@
             android:title="@string/faqdrawer" />
 
         <item
-            android:id="@+id/frag_accountinfo"
-            android:title="@string/accountinfo"/>
+        android:id="@+id/frag_accountinfo"
+        android:title="@string/accountinfo"/>
+        <item
+            android:id="@+id/frag_Logout"
+            android:title="Logout"/>
     </group>
 </menu>
