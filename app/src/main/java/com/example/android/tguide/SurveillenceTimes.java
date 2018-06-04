@@ -17,20 +17,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
-import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 // For surveillance time information
 public class SurveillenceTimes extends Fragment {
@@ -58,16 +57,8 @@ public class SurveillenceTimes extends Fragment {
     // temp variables for inputting date
     int mYear, mMonth, mDay;
 
-    // Store time text
-    String timeText;
-
     // Handler to put times in DB database
     ReminderDBHelper handler;
-
-    // Convert date to put in database and for time text
-    private SimpleDateFormat dbDateFormate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-    private SimpleDateFormat timeFormate = new SimpleDateFormat("hh:mm a");
-
 
     // Service
     //private  static final String TAG = "SurveillenceTimes";
@@ -122,28 +113,74 @@ public class SurveillenceTimes extends Fragment {
         // Load saved states
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-        // Set text
-        mPAPtext.setText(sharedPref.getString("PAP", getString(R.string.overdue)));
-        mTHYtext.setText(sharedPref.getString("THY", getString(R.string.overdue)));
-        mCELtext.setText(sharedPref.getString("CEL", getString(R.string.overdue)));
-        mECGtext.setText(sharedPref.getString("ECG", getString(R.string.overdue)));
-        mECHtext.setText(sharedPref.getString("ECH", getString(R.string.overdue)));
-        mCTtext.setText(sharedPref.getString("CT", getString(R.string.overdue)));
-        mPROtext.setText(sharedPref.getString("PRO", getString(R.string.overdue)));
-        mVIStext.setText(sharedPref.getString("VIS", getString(R.string.overdue)));
-        mHEAtext.setText(sharedPref.getString("HEA", getString(R.string.overdue)));
-        mBONtext.setText(sharedPref.getString("BON", getString(R.string.overdue)));
-        // Set time
-        mPAPtime = sharedPref.getLong("PAPtime", -1);
-        mTHYtime = sharedPref.getLong("THYtime", -1);
-        mCELtime = sharedPref.getLong("CELtime", -1);
-        mECGtime = sharedPref.getLong("ECGtime", -1);
-        mECHtime = sharedPref.getLong("ECHtime", -1);
-        mCTtime = sharedPref.getLong("CTtime", -1);
-        mPROtime = sharedPref.getLong("PROtime", -1);
-        mVIStime = sharedPref.getLong("VIStime", -1);
-        mHEAtime = sharedPref.getLong("HEAtime", -1);
-        mBONtime = sharedPref.getLong("BONtime", -1);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        ref.child("users").child(user.getUid()).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.hasChild("mCELtime")) {
+                            // Get user value
+                            User user = dataSnapshot.getValue(User.class);
+                            // Save current state of checked items
+                            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+
+                            mPAPtext.setText(user.getmPAPtext());
+                            mTHYtext.setText(user.getmTHYtext());
+                            mCELtext.setText(user.getmCELtext());
+                            mECGtext.setText(user.getmECGtext());
+                            mECHtext.setText(user.getmECHtext());
+                            mCTtext.setText(user.getmCTtext());
+                            mPROtext.setText(user.getmPROtext());
+                            mVIStext.setText(user.getmVIStext());
+                            mHEAtext.setText(user.getmHEAtext());
+                            mBONtext.setText(user.getmBONtext());
+
+                            mPAPtime = user.getmPAPtime();
+                            mTHYtime = user.getmTHYtime();
+                            mCELtime = user.getmCELtime();
+                            mECGtime = user.getmECGtime();
+                            mECHtime = user.getmECHtime();
+                            mCTtime = user.getmCTtime();
+                            mPROtime = user.getmPROtime();
+                            mVIStime = user.getmVIStime();
+                            mHEAtime = user.getmHEAtime();
+                            mBONtime = user.getmBONtime();
+
+                        } else  {
+                            // Set text
+                            mPAPtext.setText(getString(R.string.overdue));
+                            mTHYtext.setText(getString(R.string.overdue));
+                            mCELtext.setText(getString(R.string.overdue));
+                            mECGtext.setText(getString(R.string.overdue));
+                            mECHtext.setText(getString(R.string.overdue));
+                            mCTtext.setText(getString(R.string.overdue));
+                            mPROtext.setText(getString(R.string.overdue));
+                            mVIStext.setText(getString(R.string.overdue));
+                            mHEAtext.setText(getString(R.string.overdue));
+                            mBONtext.setText(getString(R.string.overdue));
+                            // Set time
+                            mPAPtime = -1;
+                            mTHYtime = -1;
+                            mCELtime = -1;
+                            mECGtime = -1;
+                            mECHtime = -1;
+                            mCTtime = -1;
+                            mPROtime = -1;
+                            mVIStime = -1;
+                            mHEAtime = -1;
+                            mBONtime = -1;
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+
+                    }
+                });
 
         // Initilize Calendar variables
         mCalendar = Calendar.getInstance();
@@ -163,8 +200,11 @@ public class SurveillenceTimes extends Fragment {
                 // To turn green on reload
                 PAPstate = true;
 
-                // Set Date and Time
-                enterSurveillance(1, mPAPtext);
+                // Call date setter and grab time
+                setDate(v, mPAPtext, 1);
+
+                //getActivity().startService(intent);
+                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
         });
 
@@ -175,11 +215,10 @@ public class SurveillenceTimes extends Fragment {
                 THYstate = true;
 
                 // Call date setter
-                //setDate(v, mTHYtext);
+                setDate(v, mTHYtext, 6);
 
-                // Set Reminder
-                //setReminder(6);
-                enterSurveillance(6, mTHYtext);
+                //getActivity().startService(intent);
+                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
         });
 
@@ -190,11 +229,10 @@ public class SurveillenceTimes extends Fragment {
                 CELstate = true;
 
                 // Call date setter
-                //setDate(v, mCELtext);
+                setDate(v, mCELtext, 10);
 
-                // Set Reminder
-                //setReminder(10);
-                enterSurveillance(10, mCELtext);
+                //getActivity().startService(intent);
+                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
         });
 
@@ -205,11 +243,10 @@ public class SurveillenceTimes extends Fragment {
                 ECGstate = true;
 
                 // Call date setter
-                //setDate(v, mECGtext);
+                setDate(v, mECGtext, 11);
 
-                // Set Reminder
-                //setReminder(11);
-                enterSurveillance(11, mECGtext);
+                //getActivity().startService(intent);
+                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
         });
 
@@ -220,11 +257,10 @@ public class SurveillenceTimes extends Fragment {
                 ECHstate = true;
 
                 // Call date setter
-                //setDate(v, mECHtext);
+                setDate(v, mECHtext, 12);
 
-                // Set Reminder
-                //setReminder(12);
-                enterSurveillance(12, mECHtext);
+                //getActivity().startService(intent);
+                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
         });
 
@@ -235,11 +271,10 @@ public class SurveillenceTimes extends Fragment {
                 CTstate = true;
 
                 // Call date setter
-                //setDate(v, mCTtext);
+                setDate(v, mCTtext, 13);
 
-                // Set Reminder
-                //setReminder(13);
-                enterSurveillance(13, mCTtext);
+                //getActivity().startService(intent);
+                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
         });
 
@@ -250,11 +285,10 @@ public class SurveillenceTimes extends Fragment {
                 PROstate = true;
 
                 // Call date setter
-                //setDate(v, mPROtext);
+                setDate(v, mPROtext, 14);
 
-                // Set Reminder
-                //setReminder(14);
-                enterSurveillance(14, mPROtext);
+                //getActivity().startService(intent);
+                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
         });
 
@@ -265,11 +299,10 @@ public class SurveillenceTimes extends Fragment {
                 VISstate = true;
 
                 // Call date setter
-                //setDate(v, mVIStext);
+                setDate(v, mVIStext, 15);
 
-                // Set Reminder
-                //setReminder(15);
-                enterSurveillance(15, mVIStext);
+                //getActivity().startService(intent);
+                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
         });
 
@@ -280,11 +313,10 @@ public class SurveillenceTimes extends Fragment {
                 HEAstate = true;
 
                 // Call date setter
-                //setDate(v, mHEAtext);
+                setDate(v, mHEAtext, 16);
 
-                // Set Reminder
-                //setReminder(16);
-                enterSurveillance(16, mHEAtext);
+                //getActivity().startService(intent);
+                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
         });
 
@@ -295,11 +327,10 @@ public class SurveillenceTimes extends Fragment {
                 BONstate = true;
 
                 // Call date setter
-                //setDate(v, mBONtext);
+                setDate(v, mBONtext, 17);
 
-                // Set Reminder
-                //setReminder(17);
-                enterSurveillance(17, mBONtext);
+                //getActivity().startService(intent);
+                //getActivity().registerReceiver(broadcastReceiver, new IntentFilter((surveillenceSurvice.BROADCAST_ACTION)));
             }
         });
 
@@ -385,6 +416,47 @@ public class SurveillenceTimes extends Fragment {
 
 
         editor.apply();
+        fireBaseSave();
+    }
+
+    public void fireBaseSave(){
+        PAPsave = mPAPtext.getText().toString();
+        THYsave = mTHYtext.getText().toString();
+        CELsave = mCELtext.getText().toString();
+        ECGsave = mECGtext.getText().toString();
+        ECHsave = mECHtext.getText().toString();
+        CTsave = mCTtext.getText().toString();
+        PROsave = mPROtext.getText().toString();
+        VISsave = mVIStext.getText().toString();
+        HEAsave = mHEAtext.getText().toString();
+        BONsave = mBONtext.getText().toString();
+
+
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("users").child(user.getUid()).child("mPAPtext").setValue(PAPsave);
+        ref.child("users").child(user.getUid()).child("mTHYtext").setValue(THYsave);
+        ref.child("users").child(user.getUid()).child("mCELtext").setValue(CELsave);
+        ref.child("users").child(user.getUid()).child("mECGtext").setValue(ECGsave);
+        ref.child("users").child(user.getUid()).child("mECHtext").setValue(ECHsave);
+        ref.child("users").child(user.getUid()).child("mCTtext").setValue(CTsave);
+        ref.child("users").child(user.getUid()).child("mPROtext").setValue(PROsave);
+        ref.child("users").child(user.getUid()).child("mVIStext").setValue(VISsave);
+        ref.child("users").child(user.getUid()).child("mHEAtext").setValue(HEAsave);
+        ref.child("users").child(user.getUid()).child("mBONtext").setValue(BONsave);
+
+        ref.child("users").child(user.getUid()).child("mPAPtime").setValue(mPAPtime);
+        ref.child("users").child(user.getUid()).child("mTHYtime").setValue(mTHYtime);
+        ref.child("users").child(user.getUid()).child("mCELtime").setValue(mCELtime);
+        ref.child("users").child(user.getUid()).child("mECGtime").setValue(mECGtime);
+        ref.child("users").child(user.getUid()).child("mECHtime").setValue(mECHtime);
+        ref.child("users").child(user.getUid()).child("mCTtime").setValue(mCTtime);
+        ref.child("users").child(user.getUid()).child("mPROtime").setValue(mPROtime);
+        ref.child("users").child(user.getUid()).child("mVIStime").setValue(mVIStime);
+        ref.child("users").child(user.getUid()).child("mHEAtime").setValue(mHEAtime);
+        ref.child("users").child(user.getUid()).child("mBONtime").setValue(mBONtime);
+
     }
 
     // Inflate the menu options from the res/menu/menu_editor.xml file.
@@ -404,7 +476,7 @@ public class SurveillenceTimes extends Fragment {
     }
 
     // Set date that is specified
-    public void setDate(final TextView tv, final TextView datedialog){
+    public void setDate(View v, final TextView tv, final int timeView){
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
 
@@ -413,7 +485,6 @@ public class SurveillenceTimes extends Fragment {
                     public void onDateSet(DatePickerDialog v, int year, int monthOfYear, int dayOfMonth) {
                         String mDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
                         tv.setText(mDate);
-                        datedialog.setText(mDate);
                         TextViewCompat.setTextAppearance(tv, R.style.DateInsert);
 
                         mYear = year;
@@ -430,6 +501,74 @@ public class SurveillenceTimes extends Fragment {
                         Log.i("Year",String.valueOf(mYear));
                         Log.i("Month",String.valueOf(mMonth));
                         Log.i("Day",String.valueOf(mDay));
+
+                        // REMINDER TO ALSO SWTICH IN bootReceiver
+                        Integer uniqueid = Integer.parseInt(mListener.generateUniqueID());
+                        switch (timeView) {
+                            case 1:
+                                mPAPtime = mCalendar.getTimeInMillis();
+                                // Set notification
+                                mListener.begin_notifications(uniqueid,getString(R.string.physicalexamTitle),
+                                        getString(R.string.physicalexamdesp),mPAPtime + 11*60*60*1000,-1,"false");
+                                Log.i("bootReceiver", String.valueOf(mPAPtime));
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mPAPtime), String.valueOf(uniqueid));
+                                break;
+                            case 6:
+                                mTHYtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.screenbloodTitle),
+                                        getString(R.string.physicalexamdesp),mTHYtime + 11*60*60*1000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mTHYtime), String.valueOf(uniqueid));
+                                break;
+                            case 10:
+                                mCELtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.celiacTitle),
+                                        getString(R.string.physicalexamdesp),mCELtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mCELtime), String.valueOf(uniqueid));
+                                break;
+                            case 11:
+                                mECGtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.ECGTitle),
+                                        getString(R.string.physicalexamdesp),mECGtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mECGtime), String.valueOf(uniqueid));
+                                break;
+                            case 12:
+                                mECHtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.ECHOTitle),
+                                        getString(R.string.physicalexamdesp),mECHtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mECHtime), String.valueOf(uniqueid));
+                                break;
+                            case 13:
+                                mCTtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.CTMRITitle),
+                                        getString(R.string.physicalexamdesp),mCTtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mCTtime), String.valueOf(uniqueid));
+                                break;
+                            case 14:
+                                mPROtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.antiproTitle),
+                                        getString(R.string.physicalexamdesp),mPROtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mPROtime), String.valueOf(uniqueid));
+                                break;
+                            case 15:
+                                mVIStime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.visionTitle),
+                                        getString(R.string.physicalexamdesp),mVIStime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mVIStime), String.valueOf(uniqueid));
+                                break;
+                            case 16:
+                                mHEAtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.hearingTitle),
+                                        getString(R.string.physicalexamdesp),mHEAtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mHEAtime), String.valueOf(uniqueid));
+                                break;
+                            case 17:
+                                mBONtime = mCalendar.getTimeInMillis();
+                                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.bonedensityTitle),
+                                        getString(R.string.physicalexamdesp),mBONtime + 30000,-1,"false");
+                                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mBONtime), String.valueOf(uniqueid));
+                                break;
+                        }
+//j
                     }
                 },
                 now.get(Calendar.YEAR),
@@ -593,7 +732,8 @@ public class SurveillenceTimes extends Fragment {
                 // Open and show turner webpage
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://firebasestorage.googleapis.com/v0/b/tguide-d15dc.appspot.com/o/TS_Surveillance_Chart.pdf?alt=media&token=08e584b5-33f3-4669-b61a-e2d63ea7fbb4"));
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("http://www.turnersyndrome.ca/wp-content/uploads/TS_Surveillance_Chart_Colour.pdf"));
                 startActivity(intent);
             }
         });
@@ -612,299 +752,58 @@ public class SurveillenceTimes extends Fragment {
 
     }
 
-    // Create time dialog to input time
-    public void setTime(final TextView dialogText) {
-        TimePickerDialog tpd = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
-                mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                mCalendar.set(Calendar.MINUTE, minute);
-                timeText = timeFormate.format(mCalendar.getTime());
-                dialogText.setText(timeText);
-            }
-        },
-                mCalendar.get(Calendar.HOUR_OF_DAY),
-                mCalendar.get(Calendar.MINUTE),
-                false
-        );
+    /*
+    // Firebase reference
+    FirebaseStorage mStorageRef;
+    StorageReference mChartRef;
+    File localFile;
 
-        tpd.setThemeDark(false);
-        tpd.show(getActivity().getFragmentManager(), "Timepickerdialog");
-    }
+    private void downloadFile() {
 
-    // Create dialog to input date and time and set reminder
-    public void enterSurveillance(final int timeView, final TextView tv) {
-        AlertDialog.Builder mbuilder = new AlertDialog.Builder(getContext());
-        mbuilder.setTitle(R.string.surveillancetimes);
+        mStorageRef = FirebaseStorage.getInstance();
+        mChartRef = mStorageRef.getReferenceFromUrl("https://firebasestorage.googleapis.com/v0/b/tguide-4d702.appspot.com/o/jpg-icon.png?alt=media&token=5c9368dd-7fcd-41cc-be2e-1032ed6c236a");
 
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.surveillancetimedate, null);
+        try {
+           localFile = File.createTempFile("images", "png");
 
-        final RelativeLayout dateLinear = dialogView.findViewById(R.id.dateSurveillacne);
-        final RelativeLayout timeLinear = dialogView.findViewById(R.id.timeSurveillacne);
+            Log.d("SurveillanceTimes:","Get message");
+            mChartRef.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Successfully downloaded data to local file
+                            Log.d("SurveillanceTimes:","Download complete");
+                            Toast.makeText(getContext(), "Download Complete!", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle failed download
+                    Toast.makeText(getContext(), "Download Error.", Toast.LENGTH_SHORT).show();
 
-        final TextView dateDialogText = dialogView.findViewById(R.id.dateIdSurveillance);
-        final TextView timeDialogText = dialogView.findViewById(R.id.timeIdSurveillance);
+                }
+            });
+        } catch (IOException ex) {}
 
-        dateLinear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setDate(tv, dateDialogText);
-            }
-        });
-
-        timeLinear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setTime(timeDialogText);
-            }
-        });
-
-        mbuilder.setView(dialogView);
-
-        mbuilder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        setReminder(timeView);
-                    }
-                })
-                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                // Dismess on button click
-                                if (dialogInterface != null) {
-                                    dialogInterface.dismiss();
-                                }
-                            }
-                        });
-
-        // Create and show the AlertDialog
-        AlertDialog alertDialog = mbuilder.create();
-        alertDialog.show();
-    }
-
-    // Insert reminder
-    public void setReminder(final int timeView) {
-        // REMINDER TO ALSO SWTICH IN bootReceiver
-        Integer uniqueid = Integer.parseInt(mListener.generateUniqueID());
-        Integer uniqueid2 = Integer.parseInt(mListener.generateUniqueID());
-
-        switch (timeView) {
-            case 1:
-                mPAPtime = mCalendar.getTimeInMillis();
-                // Set notification for future
-                mListener.begin_notifications(uniqueid,getString(R.string.physicalexamTitle),
-                        getString(R.string.physicalexamdesp),mPAPtime + 48*60*60*1000,-1,"false");
-                Log.i("bootReceiver", String.valueOf(mPAPtime));
-
-                // Set notification for current appointment
-                mListener.begin_notifications(uniqueid2,getString(R.string.physicalExamApp),
-                        getString(R.string.physicalexamdesp),mPAPtime,-1,"false");
-
-                // Add Current Appoint to Calendar
-                handler.insertReminder(getString(R.string.physicalExamApp), getString(R.string.examRemindDesp),
-                        dbDateFormate.format(mPAPtime), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid2));
-
-                // Create event in two days
-                handler.insertReminder(getString(R.string.physicalexamTitle), getString(R.string.physicalexamdesp),
-                        dbDateFormate.format(mPAPtime + 48*60*60*1000), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid));
-
-                // Insert surveillance so that colour can be checked and changed
-                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mPAPtime + 48*60*60*1000), String.valueOf(uniqueid));
-                break;
-            case 6:
-                mTHYtime = mCalendar.getTimeInMillis();
-                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.screenbloodTitle),
-                        getString(R.string.physicalexamdesp),mTHYtime + 48*60*60*1000,-1,"false");
-
-                // Set notification for current appointment
-                mListener.begin_notifications(uniqueid2,getString(R.string.screenExamApp),
-                        getString(R.string.examRemindDesp),mTHYtime,-1,"false");
-
-                // Add Current Appoint to Calendar
-                handler.insertReminder(getString(R.string.screenExamApp), getString(R.string.examRemindDesp),
-                        dbDateFormate.format(mTHYtime), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid2));
-
-                // Create event in two days
-                handler.insertReminder(getString(R.string.screenbloodTitle), getString(R.string.physicalexamdesp),
-                        dbDateFormate.format(mTHYtime + 48*60*60*1000), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid));
-
-                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mTHYtime + 48*60*60*1000), String.valueOf(uniqueid));
-                break;
-            case 10:
-                mCELtime = mCalendar.getTimeInMillis();
-                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.celiacTitle),
-                        getString(R.string.physicalexamdesp),mCELtime + 48*60*60*1000,-1,"false");
-
-                // Set notification for current appointment
-                mListener.begin_notifications(uniqueid2,getString(R.string.celiacExamApp),
-                        getString(R.string.examRemindDesp),mCELtime,-1,"false");
-
-                // Add Current Appoint to Calendar
-                handler.insertReminder(getString(R.string.celiacExamApp), getString(R.string.examRemindDesp),
-                        dbDateFormate.format(mCELtime), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid2));
-
-                // Create event in two days
-                handler.insertReminder(getString(R.string.celiacTitle), getString(R.string.physicalexamdesp),
-                        dbDateFormate.format(mCELtime + 48*60*60*1000), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid));
-
-                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mCELtime + 48*60*60*1000), String.valueOf(uniqueid));
-                break;
-            case 11:
-                mECGtime = mCalendar.getTimeInMillis();
-                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.ECGTitle),
-                        getString(R.string.physicalexamdesp),mECGtime + 48*60*60*1000,-1,"false");
-
-                // Set notification for current appointment
-                mListener.begin_notifications(uniqueid2,getString(R.string.ECGExamApp),
-                        getString(R.string.examRemindDesp),mECGtime,-1,"false");
-
-                // Add Current Appoint to Calendar
-                handler.insertReminder(getString(R.string.ECGExamApp), getString(R.string.examRemindDesp),
-                        dbDateFormate.format(mECGtime), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid2));
-
-                // Create event in two days
-                handler.insertReminder(getString(R.string.ECGTitle), getString(R.string.physicalexamdesp),
-                        dbDateFormate.format(mECGtime + 48*60*60*1000), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid));
-
-                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mECGtime + 48*60*60*1000), String.valueOf(uniqueid));
-                break;
-            case 12:
-                mECHtime = mCalendar.getTimeInMillis();
-                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.ECHOTitle),
-                        getString(R.string.physicalexamdesp),mECHtime + 48*60*60*1000,-1,"false");
-
-                // Set notification for current appointment
-                mListener.begin_notifications(uniqueid2,getString(R.string.ECHOExamApp),
-                        getString(R.string.examRemindDesp),mECHtime,-1,"false");
-
-                // Add Current Appoint to Calendar
-                handler.insertReminder(getString(R.string.ECHOExamApp), getString(R.string.examRemindDesp),
-                        dbDateFormate.format(mECHtime), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid2));
-
-                // Create event in two days
-                handler.insertReminder(getString(R.string.ECHOTitle), getString(R.string.physicalexamdesp),
-                        dbDateFormate.format(mECHtime + 48*60*60*1000), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid));
-
-                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mECHtime + 48*60*60*1000), String.valueOf(uniqueid));
-                break;
-            case 13:
-                mCTtime = mCalendar.getTimeInMillis();
-                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.CTMRITitle),
-                        getString(R.string.physicalexamdesp),mCTtime + 48*60*60*1000,-1,"false");
-
-                // Set notification for current appointment
-                mListener.begin_notifications(uniqueid2,getString(R.string.CTMRIExamApp),
-                        getString(R.string.examRemindDesp),mCTtime,-1,"false");
-
-                // Add Current Appoint to Calendar
-                handler.insertReminder(getString(R.string.CTMRIExamApp), getString(R.string.examRemindDesp),
-                        dbDateFormate.format(mCTtime), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid2));
-
-                // Create event in two days
-                handler.insertReminder(getString(R.string.CTMRITitle), getString(R.string.physicalexamdesp),
-                        dbDateFormate.format(mCTtime + 48*60*60*1000), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid));
-
-                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mCTtime + 48*60*60*1000), String.valueOf(uniqueid));
-                break;
-            case 14:
-                mPROtime = mCalendar.getTimeInMillis();
-                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.antiproTitle),
-                        getString(R.string.physicalexamdesp),mPROtime + 48*60*60*1000,-1,"false");
-
-                // Set notification for current appointment
-                mListener.begin_notifications(uniqueid2,getString(R.string.antiproApp),
-                        getString(R.string.examRemindDesp),mPROtime,-1,"false");
-
-                // Add Current Appoint to Calendar
-                handler.insertReminder(getString(R.string.antiproApp), getString(R.string.examRemindDesp),
-                        dbDateFormate.format(mPROtime), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid2));
-
-                // Create event in two days
-                handler.insertReminder(getString(R.string.antiproTitle), getString(R.string.physicalexamdesp),
-                        dbDateFormate.format(mPROtime + 48*60*60*1000), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid));
-
-                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mPROtime + 48*60*60*1000), String.valueOf(uniqueid));
-                break;
-            case 15:
-                mVIStime = mCalendar.getTimeInMillis();
-                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.visionTitle),
-                        getString(R.string.physicalexamdesp),mVIStime + 48*60*60*1000,-1,"false");
-
-                // Set notification for current appointment
-                mListener.begin_notifications(uniqueid2,getString(R.string.visionExamApp),
-                        getString(R.string.examRemindDesp),mVIStime,-1,"false");
-
-                // Add Current Appoint to Calendar
-                handler.insertReminder(getString(R.string.visionExamApp), getString(R.string.examRemindDesp),
-                        dbDateFormate.format(mVIStime), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid2));
-
-                // Create event in two days
-                handler.insertReminder(getString(R.string.visionTitle), getString(R.string.physicalexamdesp),
-                        dbDateFormate.format(mVIStime + 48*60*60*1000), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid));
-
-                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mVIStime + 48*60*60*1000), String.valueOf(uniqueid));
-                break;
-            case 16:
-                mHEAtime = mCalendar.getTimeInMillis();
-                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.hearingTitle),
-                        getString(R.string.physicalexamdesp),mHEAtime + 48*60*60*1000,-1,"false");
-
-                // Set notification for current appointment
-                mListener.begin_notifications(uniqueid2,getString(R.string.hearingExamApp),
-                        getString(R.string.examRemindDesp),mHEAtime,-1,"false");
-
-                // Add Current Appoint to Calendar
-                handler.insertReminder(getString(R.string.hearingExamApp), getString(R.string.examRemindDesp),
-                        dbDateFormate.format(mHEAtime), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid2));
-
-                // Create event in two days
-                handler.insertReminder(getString(R.string.hearingTitle), getString(R.string.physicalexamdesp),
-                        dbDateFormate.format(mHEAtime + 48*60*60*1000), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid));
-
-                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mHEAtime + 48*60*60*1000), String.valueOf(uniqueid));
-                break;
-            case 17:
-                mBONtime = mCalendar.getTimeInMillis();
-                mListener.begin_notifications(Integer.parseInt(mListener.generateUniqueID()),getString(R.string.bonedensityTitle),
-                        getString(R.string.physicalexamdesp),mBONtime + 48*60*60*1000,-1,"false");
-
-                // Set notification for current appointment
-                mListener.begin_notifications(uniqueid2,getString(R.string.boneExamApp),
-                        getString(R.string.examRemindDesp),mBONtime,-1,"false");
-
-                // Add Current Appoint to Calendar
-                handler.insertReminder(getString(R.string.boneExamApp), getString(R.string.examRemindDesp),
-                        dbDateFormate.format(mBONtime), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid2));
-
-                // Create event in two days
-                handler.insertReminder(getString(R.string.bonedensityTitle), getString(R.string.physicalexamdesp),
-                        dbDateFormate.format(mBONtime + 48*60*60*1000), timeText, "false",
-                        String.valueOf(-1), "Minute(s)", "true", String.valueOf(uniqueid));
-
-                handler.insertSurveillance(String.valueOf(timeView), String.valueOf(mBONtime + 48*60*60*1000), String.valueOf(uniqueid));
-                break;
         }
-        // Toast: Event added to calendar
-        Toast.makeText(getContext(), getString(R.string.timetocalendar), Toast.LENGTH_LONG).show();
+
+    // Broadcast Reciever to recieve from service and will just check times
+    public BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            checkTime();
+        }
+    };
+
+    private void updateUI(Intent intent) {
+        Toast.makeText(getContext(), "HI", Toast.LENGTH_SHORT).show();
+        // Change to red
+        TextViewCompat.setTextAppearance(mPAPtext, R.style.overdueText);
+
+        Log.d(TAG, "update sharedpreferences; ");
+
+        PAPstate = false;
     }
+    */
+
 }
