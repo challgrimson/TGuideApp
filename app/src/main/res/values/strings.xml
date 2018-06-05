@@ -119,9 +119,9 @@
     </string>
 
     <string name="button6Title">Can I contact TGuide?</string>
-    <string name="button6Text">Of course, ff you are interested in providing feedback or have any questions/concerns about TGuide,
-        please feel free to email us at contacttguide@gmail.com or leave a comment on the app store. We are always looking for
-        new ways to improve the app to better help you! \n If you have any questions about the Turner Society of Canada or other questions/concerns,
+    <string name="button6Text">Of course, if you are interested in providing feedback or have any questions/concerns about TGuide,
+        please feel free to leave a comment on the app store. We are always looking for
+        new ways to improve the app! If you have any questions about the Turner Society of Canada or any other questions/concerns,
         please contact info@turnersyndrome.ca.</string>
 
     <!-- Strings for Checklist -->
@@ -230,11 +230,12 @@
         \n- Fast pulse</string>
     <string name="symptombuttonexit">Close</string>
     <string name="incorrectconfirmtion">Input Incorrect</string>
-    <string name="cardinfo">Females with Turner Syndrome have an increased likelihood of an
-    aortic dissection which can be life threatening. If you are experiencing the aortic
-    dissection symptoms then present to the emergency department immediately and present this card
-    to help the emergency room staff to help guide your treatment. It is also best to keep a physical, paper card with this
-    information on you as well.</string>
+    <string name="cardinfo">Women with Turner Syndrome have an increased possibility of an aortic dissection which is
+        a life threatening event. If you are experiencing the following symptoms; sudden severe chest or upper back pain,
+        shortness of breath, dificult speaking, dizzy, weak, sweaty, anxious, pale and fast pulse, then go to the emergency department immediately and present this card.
+        It will help the emergency room staff guide your treatment. It is also best to keep a paper card with your health information on your person
+        at all times. Consult your specialist for more information on aortic dissection in Turner Syndrome. Make sure to click the boxes with the correct information
+        to help the emergency room staff with your treatment.</string>
     <string name="cardinfocontentdesp">Information about this card.</string>
     <string name="title_activity_login">Sign in</string>
 
@@ -268,7 +269,7 @@
     <string name="reminders">Reminders</string>
     <string name="notepaddrawer">Notepad</string>
     <string name="faqdrawer">FAQ</string>
-    <string name="accountinfo">Account Information</string>
+    <string name="accountinfo">Account Setting</string>
     <string name="addreminder">Add Reminder</string>
     <string name="calendar">Calendar</string>
 
@@ -287,13 +288,14 @@
     <string name="changeemail">Update Email</string>
     <string name="resetemail">Reset Email</string>
     <string name="deleteaccount">Delete Account</string>
-    <string name="removeaccountconfirm">We are sorry to see you go. If you have or had any questions or concerns,
-    please feel to contact us using the information found in the FAQ question. To confirm your account deactivation, please
-    type in the follow password:</string>
+    <string name="confirmaccountinformation">Confirm account information</string>
     <string name="passwordnotcorrect">Error. Password not correct.</string>
     <string name="incorrectcredentials">Error. Credentials incorrectl</string>
     <string name="sendemail">Send Email</string>
     <string name="requestemail">Please enter account email</string>
+    <string name="logout">Logout Account</string>
+    <string name="logoutconfirmation">Logout Confirmation</string>
+    <string name="confirmlogout">Are you sure you would like to logout?</string>
 
     <!-- Login Info -->
     <string name="requestemaillogin">Please enter email</string>

@@ -65,19 +65,46 @@
         android:textStyle="bold"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/deleteaccount"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:text="@string/deleteaccount"
-        android:clickable="true"
-        android:focusable="true"
-        android:textSize="25sp"
-        android:textColor="@color/colorAccent"
-        android:gravity="bottom"
+        android:orientation="horizontal"
         android:layout_below="@+id/linearbutton"
         android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:weightSum="1"
+        android:gravity="bottom">
 
+        <TextView
+            android:id="@+id/logoutaccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/logout"
+            android:clickable="true"
+            android:focusable="true"
+            android:textSize="25sp"
+            android:textColor="@color/colorAccent"
+            android:gravity="bottom|start"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/deleteaccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/deleteaccount"
+            android:clickable="true"
+            android:focusable="true"
+            android:textSize="25sp"
+            android:textColor="@color/colorAccent"
+            android:gravity="bottom|end"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
 </RelativeLayout>

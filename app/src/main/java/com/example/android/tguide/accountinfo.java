@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -31,7 +30,7 @@ public class accountinfo extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private TextView accountemail, deleteacc;
+    private TextView accountemail, deleteacc, logoutacc;
 
     private Button bchangeemail, bchangepassword, bresetpassword;
 
@@ -65,6 +64,7 @@ public class accountinfo extends Fragment {
         bchangeemail = view.findViewById(R.id.changeemail);
         bchangepassword = view.findViewById(R.id.changepassword);
         bresetpassword = view.findViewById(R.id.resetpassword);
+        logoutacc = view.findViewById(R.id.logoutaccount);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -190,7 +190,7 @@ public class accountinfo extends Fragment {
             public void onClick(View view) {
                 // Create dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle(getString(R.string.changepassword));
+                builder.setTitle(getString(R.string.confirmaccountinformation));
 
                 // Set View to hold strings
                 // Get layout inflater
@@ -278,6 +278,36 @@ public class accountinfo extends Fragment {
                                         }
                                     }
                                 });
+                    }
+                });
+                builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                // Create and show the AlertDialog
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+
+        logoutacc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle(getString(R.string.logoutconfirmation));
+                builder.setMessage(R.string.confirmlogout);
+
+                // Set up the buttons
+                builder.setPositiveButton(getString(R.string.logout), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseAuth.getInstance().signOut();
+                        // Logout
+                        Intent intent = new Intent(getActivity(), loginActivity.class);
+                        startActivity(intent);
                     }
                 });
                 builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {

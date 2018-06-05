@@ -24,9 +24,6 @@
         <item
             android:id="@+id/fraq_calendar"
             android:title="@string/calendar"/>
-        <!-- item
-            android:id="@+id/frag_reminders"
-            android:title="@string/reminders" -->
         <item
             android:id="@+id/frag_mainPage"
             android:title="@string/notepaddrawer"/>
@@ -37,8 +34,5 @@
         <item
         android:id="@+id/frag_accountinfo"
         android:title="@string/accountinfo"/>
-        <item
-            android:id="@+id/frag_Logout"
-            android:title="Logout"/>
     </group>
 </menu>

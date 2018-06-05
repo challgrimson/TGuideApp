@@ -182,7 +182,8 @@
         app:backgroundTint="@android:color/darker_gray"
         app:fabSize="normal"
         app:layout_anchor="@id/reminder_add_titleText"
-        app:layout_anchorGravity="bottom|right"/>
+        app:layout_anchorGravity="bottom|right"
+        android:scaleType="fitCenter"/>
 
     <!-- Sound Off -->
     <android.support.design.widget.FloatingActionButton
@@ -197,5 +198,6 @@
         app:backgroundTint="@android:color/darker_gray"
         app:fabSize="normal"
         app:layout_anchor="@id/reminder_add_titleText"
-        app:layout_anchorGravity="bottom|right"/>
+        app:layout_anchorGravity="bottom|right"
+        android:scaleType="fitCenter"/>
 </android.support.design.widget.CoordinatorLayout>

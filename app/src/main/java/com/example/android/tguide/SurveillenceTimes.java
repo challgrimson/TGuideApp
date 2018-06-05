@@ -17,7 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -37,14 +36,17 @@ import java.text.SimpleDateFormat;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import java.net.URL;
-import java.text.SimpleDateFormat;
-
 import java.util.Calendar;
 import java.util.Locale;
 
 // For surveillance time information
 public class SurveillenceTimes extends Fragment {
+    /**
+     * Class used to track the surveillence times of client. TextView class will show a date that is either
+     * green or red corresponding to if the appointment is due or not. On click of textview,
+     * dialog appears for input of date and time. Date and time is then stored in SQL database.
+     * Time is tracked to determine if date has passed or not
+     */
 
     private OnFragmentInteractionListener mListener;
 
@@ -75,12 +77,12 @@ public class SurveillenceTimes extends Fragment {
     // Handler to put times in DB database
     ReminderDBHelper handler;
 
+    // Create temporary time when cancelling
+    String temptime;
+
     // Convert date to put in database and for time text
     private SimpleDateFormat dbDateFormate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-    private SimpleDateFormat timeFormate = new SimpleDateFormat("hh:mm a");
-    // Service
-    //private  static final String TAG = "SurveillenceTimes";
-    //private Intent intent;
+    private SimpleDateFormat timeFormate = new SimpleDateFormat("hh:mm a", Locale.getDefault());
 
     public SurveillenceTimes() {
         // Required empty public constructor
@@ -131,86 +133,91 @@ public class SurveillenceTimes extends Fragment {
         // Load saved states
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        // Set text
+        mPAPtext.setText(sharedPref.getString("PAP", getString(R.string.overdue)));
+        mTHYtext.setText(sharedPref.getString("THY", getString(R.string.overdue)));
+        mCELtext.setText(sharedPref.getString("CEL", getString(R.string.overdue)));
+        mECGtext.setText(sharedPref.getString("ECG", getString(R.string.overdue)));
+        mECHtext.setText(sharedPref.getString("ECH", getString(R.string.overdue)));
+        mCTtext.setText(sharedPref.getString("CT", getString(R.string.overdue)));
+        mPROtext.setText(sharedPref.getString("PRO", getString(R.string.overdue)));
+        mVIStext.setText(sharedPref.getString("VIS", getString(R.string.overdue)));
+        mHEAtext.setText(sharedPref.getString("HEA", getString(R.string.overdue)));
+        mBONtext.setText(sharedPref.getString("BON", getString(R.string.overdue)));
+        // Set time
+        mPAPtime = sharedPref.getLong("PAPtime", -1);
+        mTHYtime = sharedPref.getLong("THYtime", -1);
+        mCELtime = sharedPref.getLong("CELtime", -1);
+        mECGtime = sharedPref.getLong("ECGtime", -1);
+        mECHtime = sharedPref.getLong("ECHtime", -1);
+        mCTtime = sharedPref.getLong("CTtime", -1);
+        mPROtime = sharedPref.getLong("PROtime", -1);
+        mVIStime = sharedPref.getLong("VIStime", -1);
+        mHEAtime = sharedPref.getLong("HEAtime", -1);
+        mBONtime = sharedPref.getLong("BONtime", -1);
 
-        ref.child("users").child(user.getUid()).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChild("mCELtime")) {
-                            // Get user value
-                            User user = dataSnapshot.getValue(User.class);
-                            // Save current state of checked items
-                            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        // Check to see if new user or if app on new phone and if so then update data
+        if (sharedPref.getBoolean("NEWUSER", true)) {
 
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+            ref.child("users").child(user.getUid()).addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.hasChild("mCELtime")) {
+                                // Get user value
+                                User user = dataSnapshot.getValue(User.class);
 
-                            mPAPtext.setText(user.getmPAPtext());
-                            mTHYtext.setText(user.getmTHYtext());
-                            mCELtext.setText(user.getmCELtext());
-                            mECGtext.setText(user.getmECGtext());
-                            mECHtext.setText(user.getmECHtext());
-                            mCTtext.setText(user.getmCTtext());
-                            mPROtext.setText(user.getmPROtext());
-                            mVIStext.setText(user.getmVIStext());
-                            mHEAtext.setText(user.getmHEAtext());
-                            mBONtext.setText(user.getmBONtext());
+                                mPAPtext.setText(user.getmPAPtext());
+                                mTHYtext.setText(user.getmTHYtext());
+                                mCELtext.setText(user.getmCELtext());
+                                mECGtext.setText(user.getmECGtext());
+                                mECHtext.setText(user.getmECHtext());
+                                mCTtext.setText(user.getmCTtext());
+                                mPROtext.setText(user.getmPROtext());
+                                mVIStext.setText(user.getmVIStext());
+                                mHEAtext.setText(user.getmHEAtext());
+                                mBONtext.setText(user.getmBONtext());
+                                Log.i("PAPVALUE", String.valueOf(user.getmPAPtime()));
+                                mPAPtime = user.getmPAPtime();
+                                mTHYtime = user.getmTHYtime();
+                                mCELtime = user.getmCELtime();
+                                mECGtime = user.getmECGtime();
+                                mECHtime = user.getmECHtime();
+                                mCTtime = user.getmCTtime();
+                                mPROtime = user.getmPROtime();
+                                mVIStime = user.getmVIStime();
+                                mHEAtime = user.getmHEAtime();
+                                mBONtime = user.getmBONtime();
 
-                            mPAPtime = user.getmPAPtime();
-                            mTHYtime = user.getmTHYtime();
-                            mCELtime = user.getmCELtime();
-                            mECGtime = user.getmECGtime();
-                            mECHtime = user.getmECHtime();
-                            mCTtime = user.getmCTtime();
-                            mPROtime = user.getmPROtime();
-                            mVIStime = user.getmVIStime();
-                            mHEAtime = user.getmHEAtime();
-                            mBONtime = user.getmBONtime();
+                                // Check appropiate colours
+                                checkTime();
 
-                        } else {
-                            // Set text
-                            mPAPtext.setText(getString(R.string.overdue));
-                            mTHYtext.setText(getString(R.string.overdue));
-                            mCELtext.setText(getString(R.string.overdue));
-                            mECGtext.setText(getString(R.string.overdue));
-                            mECHtext.setText(getString(R.string.overdue));
-                            mCTtext.setText(getString(R.string.overdue));
-                            mPROtext.setText(getString(R.string.overdue));
-                            mVIStext.setText(getString(R.string.overdue));
-                            mHEAtext.setText(getString(R.string.overdue));
-                            mBONtext.setText(getString(R.string.overdue));
-                            // Set time
-                            mPAPtime = -1;
-                            mTHYtime = -1;
-                            mCELtime = -1;
-                            mECGtime = -1;
-                            mECHtime = -1;
-                            mCTtime = -1;
-                            mPROtime = -1;
-                            mVIStime = -1;
-                            mHEAtime = -1;
-                            mBONtime = -1;
+                                // Make text appropiate colours
+                                managecolours();
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
 
                         }
-                    }
+                    });
+        } else {
+            // Check appropiate colours
+            checkTime();
 
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-
-                    }
-                });
+            // Make text appropiate colours
+            managecolours();
+        }
 
         // Initilize Calendar variables
         mCalendar = Calendar.getInstance();
         mYear = mCalendar.get(Calendar.YEAR);
         mMonth = mCalendar.get(Calendar.MONTH);
         mDay = mCalendar.get(Calendar.DATE);
-
-        // Check appropiate colours
-        checkTime();
-
-        // Make text appropiate colours
-        managecolours();
 
         mPAP.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,11 +238,6 @@ public class SurveillenceTimes extends Fragment {
                 // To turn green on reload
                 THYstate = true;
 
-                // Call date setter
-                //setDate(v, mTHYtext);
-
-                // Set Reminder
-                //setReminder(6);
                 enterSurveillance(6, mTHYtext);
             }
         });
@@ -246,11 +248,6 @@ public class SurveillenceTimes extends Fragment {
                 // To turn green on reload
                 CELstate = true;
 
-                // Call date setter
-                //setDate(v, mCELtext);
-
-                // Set Reminder
-                //setReminder(10);
                 enterSurveillance(10, mCELtext);
             }
         });
@@ -261,11 +258,6 @@ public class SurveillenceTimes extends Fragment {
                 // To turn green on reload
                 ECGstate = true;
 
-                // Call date setter
-                //setDate(v, mECGtext);
-
-                // Set Reminder
-                //setReminder(11);
                 enterSurveillance(11, mECGtext);
             }
         });
@@ -276,11 +268,6 @@ public class SurveillenceTimes extends Fragment {
                 // To turn green on reload
                 ECHstate = true;
 
-                // Call date setter
-                //setDate(v, mECHtext);
-
-                // Set Reminder
-                //setReminder(12);
                 enterSurveillance(12, mECHtext);
             }
         });
@@ -291,11 +278,6 @@ public class SurveillenceTimes extends Fragment {
                 // To turn green on reload
                 CTstate = true;
 
-                // Call date setter
-                //setDate(v, mCTtext);
-
-                // Set Reminder
-                //setReminder(13);
                 enterSurveillance(13, mCTtext);
             }
         });
@@ -306,11 +288,6 @@ public class SurveillenceTimes extends Fragment {
                 // To turn green on reload
                 PROstate = true;
 
-                // Call date setter
-                //setDate(v, mPROtext);
-
-                // Set Reminder
-                //setReminder(14);
                 enterSurveillance(14, mPROtext);
             }
         });
@@ -321,11 +298,6 @@ public class SurveillenceTimes extends Fragment {
                 // To turn green on reload
                 VISstate = true;
 
-                // Call date setter
-                //setDate(v, mVIStext);
-
-                // Set Reminder
-                //setReminder(15);
                 enterSurveillance(15, mVIStext);
             }
         });
@@ -336,11 +308,6 @@ public class SurveillenceTimes extends Fragment {
                 // To turn green on reload
                 HEAstate = true;
 
-                // Call date setter
-                //setDate(v, mHEAtext);
-
-                // Set Reminder
-                //setReminder(16);
                 enterSurveillance(16, mHEAtext);
             }
         });
@@ -351,11 +318,6 @@ public class SurveillenceTimes extends Fragment {
                 // To turn green on reload
                 BONstate = true;
 
-                // Call date setter
-                //setDate(v, mBONtext);
-
-                // Set Reminder
-                //setReminder(17);
                 enterSurveillance(17, mBONtext);
             }
         });
@@ -430,7 +392,7 @@ public class SurveillenceTimes extends Fragment {
         editor.putString("BON", BONsave);
 
 
-        // Sve bool
+        // Save bool
         editor.putLong("PAPtime", mPAPtime);
         editor.putLong("THYtime", mTHYtime);
         editor.putLong("CELtime", mCELtime);
@@ -442,23 +404,15 @@ public class SurveillenceTimes extends Fragment {
         editor.putLong("HEAtime", mHEAtime);
         editor.putLong("BONtime", mBONtime);
 
+        // Not a new user
+        editor.putBoolean("NEWUSER", false);
 
         editor.apply();
         fireBaseSave();
     }
 
     public void fireBaseSave() {
-        PAPsave = mPAPtext.getText().toString();
-        THYsave = mTHYtext.getText().toString();
-        CELsave = mCELtext.getText().toString();
-        ECGsave = mECGtext.getText().toString();
-        ECHsave = mECHtext.getText().toString();
-        CTsave = mCTtext.getText().toString();
-        PROsave = mPROtext.getText().toString();
-        VISsave = mVIStext.getText().toString();
-        HEAsave = mHEAtext.getText().toString();
-        BONsave = mBONtext.getText().toString();
-
+        // Save date in firebase
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -503,7 +457,7 @@ public class SurveillenceTimes extends Fragment {
     }
 
     // Set date that is specified
-    public void setDate(final TextView tv, final TextView datedialog) {
+    public void setDate(final TextView datedialog) {
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
 
@@ -511,9 +465,8 @@ public class SurveillenceTimes extends Fragment {
                     @Override
                     public void onDateSet(DatePickerDialog v, int year, int monthOfYear, int dayOfMonth) {
                         String mDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                        tv.setText(mDate);
+                        temptime = mDate;
                         datedialog.setText(mDate);
-                        TextViewCompat.setTextAppearance(tv, R.style.DateInsert);
 
                         mYear = year;
                         mMonth = monthOfYear;
@@ -539,9 +492,8 @@ public class SurveillenceTimes extends Fragment {
         dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
     }
 
-    // Set the appropiate colours depending on value
+    // Set the appropiate colours depending on if date has passed or not
     public void managecolours() {
-        // Compare each once to overdue to check
         if (PAPstate) {
             TextViewCompat.setTextAppearance(mPAPtext, R.style.DateInsert);
         } else {
@@ -605,16 +557,18 @@ public class SurveillenceTimes extends Fragment {
     public void checkTime() {
         Log.i("PAP time", String.valueOf(mPAPtime));
         Log.i("Current time", String.valueOf(Calendar.getInstance().getTimeInMillis()));
+        Log.i("Difference", String.valueOf(Calendar.getInstance().getTimeInMillis() - mPAPtime));
+        Log.i("DifferenceBoolean", String.valueOf(Calendar.getInstance().getTimeInMillis() - mPAPtime > 24*60*60*1000 || mPAPtime == -1));
 
         //Yearly
-        if (Calendar.getInstance().getTimeInMillis() - mPAPtime > 10000 || mPAPtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mPAPtime > 24*60*60*1000 || mPAPtime == -1) {
             PAPstate = false;
         } else {
             PAPstate = true;
         }
 
         // Yearly
-        if (Calendar.getInstance().getTimeInMillis() - mTHYtime > 10000 || mTHYtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mTHYtime > 24*60*60*1000 || mTHYtime == -1) {
             THYstate = false;
         } else {
             THYstate = true;
@@ -622,54 +576,54 @@ public class SurveillenceTimes extends Fragment {
 
 
         // 2-5 Years
-        if (Calendar.getInstance().getTimeInMillis() - mCELtime > 10000 || mCELtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mCELtime > 2*24*60*60*1000 || mCELtime == -1) {
             CELstate = false;
         } else {
             CELstate = true;
         }
 
         //3-5 Years
-        if (Calendar.getInstance().getTimeInMillis() - mECGtime > 10000 || mECGtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mECGtime > 3*24*60*60*1000 || mECGtime == -1) {
             ECGstate = false;
         } else {
             ECGstate = true;
         }
 
-
-        if (Calendar.getInstance().getTimeInMillis() - mECHtime > 10000 || mECHtime == -1) {
+        // Yearly
+        if (Calendar.getInstance().getTimeInMillis() - mECHtime > 24*60*60*1000 || mECHtime == -1) {
             ECHstate = false;
         } else {
             ECHstate = true;
         }
 
-        if (Calendar.getInstance().getTimeInMillis() - mCTtime > 10000 || mCTtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mCTtime > 24*60*60*1000 || mCTtime == -1) {
             CTstate = false;
         } else {
             CTstate = true;
         }
 
-        if (Calendar.getInstance().getTimeInMillis() - mPROtime > 10000 || mPROtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mPROtime > 24*60*60*1000 || mPROtime == -1) {
             PROstate = false;
         } else {
             PROstate = true;
         }
 
         // 1-2 Years
-        if (Calendar.getInstance().getTimeInMillis() - mVIStime > 10000 || mVIStime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mVIStime > 2*24*60*60*1000 || mVIStime == -1) {
             VISstate = false;
         } else {
             VISstate = true;
         }
 
         // 2-3 Years
-        if (Calendar.getInstance().getTimeInMillis() - mHEAtime > 10000 || mHEAtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mHEAtime > 2*24*60*60*1000 || mHEAtime == -1) {
             HEAstate = false;
         } else {
             HEAstate = true;
         }
 
         //3-5 Years
-        if (Calendar.getInstance().getTimeInMillis() - mBONtime > 10000 || mBONtime == -1) {
+        if (Calendar.getInstance().getTimeInMillis() - mBONtime > 3*24*60*60*1000 || mBONtime == -1) {
             BONstate = false;
         } else {
             BONstate = true;
@@ -716,8 +670,6 @@ public class SurveillenceTimes extends Fragment {
     // Create time dialog to input time
     public void setTime(final TextView dialogText) {
         TimePickerDialog tpd = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
-
-
                                                                 @Override
                                                                 public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute) {
                                                                     mCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
@@ -752,8 +704,7 @@ public class SurveillenceTimes extends Fragment {
         dateLinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setDate(tv, dateDialogText);
-
+                setDate(dateDialogText);
 
             }
         });
@@ -772,6 +723,8 @@ public class SurveillenceTimes extends Fragment {
         mbuilder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                tv.setText(temptime);
+                TextViewCompat.setTextAppearance(tv, R.style.DateInsert);
                 setReminder(timeView);
             }
         })

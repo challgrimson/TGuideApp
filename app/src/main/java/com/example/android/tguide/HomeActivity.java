@@ -210,10 +210,6 @@ public class HomeActivity extends AppCompatActivity
             fragment = new accountinfo();
         } else if (id == R.id.fraq_calendar) {
             fragment = new calendar();
-        } else if (id == R.id.frag_Logout) {
-            FirebaseAuth.getInstance().signOut();
-            finish();
-            startActivity(new Intent(this, loginActivity.class));
         }
 
         // Change Fragment
