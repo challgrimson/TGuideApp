@@ -36,6 +36,14 @@ import com.twitter.sdk.android.tweetui.TweetUi;
 import com.twitter.sdk.android.tweetui.UserTimeline;
 */
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.Random;
 
 
@@ -129,15 +137,32 @@ public class HomePage extends Fragment {
         box3 = checkitem3.findViewById(R.id.checkbox);
 
         // Save current state of checked items
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("usersRdCard").child(user.getUid()).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.hasChild("box1")) {
 
-        Boolean state1 = sharedPref.getBoolean("emergbox1",false);
-        Boolean state2 = sharedPref.getBoolean("emergbox2",false);
-        Boolean state3 = sharedPref.getBoolean("emergbox3",false);
+                            User userdata = dataSnapshot.getValue(User.class);
+                            //figure out why onyl works for User class??????????????
+                            box1.setChecked(userdata.getbox1());
+                            box2.setChecked(userdata.getbox2());
+                            box3.setChecked(userdata.getbox3());
+                            //Log.i("notepadCHECK",userNpdata.getNotepadText());
+                        } else  {
+                            box1.setChecked(false);
+                            box2.setChecked(false);
+                            box3.setChecked(false);
+                        }
+                    }
 
-        box1.setChecked(state1);
-        box2.setChecked(state2);
-        box3.setChecked(state3);
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+
+                    }
+                });
 
         // Send confirmation before changing
         box1.setOnClickListener(new View.OnClickListener() {
@@ -286,6 +311,13 @@ public class HomePage extends Fragment {
         editor.putBoolean("emergbox1",state1);
         editor.putBoolean("emergbox2",state2);
         editor.putBoolean("emergbox3",state3);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        ref.child("usersRdCard").child(user.getUid()).child("box1").setValue(state1.booleanValue());
+        ref.child("usersRdCard").child(user.getUid()).child("box2").setValue(state2.booleanValue());
+        ref.child("usersRdCard").child(user.getUid()).child("box3").setValue(state3.booleanValue());
 
         editor.apply();
     }

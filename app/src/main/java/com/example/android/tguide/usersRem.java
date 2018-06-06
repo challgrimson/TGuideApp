@@ -17,7 +17,9 @@ public class usersRem {
     private String uniqueID;
 
     public usersRem(){}
-
+   //reff.child("usersRem").child(userr.getUid()).child(id).child("SURV_ALARM_TIME").setValue(time);
+      //  reff.child("usersRem").child(userr.getUid()).child(id).child("SURV_UNIQE_ID").setValue(uniqueid);
+      //  reff.child("usersRem").child(userr.getUid()).child(id).child("id").setValue(id);
     public usersRem(String titleText,
              String description,
              String dateText,

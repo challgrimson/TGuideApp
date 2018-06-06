@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -75,14 +76,30 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
                 SURV_ALARM_TIME + " TEXT NOT NULL)"
         );
 
-
-        FirebaseDatabase.getInstance().getReference().child("usersRem")
+        FirebaseUser userr = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseDatabase.getInstance().getReference().child("usersRem").child(userr.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             usersRem user = snapshot.getValue(usersRem.class);
                             insertReminderFromFire(user.gettitleText(),user.getdescription(), user.getdateText(), user.gettimeText(), user.getrepeat(), user.getrepeatNum(), user.getrepeatType(), user.getsound(), user.getuniqueID());
+                            Log.i("Surveillance","good");
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+        Log.i("Surveillance","doublegood");
+
+        FirebaseDatabase.getInstance().getReference().child("usersSurv")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            usersSurv user = snapshot.getValue(usersSurv.class);
+                            insertSurveillanceFirebase(user.getSURV_ALARM_TIME() ,user.getSURV_UNIQE_ID() , user.getid());
                         }
                     }
                     @Override
@@ -219,6 +236,32 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
+
+        FirebaseUser userr = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
+
+        if (exists(id)) {
+            contentValues.put(SURV_ALARM_TIME, time);
+            contentValues.put(SURV_UNIQE_ID, uniqueid);
+            // Update existent time
+            db.update(SURV_TABLE_NAME, contentValues, SURV_ALARM_ID + " = ?", new String[] { id } );
+        } else {
+            contentValues.put(SURV_ALARM_ID, id);
+            contentValues.put(SURV_ALARM_TIME, time);
+            contentValues.put(SURV_UNIQE_ID, uniqueid);
+            // Insert into database
+            db.insert(SURV_TABLE_NAME, null, contentValues);}
+
+        reff.child("usersSurv").child(userr.getUid()).child(id).child("SURV_ALARM_TIME").setValue(time);
+        reff.child("usersSurv").child(userr.getUid()).child(id).child("SURV_UNIQE_ID").setValue(uniqueid);
+        reff.child("usersSurv").child(userr.getUid()).child(id).child("id").setValue(id);
+    }
+
+    // Same as above but for firebase (used when updating)
+    public void insertSurveillanceFirebase(String id, String time, String uniqueid) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
         if (exists(id)) {
             contentValues.put(SURV_ALARM_TIME, time);
             contentValues.put(SURV_UNIQE_ID, uniqueid);
@@ -252,6 +295,7 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
 
     // Fetch dates for cursor to set calendar events
     public Cursor fetchEvents() {
+
         SQLiteDatabase db = this.getReadableDatabase();
         return db.query(REMINDER_TABLE_NAME, new String[] {REMINDER_COLUMN_DATE},
                 null, null, null, null, null);

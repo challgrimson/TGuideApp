@@ -7,10 +7,19 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import static com.example.android.tguide.R.id.parent;
 
@@ -68,6 +77,8 @@ public class MainPage extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
@@ -80,11 +91,37 @@ public class MainPage extends Fragment {
             mListener.onFragmentInteraction(getString(R.string.notepaddrawer));
         }
 
-        // Update notepad based on saved data
+       /* // Update notepad based on saved data
         editText =  view.findViewById(R.id.notepad);
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         notepad_txt = sharedPref.getString("notepad","");
         editText.setText(notepad_txt);
+*/
+
+        //set from firebase
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        editText =  view.findViewById(R.id.notepad);
+        ref.child("usersNP").child(user.getUid()).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.hasChild("notepad")) {
+
+                            User userNpdata = dataSnapshot.getValue(User.class);
+                            //figure out why onyl works for User class??????????????
+                            editText.setText(userNpdata.getnotepad());
+                            //Log.i("notepadCHECK",userNpdata.getNotepadText());
+                        } else  {
+                            editText.setText("");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+
+                    }
+                });
 
         return view;
     }
@@ -129,6 +166,11 @@ public class MainPage extends Fragment {
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         notepad_txt = editText.getText().toString();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("usersNP").child(user.getUid()).child("notepad").setValue(notepad_txt);
+
         editor.putString("notepad",notepad_txt);
         editor.apply();
     }
