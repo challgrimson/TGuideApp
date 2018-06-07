@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.TextViewCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -92,8 +93,6 @@ public class SurveillenceTimes extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //intent = new Intent(getActivity(), surveillenceSurvice.class);
-
     }
 
     @Override
@@ -133,6 +132,7 @@ public class SurveillenceTimes extends Fragment {
         // Load saved states
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
+        /*
         // Set text
         mPAPtext.setText(sharedPref.getString("PAP", getString(R.string.overdue)));
         mTHYtext.setText(sharedPref.getString("THY", getString(R.string.overdue)));
@@ -155,10 +155,10 @@ public class SurveillenceTimes extends Fragment {
         mVIStime = sharedPref.getLong("VIStime", -1);
         mHEAtime = sharedPref.getLong("HEAtime", -1);
         mBONtime = sharedPref.getLong("BONtime", -1);
+        */
 
         // Check to see if new user or if app on new phone and if so then update data
-        if (sharedPref.getBoolean("NEWUSER", true)) {
-
+        //if (sharedPref.getBoolean("NEWUSER", true)) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
             ref.child("users").child(user.getUid()).addListenerForSingleValueEvent(
@@ -197,6 +197,30 @@ public class SurveillenceTimes extends Fragment {
                                 // Make text appropiate colours
                                 managecolours();
 
+                            } else  {
+                                // Set text
+                                mPAPtext.setText(getString(R.string.overdue));
+                                mTHYtext.setText(getString(R.string.overdue));
+                                mCELtext.setText(getString(R.string.overdue));
+                                mECGtext.setText(getString(R.string.overdue));
+                                mECHtext.setText(getString(R.string.overdue));
+                                mCTtext.setText(getString(R.string.overdue));
+                                mPROtext.setText(getString(R.string.overdue));
+                                mVIStext.setText(getString(R.string.overdue));
+                                mHEAtext.setText(getString(R.string.overdue));
+                                mBONtext.setText(getString(R.string.overdue));
+                                // Set time
+                                mPAPtime = -1;
+                                mTHYtime = -1;
+                                mCELtime = -1;
+                                mECGtime = -1;
+                                mECHtime = -1;
+                                mCTtime = -1;
+                                mPROtime = -1;
+                                mVIStime = -1;
+                                mHEAtime = -1;
+                                mBONtime = -1;
+
                             }
                         }
 
@@ -205,13 +229,13 @@ public class SurveillenceTimes extends Fragment {
 
                         }
                     });
-        } else {
+        /*} else {
             // Check appropiate colours
             checkTime();
 
             // Make text appropiate colours
             managecolours();
-        }
+        }*/
 
         // Initilize Calendar variables
         mCalendar = Calendar.getInstance();
@@ -366,7 +390,7 @@ public class SurveillenceTimes extends Fragment {
         super.onPause();
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-
+        /*
         // Grab text
         PAPsave = mPAPtext.getText().toString();
         THYsave = mTHYtext.getText().toString();
@@ -406,13 +430,23 @@ public class SurveillenceTimes extends Fragment {
 
         // Not a new user
         editor.putBoolean("NEWUSER", false);
+        */
 
         editor.apply();
         fireBaseSave();
     }
 
     public void fireBaseSave() {
-        // Save date in firebase
+        PAPsave = mPAPtext.getText().toString();
+        THYsave = mTHYtext.getText().toString();
+        CELsave = mCELtext.getText().toString();
+        ECGsave = mECGtext.getText().toString();
+        ECHsave = mECHtext.getText().toString();
+        CTsave = mCTtext.getText().toString();
+        PROsave = mPROtext.getText().toString();
+        VISsave = mVIStext.getText().toString();
+        HEAsave = mHEAtext.getText().toString();
+        BONsave = mBONtext.getText().toString();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -723,9 +757,13 @@ public class SurveillenceTimes extends Fragment {
         mbuilder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                tv.setText(temptime);
-                TextViewCompat.setTextAppearance(tv, R.style.DateInsert);
-                setReminder(timeView);
+                if (TextUtils.isEmpty(dateDialogText.getText().toString()) || TextUtils.isEmpty(timeDialogText.getText().toString())) {
+                    Toast.makeText(getContext(), getString(R.string.missinginformation), Toast.LENGTH_LONG).show();
+                } else {
+                    tv.setText(temptime);
+                    TextViewCompat.setTextAppearance(tv, R.style.DateInsert);
+                    setReminder(timeView);
+                }
             }
         })
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {

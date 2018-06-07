@@ -237,6 +237,7 @@ public class bootReceiver extends BroadcastReceiver {
         cursor.close();
     }
 
+    /*
     public void surveillancetimes() {
         Log.i(TAG, "Reseting Surveillance");
 
@@ -308,4 +309,5 @@ public class bootReceiver extends BroadcastReceiver {
         }
         cursor.close();
     }
+    */
 }

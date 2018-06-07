@@ -212,6 +212,7 @@
     <string name="examRemindDesp">Is your appointment today?</string>
     <string name="enterDate">Enter Date</string>
     <string name="enterTime">Enter Time</string>
+    <string name="missinginformation">Information missing. Please try again.</string>
 
     <!-- String for emergency aortic dissection card -->
     <string name="emergencyTitle">I have Turner Syndrome and I am at risk of Aortic Dissection. I have:</string>
@@ -286,7 +287,7 @@
     <string name="passwordnotupdated">Error. Please try again.</string>
     <string name="passwordchanged">Password Changed</string>
     <string name="changeemail">Update Email</string>
-    <string name="resetemail">Reset Email</string>
+    <string name="resetpassword">Reset Password</string>
     <string name="deleteaccount">Delete Account</string>
     <string name="confirmaccountinformation">Confirm account information</string>
     <string name="passwordnotcorrect">Error. Password not correct.</string>
@@ -296,6 +297,12 @@
     <string name="logout">Logout Account</string>
     <string name="logoutconfirmation">Logout Confirmation</string>
     <string name="confirmlogout">Are you sure you would like to logout?</string>
+    <string name="boxempty">Please fill out information.</string>
+    <string name="deletemessage">We are sorry to see you go. If there is anything we could
+    have done better please let us know in the app store or email us at info@turnersyndrome.ca. Please
+    enter your information to confirm the deletion of your account, you will be unable to access
+    your information after the account has been deleted.</string>
+    <string name="passwordresetConfirm">Please confirm that you would like to reset your password.</string>
 
     <!-- Login Info -->
     <string name="requestemaillogin">Please enter email</string>

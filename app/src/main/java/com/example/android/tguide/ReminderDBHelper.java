@@ -20,6 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 // To put in database
 /**
  * Created by zacha_000 on 2018-01-10.
+ * Holds data for reminders and surveillance time in SQL database that is backed up online.
+ * The reminder database is used in the calendar and the surveillance database is used to check
+ * the colours in surveillance times.
  */
 
 public class ReminderDBHelper extends SQLiteOpenHelper {

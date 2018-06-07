@@ -1,16 +1,11 @@
 package com.example.android.tguide;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,23 +13,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-/*
-import com.twitter.sdk.android.core.DefaultLogger;
-import com.twitter.sdk.android.core.Twitter;
-import com.twitter.sdk.android.core.TwitterAuthConfig;
-import com.twitter.sdk.android.core.TwitterConfig;
-import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
-import com.twitter.sdk.android.tweetui.TweetUi;
-import com.twitter.sdk.android.tweetui.UserTimeline;
-*/
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -56,6 +39,12 @@ import java.util.Random;
  * create an instance of this fragment.
  */
 public class HomePage extends Fragment {
+    /**
+     * HomePage is view when first entering app. It contains twitter in a webview and
+     * card with emergency information that when clicked opens a dialog that requires a password to
+     * change the information.
+     */
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -63,7 +52,6 @@ public class HomePage extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    ListView list;
 
     private OnFragmentInteractionListener mListener;
 
@@ -301,16 +289,9 @@ public class HomePage extends Fragment {
     @Override
     public void onPause(){
         super.onPause();
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-
         Boolean state1 = box1.isChecked();
         Boolean state2 = box2.isChecked();
         Boolean state3 = box3.isChecked();
-
-        editor.putBoolean("emergbox1",state1);
-        editor.putBoolean("emergbox2",state2);
-        editor.putBoolean("emergbox3",state3);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -318,8 +299,6 @@ public class HomePage extends Fragment {
         ref.child("usersRdCard").child(user.getUid()).child("box1").setValue(state1.booleanValue());
         ref.child("usersRdCard").child(user.getUid()).child("box2").setValue(state2.booleanValue());
         ref.child("usersRdCard").child(user.getUid()).child("box3").setValue(state3.booleanValue());
-
-        editor.apply();
     }
 
     /**

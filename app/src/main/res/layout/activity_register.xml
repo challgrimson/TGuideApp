@@ -21,7 +21,6 @@
             />
 
         <EditText
-            android:inputType="textEmailAddress"
             android:id="@+id/editTextEmail"
             android:hint="@string/enteremail"
             android:layout_width="match_parent"
@@ -35,7 +34,8 @@
             android:textColor="@android:color/black"
             android:textCursorDrawable="@null"
             android:textSize="20sp"
-            android:background="@drawable/usernameinput" />
+            android:background="@drawable/usernameinput"
+            android:inputType="textVisiblePassword" />
 
         <EditText
             android:inputType="textPassword"

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
@@ -27,6 +29,11 @@ import java.util.Random;
 
 
 public class accountinfo extends Fragment {
+    /**
+     * Accountinfo class used to display information for user account. Will display email address
+     * and buttons to allow for email addresse, and passwords to be changed. Also, offers the ability
+     * to logout or delete user account.
+     */
 
     private OnFragmentInteractionListener mListener;
 
@@ -78,28 +85,34 @@ public class accountinfo extends Fragment {
                 // Set up the input
                 final EditText input = new EditText(getContext());
                 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                input.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 mbuilder.setView(input);
 
                 // Set up the buttons
                 mbuilder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        firebaseAuth.getCurrentUser().updateEmail(input.getText().toString())
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            Log.d("accountinfo", "Email change.");
-                                            Toast.makeText(getContext(), getString(R.string.emailchangeconfirm), Toast.LENGTH_LONG).show();
-                                        } else {
-                                            Toast.makeText(getContext(), getString(R.string.emailchangeerror), Toast.LENGTH_LONG).show();
+                        String email = input.getText().toString().trim();
+                        // Confirm if box is empty
+                        if (TextUtils.isEmpty(email)) {
+                            Toast.makeText(getContext(), getString(R.string.boxempty), Toast.LENGTH_LONG).show();
+                        } else {
+                            firebaseAuth.getCurrentUser().updateEmail(input.getText().toString())
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Log.d("accountinfo", "Email change.");
+                                                Toast.makeText(getContext(), getString(R.string.emailchangeconfirm), Toast.LENGTH_LONG).show();
+                                            } else {
+                                                Toast.makeText(getContext(), getString(R.string.emailchangeerror), Toast.LENGTH_LONG).show();
+                                            }
                                         }
-                                    }
-                                });
-                        // Dismess on button click
-                        if (dialog != null) {
-                            dialog.dismiss();
+                                    });
+                            // Dismess on button click
+                            if (dialog != null) {
+                                dialog.dismiss();
+                            }
                         }
                     }
                 })
@@ -137,36 +150,45 @@ public class accountinfo extends Fragment {
                 mbuilder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        // Authenicate user using oldPassword
-                        AuthCredential credential = EmailAuthProvider.getCredential(firebaseAuth.getCurrentUser().getEmail(), oldPassword.getText().toString());
-                        firebaseAuth.getCurrentUser().reauthenticate(credential)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            // check if new and old password match
-                                            if (newPassword.getText().toString().equals(confirmPassword.getText().toString())){
-                                                // change password
-                                                firebaseAuth.getCurrentUser().updatePassword(newPassword.getText().toString())
-                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if (task.isSuccessful()) {
-                                                                    Toast.makeText(getContext(), getString(R.string.passwordchanged), Toast.LENGTH_LONG).show();
-                                                                } else {
-                                                                    Toast.makeText(getContext(), getString(R.string.passwordnotupdated), Toast.LENGTH_LONG).show();
+                        // Confirm is empty
+                        final String SoldPassword = oldPassword.getText().toString().trim();
+                        final String SnewPassword = oldPassword.getText().toString().trim();
+                        final String SconfirmPassword = oldPassword.getText().toString().trim();
+
+                        if (TextUtils.isEmpty(SoldPassword) & TextUtils.isEmpty(SnewPassword) & TextUtils.isEmpty(SconfirmPassword)) {
+                            Toast.makeText(getContext(), getString(R.string.boxempty), Toast.LENGTH_LONG).show();
+                        } else {
+                            // Authenicate user using oldPassword
+                            AuthCredential credential = EmailAuthProvider.getCredential(firebaseAuth.getCurrentUser().getEmail(), SoldPassword);
+                            firebaseAuth.getCurrentUser().reauthenticate(credential)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                // check if new and old password match
+                                                if (SconfirmPassword.equals(SoldPassword)) {
+                                                    // change password
+                                                    firebaseAuth.getCurrentUser().updatePassword(SnewPassword)
+                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        Toast.makeText(getContext(), getString(R.string.passwordchanged), Toast.LENGTH_LONG).show();
+                                                                    } else {
+                                                                        Toast.makeText(getContext(), getString(R.string.passwordnotupdated), Toast.LENGTH_LONG).show();
+                                                                    }
                                                                 }
-                                                            }
-                                                        });
+                                                            });
+                                                } else {
+                                                    Toast.makeText(getContext(), getString(R.string.passwordnomatch), Toast.LENGTH_LONG).show();
+                                                }
                                             } else {
-                                                Toast.makeText(getContext(), getString(R.string.passwordnomatch), Toast.LENGTH_LONG).show();
+                                                Log.d("accountinfo", "Error password not update");
+                                                Toast.makeText(getContext(), getString(R.string.passwordnotupdated), Toast.LENGTH_LONG).show();
                                             }
-                                        } else {
-                                            Log.d("accountinfo", "Error password not update");
-                                            Toast.makeText(getContext(), getString(R.string.passwordnotupdated), Toast.LENGTH_LONG).show();
                                         }
-                                    }
-                                });
+                                    });
+                        }
                     }
                 })
                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -191,6 +213,7 @@ public class accountinfo extends Fragment {
                 // Create dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle(getString(R.string.confirmaccountinformation));
+                builder.setMessage(R.string.deletemessage);
 
                 // Set View to hold strings
                 // Get layout inflater
@@ -204,29 +227,43 @@ public class accountinfo extends Fragment {
 
                 builder.setPositiveButton(R.string.deleteaccount, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        AuthCredential credential = EmailAuthProvider
-                                .getCredential(email.getText().toString(), password.getText().toString());
+                        String emailString = email.getText().toString().trim();
+                        String passwordString  = password.getText().toString().trim();
+                        // Determine if edittext is empty or not
+                        if (!(TextUtils.isEmpty(emailString) & TextUtils.isEmpty(passwordString))) {
+                            AuthCredential credential = EmailAuthProvider
+                                    .getCredential(emailString, passwordString);
 
-                        // Prompt the user to re-provide their sign-in credentials
-                        firebaseAuth.getCurrentUser().reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        firebaseAuth.getCurrentUser().delete()
-                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task) {
-                                                        if (task.isSuccessful()){
-                                                            Log.d("accountinfo", "User account deleted.");
-                                                            startActivity(new Intent(getContext(), loginActivity.class));
-                                                            getActivity().finish();
-                                                        } else {
-                                                            Toast.makeText(getContext(), getString(R.string.incorrectcredentials), Toast.LENGTH_LONG).show();
-                                                        }
+                            // Prompt the user to re-provide their sign-in credentials
+                            firebaseAuth.getCurrentUser().reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    firebaseAuth.getCurrentUser().delete()
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Log.d("accountinfo", "User account deleted.");
+                                                        Intent intent = new Intent(getActivity(), loginActivity.class);
+                                                        intent.putExtra("caller", getContext().getClass().getSimpleName());
+                                                        startActivity(intent);
+                                                    } else {
+                                                        Toast.makeText(getContext(), getString(R.string.incorrectcredentials), Toast.LENGTH_LONG).show();
                                                     }
-                                                });
-                                    }
-                        });
-                        // Determine if correct
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(getContext(), getString(R.string.incorrectcredentials), Toast.LENGTH_LONG).show();
+                                                }
+                                            });
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getContext(), getString(R.string.boxempty), Toast.LENGTH_LONG).show();
+                        }
+
                         // Dismess on button click
                         if (dialog != null) {
                             dialog.dismiss();
@@ -256,20 +293,14 @@ public class accountinfo extends Fragment {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setTitle(getString(R.string.requestemail));
-
-                // Set up the input
-                final EditText input = new EditText(getContext());
-                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_TEXT);
-                builder.setView(input);
+                builder.setTitle(getString(R.string.resetpassword));
+                builder.setMessage(R.string.passwordresetConfirm);
 
                 // Set up the buttons
                 builder.setPositiveButton(getString(R.string.sendemail), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String m_Text = input.getText().toString();
-                        firebaseAuth.getInstance().sendPasswordResetEmail(m_Text)
+                        firebaseAuth.getInstance().sendPasswordResetEmail(firebaseAuth.getCurrentUser().getEmail())
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
@@ -307,6 +338,7 @@ public class accountinfo extends Fragment {
                         FirebaseAuth.getInstance().signOut();
                         // Logout
                         Intent intent = new Intent(getActivity(), loginActivity.class);
+                        intent.putExtra("caller", getContext().getClass().getSimpleName());
                         startActivity(intent);
                     }
                 });

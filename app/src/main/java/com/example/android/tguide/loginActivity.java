@@ -20,10 +20,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.IOException;
 
 
 //mirror of the register
 public class loginActivity extends AppCompatActivity implements View.OnClickListener{
+    /**
+     * LoginActivity uses firebase to login in the user. Will then direct to mainactivity.
+     * Firebase also set to persist when offline
+     */
+
     private Button buttonSignIn;
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -40,6 +48,11 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Persist database when offline
+        if (!getIntent().hasExtra("caller")) {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
 
         firebaseAuth = FirebaseAuth.getInstance();
 

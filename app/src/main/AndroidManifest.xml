@@ -63,8 +63,6 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".surveillenceSurvice" />
-
     </application>
 
 </manifest>

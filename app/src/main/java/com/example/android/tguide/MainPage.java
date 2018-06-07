@@ -91,13 +91,6 @@ public class MainPage extends Fragment {
             mListener.onFragmentInteraction(getString(R.string.notepaddrawer));
         }
 
-       /* // Update notepad based on saved data
-        editText =  view.findViewById(R.id.notepad);
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        notepad_txt = sharedPref.getString("notepad","");
-        editText.setText(notepad_txt);
-*/
-
         //set from firebase
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -143,17 +136,7 @@ public class MainPage extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    
     public interface OnFragmentInteractionListener {
         //Passed needed title for fragment to MainActivity
         void onFragmentInteraction(String title);
@@ -163,15 +146,10 @@ public class MainPage extends Fragment {
     @Override
     public void onPause(){
         super.onPause();
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
+        // Push text to firebase
         notepad_txt = editText.getText().toString();
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         ref.child("usersNP").child(user.getUid()).child("notepad").setValue(notepad_txt);
-
-        editor.putString("notepad",notepad_txt);
-        editor.apply();
     }
 }
