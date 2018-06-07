@@ -61,6 +61,8 @@ public class calendar extends Fragment {
     String currentdate;
 
 
+    public static boolean loadedFirebase = false;
+
     public calendar() {
         // Required empty public constructor
     }
@@ -99,6 +101,8 @@ public class calendar extends Fragment {
 
         // set handler for data base
         handler = new ReminderDBHelper(getContext());
+        //if (loadedFirebase == false){
+       // }
 
         // Set date
 

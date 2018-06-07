@@ -97,7 +97,16 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
+
                         if(task.isSuccessful()){
+                            ReminderDBHelper database = new ReminderDBHelper(getApplicationContext());
+                            if (database.notEmpty()) {
+                                Log.i("Login", "Not empty");
+                            } else {
+                                database.loadFromFirebase();
+                                Log.i("Login", "Empty");
+                            }
+
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                             finish();
                         }

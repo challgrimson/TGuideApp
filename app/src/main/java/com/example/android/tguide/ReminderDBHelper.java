@@ -79,24 +79,36 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
                 SURV_ALARM_TIME + " TEXT NOT NULL)"
         );
 
-        FirebaseUser userr = FirebaseAuth.getInstance().getCurrentUser();
+
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + REMINDER_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + SURV_TABLE_NAME);
+        onCreate(db);
+    }
+
+    public void loadFromFirebase(){
+       FirebaseUser userr = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase.getInstance().getReference().child("usersRem").child(userr.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             usersRem user = snapshot.getValue(usersRem.class);
+                            Cursor crser = getReminder(Integer.parseInt(user.getuniqueID()));
                             insertReminderFromFire(user.gettitleText(),user.getdescription(), user.getdateText(), user.gettimeText(), user.getrepeat(), user.getrepeatNum(), user.getrepeatType(), user.getsound(), user.getuniqueID());
-                            Log.i("Surveillance","good");
+
                         }
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-        Log.i("Surveillance","doublegood");
 
-        FirebaseDatabase.getInstance().getReference().child("usersSurv")
+        FirebaseDatabase.getInstance().getReference().child("usersSurv").child(userr.getUid())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -109,13 +121,7 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
                     public void onCancelled(DatabaseError databaseError) {
                     }
                 });
-    }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + REMINDER_TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + SURV_TABLE_NAME);
-        onCreate(db);
     }
 
     // Insert Reminder into database
@@ -309,6 +315,17 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         return  db.rawQuery("SELECT * FROM " + REMINDER_TABLE_NAME +" WHERE " + REMINDER_COLUMN_DATE + " = ?", new String[] { date });
     }
+
+    // Determine if SQL Database is empty or not to determine if firebase needs to load data
+    public boolean notEmpty() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor Rcursor = db.rawQuery( "SELECT * FROM " + REMINDER_TABLE_NAME, null );
+        Cursor Scursor = db.rawQuery( "SELECT * FROM " + SURV_TABLE_NAME, null );
+        boolean notEmpty = (Rcursor.getCount() > 0 || Scursor.getCount() > 0);
+        Rcursor.close();
+        Scursor.close();
+        return notEmpty;
+}
 
 
     /*
