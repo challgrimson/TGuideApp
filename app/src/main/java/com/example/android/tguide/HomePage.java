@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,8 @@ public class HomePage extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private ProgressBar progressBar;
+    private WebView webview;
     private String mParam1;
     private String mParam2;
 
@@ -257,15 +261,44 @@ public class HomePage extends Fragment {
         // MIGHT HAVE TO CHANGE FOR FRENCH
         //String data = "<a class=\"twitter-timeline\" href=\"https://twitter.com/TSSCCanada?ref_src=twsrc%5Etfw\">Tweets by TSSCCanada</a> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>";
         String data = "<a class=\"twitter-timeline\" data-link-color=\"#981CEB\" href=\"https://twitter.com/TSSCCanada?ref_src=twsrc%5Etfw\">Tweets by TSSCCanada</a> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>";
-        WebView webview = view.findViewById(R.id.twitterfeed);
+        webview = view.findViewById(R.id.twitterfeed);
+        progressBar = view.findViewById((R.id.simpleProgressBar));
         webview.setWebViewClient(new WebViewClient());
         webview.getSettings().setDomStorageEnabled(true);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.setBackgroundColor(0);
+        startWebView(webview,data);
         //webview.loadUrl("https://twitter.com/TSSCCanada?ref_src=twsrc%5Etfw&ref_url=http%3A%2F%2Fwww.turnersyndrome.ca%2Fabout-turner-syndrome%2F");
-        webview.loadDataWithBaseURL("https://twitter.com",data,"text/html","UTF-8",null);
+        //webview.loadDataWithBaseURL("https://twitter.com",data,"text/html","UTF-8",null);
 
         return view;
+    }
+
+    private void startWebView(final WebView webView, final String data) {
+        progressBar.setVisibility(View.VISIBLE);
+        webView.setVisibility(View.INVISIBLE);
+
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadDataWithBaseURL("https://twitter.com",data,"text/html","UTF-8",null);
+                return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                progressBar.setVisibility(View.GONE);
+                webView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+
+
+            }
+        });
+        webView.loadDataWithBaseURL("https://twitter.com",data,"text/html","UTF-8",null);
     }
 
     @Override

@@ -1,19 +1,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.android.tguide.HomePage"
     android:orientation="vertical"
-    android:background="@color/homeBackground"
+    android:background="@drawable/faqbackground"
     android:gravity="center">
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1">
     <WebView
         android:id="@+id/twitterfeed"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="355dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp">
+
+    </WebView>
+    <ProgressBar
+        android:id="@+id/simpleProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateTint="#856293"
+        android:indeterminateTintMode="src_atop"
+        android:scaleY="2"
+        android:scaleX="2"
+        />
+
+</FrameLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,8 +41,8 @@
         android:orientation="vertical"
         android:paddingTop="10dp"
         android:padding="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp">
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -60,15 +79,16 @@
     <Button
         android:id="@+id/sympButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:background="@color/colorWhite"
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
         android:text="@string/symptomsbutton"
-        android:textColor="@color/mdtp_date_picker_month_day"
-        android:textStyle="bold" />
+        android:textColor="#DB0202"
+        android:textStyle="bold"
+        />
 
 
     <!--FrameLayout
