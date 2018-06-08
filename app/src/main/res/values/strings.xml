@@ -131,6 +131,10 @@
     <string name="infoChecklsit">Collect Appointment Forms (if needed)</string>
     <string name="reflectCheclist">Complete Reflection Actiivty</string>
     <string name="refreshDesp">Refresh Checklist</string>
+    <string name="appConfirm">Appointments Confirmation</string>
+    <string name="appCalendar">Have you put these appointments in your calendar?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!-- Self-reflection description -->
     <string name="selfReflection">Reflection and meditation can help to reduce stress and anxiety. It is a great way to reflect on your daily life.
@@ -289,9 +293,8 @@
     <string name="changeemail">Update Email</string>
     <string name="resetpassword">Reset Password</string>
     <string name="deleteaccount">Delete Account</string>
-    <string name="confirmaccountinformation">Confirm account information</string>
-    <string name="passwordnotcorrect">Error. Password not correct.</string>
-    <string name="incorrectcredentials">Error. Credentials incorrectl</string>
+    <string name="confirmaccountinformation">Confirm Account Deletion</string>
+    <string name="passwordnotcorrect">Error. Password incorrect.</string>
     <string name="sendemail">Send Email</string>
     <string name="requestemail">Please enter account email</string>
     <string name="logout">Logout Account</string>
@@ -300,7 +303,7 @@
     <string name="boxempty">Please fill out information.</string>
     <string name="deletemessage">We are sorry to see you go. If there is anything we could
     have done better please let us know in the app store or email us at info@turnersyndrome.ca. Please
-    enter your information to confirm the deletion of your account, you will be unable to access
+    enter your password to confirm the deletion of your account, you will be unable to access
     your information after the account has been deleted.</string>
     <string name="passwordresetConfirm">Please confirm that you would like to reset your password.</string>
 

@@ -24,17 +24,18 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity
+        /**
+         * HomeActivity is base for fragments. On opening for first time it creates welcomeAlarm
+         * that reminds user to use the app. It also holds methods to create the reminders and
+         * give the reminders their unique IDs
+         */
 
         implements
         MainPage.OnFragmentInteractionListener,
@@ -51,9 +52,6 @@ public class HomeActivity extends AppCompatActivity
 
 
         NavigationView.OnNavigationItemSelectedListener {
-
-    // Unique Id for notifications
-    private static int NOTIFICATION_UNIQUE_ID;
 
     // Set shared preference
     SharedPreferences sharedPref;
@@ -88,10 +86,8 @@ public class HomeActivity extends AppCompatActivity
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
-        // Grab unique ID value and store in NOTIFICATION_UNIQUE_ID
-        NOTIFICATION_UNIQUE_ID = sharedPref.getInt("uniqueIDValue",1);
-
         // Check if first time opening app: if so then run introduction dialog
+        // TODO: STORE IN FIREBASE
         if (sharedPref.getBoolean("firstvisit", true)) {
             Log.i("HomeActivity","Start Welcome");
             // Set introduction dialog
@@ -115,19 +111,23 @@ public class HomeActivity extends AppCompatActivity
             // Create welcome alarm
             welcomeAlarm();
 
-            // Put date into database
-            // Get Handler for database
-            //Log.i("bootReceiver", "Putting time into database");
-            //Log.i("bootReceiver", String.valueOf(System.currentTimeMillis()) + 10000);
-            //ReminderDBHelper handler = new ReminderDBHelper(this);
-            //handler.insertAlarmTime(String.valueOf(System.currentTimeMillis()) + 10000);
-
             // Set to not first time
             editor.putBoolean("firstvisit",false);
             editor.apply();
         }
-    }
 
+        // Create welcome alarm - put in seperate space to ensure when switching phone welcome alarm is
+        // activated
+        if (sharedPref.getBoolean("welcomeAlarm", true)) {
+            // Create welcome alarm
+            welcomeAlarm();
+
+            // Store welcomeAlarm
+            editor.putBoolean("welcomeAlarm", true);
+            editor.apply();
+        }
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -176,10 +176,6 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onPause() {
         super.onPause();
-        // Save NOTIFICATION_UNIQUE_ID
-        editor.putInt("uniqueIDValue",NOTIFICATION_UNIQUE_ID);
-        // Apply Change
-        editor.apply();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -288,7 +284,6 @@ public class HomeActivity extends AppCompatActivity
 
     // Change to add reminder fragment when clicked
     public void change_AddReminder (String date) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // CHANGED FOR CALENDAR
         //ft.replace(R.id.mainFrame, new Reminders());
 
@@ -366,15 +361,27 @@ public class HomeActivity extends AppCompatActivity
 }
 
     public String generateUniqueID() {
-        ++NOTIFICATION_UNIQUE_ID;
-        //return String.valueOf(NOTIFICATION_UNIQUE_ID);
-        return String.valueOf((int) System.currentTimeMillis());
+        // Generate ID for alarm based on time to ensure it is unique
+        Date now = new Date();
+        // Creates ID to the nearest second - should be enough time to allow for unique ID
+        Log.i("HomeActivity", new SimpleDateFormat("MMddHHmmss", Locale.CANADA).format(now));
+        return new SimpleDateFormat("MMddHHmmss", Locale.CANADA).format(now);
     }
 
     public void welcomeAlarm () {
         // Creat alarm: SET FOR 5 MINUTS
         Log.i("Alarm","Creating welcome alarm;");
-        begin_notifications(1, getString(R.string.welcomeNotificationTitle), getString(R.string.welcomeNotificationDescrip), System.currentTimeMillis() + 60 * 1000, 5 * 60 * 1000, "true");
+        begin_notifications(1, getString(R.string.welcomeNotificationTitle), getString(R.string.welcomeNotificationDescrip), System.currentTimeMillis() + 5*60 * 1000, 5 * 60 * 1000, "true");
+    }
+
+    public void change_calendar() {
+        // Change to calendar fragment when requeted
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        calendar fragobj = new calendar();
+        //fragobj.newInstance("true", title, description, date, time, repeat, repeatNu, repeatTy, active, reminderID);
+        fragmentTransaction.replace(R.id.mainFrame,fragobj);
+        fragmentTransaction.commit();
     }
 
 }

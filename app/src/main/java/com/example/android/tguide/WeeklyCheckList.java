@@ -1,6 +1,9 @@
 package com.example.android.tguide;
 
+import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,12 +36,16 @@ import com.google.firebase.database.ValueEventListener;
  * create an instance of this fragment.
  */
 public class WeeklyCheckList extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
+    /**
+     * WeeklyChecklist class holst 4 check boxes that are used to help the user
+     * stap up to date with their condition. On clicking box 2, dialog appears that will
+     * direct user to the calendar fragment if they have no inputted their appointments
+     * into the calendar yet.
+     */
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -62,7 +69,6 @@ public class WeeklyCheckList extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment WeeklyCheckList.
      */
-    // TODO: Rename and change types and number of parameters
     public static WeeklyCheckList newInstance(String param1, String param2) {
         WeeklyCheckList fragment = new WeeklyCheckList();
         Bundle args = new Bundle();
@@ -154,6 +160,44 @@ public class WeeklyCheckList extends Fragment {
                     }
                 });
 
+        box2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // On click ask if they have inputted events to calender
+
+                // Check to see if clicking if unclicked
+                if (box2.isChecked() == true) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle(R.string.appConfirm);
+                    builder.setMessage(R.string.appCalendar);
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // Dismess on button click
+                            if (dialog != null) {
+                                dialog.dismiss();
+                            }
+                        }
+                    });
+                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // Change to calendar fragment to allow input of events
+                            mListener.change_calendar();
+
+                            // Dismess on button click
+                            if (dialog != null) {
+                                dialog.dismiss();
+                            }
+                        }
+                    });
+
+                    // Create and show the AlertDialog
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.setCancelable(false);
+                    alertDialog.setCanceledOnTouchOutside(false);
+                    alertDialog.show();
+                }
+            }
+        });
 
 
         return view;
@@ -238,5 +282,6 @@ public class WeeklyCheckList extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(String title);
+        void change_calendar();
     }
 }

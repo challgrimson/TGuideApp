@@ -99,13 +99,9 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                         progressDialog.dismiss();
 
                         if(task.isSuccessful()){
+                            // Load date from firebase
                             ReminderDBHelper database = new ReminderDBHelper(getApplicationContext());
-                            if (database.notEmpty()) {
-                                Log.i("Login", "Not empty");
-                            } else {
-                                database.loadFromFirebase();
-                                Log.i("Login", "Empty");
-                            }
+                            database.loadFromFirebase();
 
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                             finish();

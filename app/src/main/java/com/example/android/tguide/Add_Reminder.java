@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -197,7 +195,7 @@ public class Add_Reminder extends Fragment implements
         setHasOptionsMenu(true);
 
         // Make date relative layout clickable
-        RelativeLayout dateRelative = (RelativeLayout) view.findViewById(R.id.reminder_date);
+        RelativeLayout dateRelative = view.findViewById(R.id.reminder_date);
         dateRelative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -206,7 +204,7 @@ public class Add_Reminder extends Fragment implements
         });
 
         // Make Time relative layout clickable
-        RelativeLayout timeRelative = (RelativeLayout) view.findViewById(R.id.reminder_time);
+        RelativeLayout timeRelative = view.findViewById(R.id.reminder_time);
         timeRelative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -328,7 +326,7 @@ public class Add_Reminder extends Fragment implements
                 mDate = mDay + "/" + (mMonth + 1) + "/" + mYear;
             }
 
-            if (mDay < 10) {mDate = "0" + mDate;};
+            if (mDay < 10) {mDate = "0" + mDate;}
 
             if (mMinute < 10) {
                 if (mHour == 0) {
@@ -402,23 +400,9 @@ public class Add_Reminder extends Fragment implements
         String generateUniqueID();
     }
 
-    // Save data on pause
-    // UPDATE FROM GITHUB SCRIPT
     @Override
     public void onPause(){
         super.onPause();
-        /*
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor outState = sharedPref.edit();
-        outState.putString(KEY_TITLE, mTitleText.getText().toString());
-        outState.putString(KEY_TIME, mTimeText.getText().toString());
-        outState.putString(KEY_DATE, mDateText.getText().toString());
-        outState.putString(KEY_REPEAT, mRepeatText.getText().toString());
-        outState.putString(KEY_REPEAT_NO, mRepeatNoText.getText().toString());
-        outState.putString(KEY_REPEAT_TYPE, mRepeatTypeText.getText().toString());
-        outState.putString(KEY_ACTIVE, mActive);
-        outState.apply();
-        */
     }
 
     // On clicking Time picker
@@ -797,6 +781,9 @@ public class Add_Reminder extends Fragment implements
 
         } else {
             String uniqueID = mListener.generateUniqueID();
+            Log.i("AddReminder", "ADD-REMINDER");
+            Log.i("AddReminder", uniqueID);
+            Log.i("AddReminder",String.valueOf(Integer.parseInt(uniqueID)));
             // Insert into dataebase
             handler.insertReminder(mTitle, mDescrip, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive, uniqueID);
             // Create notification

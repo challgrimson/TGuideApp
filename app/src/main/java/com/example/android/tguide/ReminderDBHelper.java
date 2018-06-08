@@ -98,7 +98,7 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             usersRem user = snapshot.getValue(usersRem.class);
-                            Cursor crser = getReminder(Integer.parseInt(user.getuniqueID()));
+                            //Cursor cursor = getReminder(Integer.parseInt(user.getuniqueID()));
                             insertReminderFromFire(user.gettitleText(),user.getdescription(), user.getdateText(), user.gettimeText(), user.getrepeat(), user.getrepeatNum(), user.getrepeatType(), user.getsound(), user.getuniqueID());
 
                         }
@@ -146,15 +146,15 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
         //titletext is the header of which rest of info is under
         FirebaseUser userr = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("titleText").setValue(titleText);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("description").setValue(description);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("dateText").setValue(dateText);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("timeText").setValue(timeText);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("repeat").setValue(repeat);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("repeatNum").setValue(repeatNum);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("repeatType").setValue(repeatType);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("sound").setValue(sound);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("uniqueID").setValue(uniqueID);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("titleText").setValue(titleText);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("description").setValue(description);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("dateText").setValue(dateText);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("timeText").setValue(timeText);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("repeat").setValue(repeat);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("repeatNum").setValue(repeatNum);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("repeatType").setValue(repeatType);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("sound").setValue(sound);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("uniqueID").setValue(uniqueID);
 
         return reminderID;
     }
@@ -197,6 +197,20 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
     // Return res to
     public int deletePerson(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
+
+        // TODO: CHANGE THIS TO UNIQUE ID
+        // Delete from firebase
+        Cursor cursor = db.rawQuery("SELECT " + REMINDER_UNIQUE_ID +" FROM " + REMINDER_TABLE_NAME +" WHERE " + REMINDER_COLUMN_ID + " = ?", new String[] {Integer.toString(id)});
+        cursor.moveToFirst();
+        int uniqueIDPlace = cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_UNIQUE_ID);
+        Log.i("ReminderDBHelper", String.valueOf(uniqueIDPlace));
+        String uniqueID = cursor.getString(uniqueIDPlace);
+        FirebaseUser userr = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).removeValue();
+
+
+
         return db.delete(REMINDER_TABLE_NAME, REMINDER_COLUMN_ID + " = ?", new String[]{Integer.toString(id)});
     }
 
@@ -218,16 +232,21 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
         // Insert into database
         db.update(REMINDER_TABLE_NAME, contentValues, REMINDER_COLUMN_ID + " = ?", new String[] { Integer.toString(reminderID) } );
 
+        // Grab unique ID to update data
+        Cursor cursor = db.rawQuery("SELECT * FROM " + REMINDER_TABLE_NAME +" WHERE " + REMINDER_COLUMN_ID + " = ?", new String[] { String.valueOf(reminderID) });
+        int uniqueIDPlace = cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_UNIQUE_ID);
+        String uniqueID = cursor.getString(uniqueIDPlace);
+
         FirebaseUser userr = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("titleText").setValue(titleText);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("description").setValue(description);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("dateText").setValue(dateText);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("timeText").setValue(timeText);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("repeat").setValue(repeat);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("repeatNum").setValue(repeatNum);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("repeatType").setValue(repeatType);
-        reff.child("usersRem").child(userr.getUid()).child(titleText).child("sound").setValue(sound);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("titleText").setValue(titleText);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("description").setValue(description);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("dateText").setValue(dateText);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("timeText").setValue(timeText);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("repeat").setValue(repeat);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("repeatNum").setValue(repeatNum);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("repeatType").setValue(repeatType);
+        reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("sound").setValue(sound);
         return true;
     }
 
@@ -261,9 +280,9 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
             // Insert into database
             db.insert(SURV_TABLE_NAME, null, contentValues);}
 
-        reff.child("usersSurv").child(userr.getUid()).child(id).child("SURV_ALARM_TIME").setValue(time);
-        reff.child("usersSurv").child(userr.getUid()).child(id).child("SURV_UNIQE_ID").setValue(uniqueid);
-        reff.child("usersSurv").child(userr.getUid()).child(id).child("id").setValue(id);
+        reff.child("usersSurv").child(userr.getUid()).child(uniqueid).child("SURV_ALARM_TIME").setValue(time);
+        reff.child("usersSurv").child(userr.getUid()).child(uniqueid).child("SURV_UNIQE_ID").setValue(uniqueid);
+        reff.child("usersSurv").child(userr.getUid()).child(uniqueid).child("id").setValue(id);
     }
 
     // Same as above but for firebase (used when updating)
@@ -284,7 +303,7 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
             db.insert(SURV_TABLE_NAME, null, contentValues);}
     }
 
-    // Check to see if alread inserted
+    // Check to see if already inserted
     public boolean exists(String id) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT " + SURV_ALARM_ID + " FROM " + SURV_TABLE_NAME + " WHERE " +
@@ -304,7 +323,6 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
 
     // Fetch dates for cursor to set calendar events
     public Cursor fetchEvents() {
-
         SQLiteDatabase db = this.getReadableDatabase();
         return db.query(REMINDER_TABLE_NAME, new String[] {REMINDER_COLUMN_DATE},
                 null, null, null, null, null);
@@ -316,16 +334,13 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
         return  db.rawQuery("SELECT * FROM " + REMINDER_TABLE_NAME +" WHERE " + REMINDER_COLUMN_DATE + " = ?", new String[] { date });
     }
 
-    // Determine if SQL Database is empty or not to determine if firebase needs to load data
-    public boolean notEmpty() {
+    // Delete sql table contents to prevent other accounts from accessing
+    public void deletall() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor Rcursor = db.rawQuery( "SELECT * FROM " + REMINDER_TABLE_NAME, null );
-        Cursor Scursor = db.rawQuery( "SELECT * FROM " + SURV_TABLE_NAME, null );
-        boolean notEmpty = (Rcursor.getCount() > 0 || Scursor.getCount() > 0);
-        Rcursor.close();
-        Scursor.close();
-        return notEmpty;
-}
+        db.delete(REMINDER_TABLE_NAME, null, null);
+        db.delete(SURV_TABLE_NAME, null, null);
+        db.close();
+    }
 
 
     /*

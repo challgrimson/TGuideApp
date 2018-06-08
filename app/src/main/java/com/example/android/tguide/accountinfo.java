@@ -152,8 +152,8 @@ public class accountinfo extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // Confirm is empty
                         final String SoldPassword = oldPassword.getText().toString().trim();
-                        final String SnewPassword = oldPassword.getText().toString().trim();
-                        final String SconfirmPassword = oldPassword.getText().toString().trim();
+                        final String SnewPassword = newPassword.getText().toString().trim();
+                        final String SconfirmPassword = confirmPassword.getText().toString().trim();
 
                         if (TextUtils.isEmpty(SoldPassword) & TextUtils.isEmpty(SnewPassword) & TextUtils.isEmpty(SconfirmPassword)) {
                             Toast.makeText(getContext(), getString(R.string.boxempty), Toast.LENGTH_LONG).show();
@@ -166,7 +166,7 @@ public class accountinfo extends Fragment {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 // check if new and old password match
-                                                if (SconfirmPassword.equals(SoldPassword)) {
+                                                if (SconfirmPassword.equals(SnewPassword)) {
                                                     // change password
                                                     firebaseAuth.getCurrentUser().updatePassword(SnewPassword)
                                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -222,17 +222,14 @@ public class accountinfo extends Fragment {
 
                 builder.setView(dialogView);
 
-                final EditText email = dialogView.findViewById(R.id.editText);
                 final EditText password = dialogView.findViewById(R.id.editText2);
 
                 builder.setPositiveButton(R.string.deleteaccount, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        String emailString = email.getText().toString().trim();
-                        String passwordString  = password.getText().toString().trim();
+                        final String passwordString  = password.getText().toString().trim();
                         // Determine if edittext is empty or not
-                        if (!(TextUtils.isEmpty(emailString) & TextUtils.isEmpty(passwordString))) {
-                            AuthCredential credential = EmailAuthProvider
-                                    .getCredential(emailString, passwordString);
+                        if (!TextUtils.isEmpty(passwordString)) {
+                            AuthCredential credential = EmailAuthProvider.getCredential(firebaseAuth.getCurrentUser().getEmail(), passwordString);
 
                             // Prompt the user to re-provide their sign-in credentials
                             firebaseAuth.getCurrentUser().reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -244,18 +241,22 @@ public class accountinfo extends Fragment {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
                                                         Log.d("accountinfo", "User account deleted.");
+                                                        // Delete table to prevent other accounts from seeing it
+                                                        ReminderDBHelper database = new ReminderDBHelper(getContext());
+                                                        database.deletall();
+
                                                         Intent intent = new Intent(getActivity(), loginActivity.class);
                                                         intent.putExtra("caller", getContext().getClass().getSimpleName());
                                                         startActivity(intent);
                                                     } else {
-                                                        Toast.makeText(getContext(), getString(R.string.incorrectcredentials), Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(getContext(), getString(R.string.emailchangeerror), Toast.LENGTH_LONG).show();
                                                     }
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(getContext(), getString(R.string.incorrectcredentials), Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(getContext(), getString(R.string.passwordnotcorrect), Toast.LENGTH_LONG).show();
                                                 }
                                             });
                                 }
@@ -335,6 +336,10 @@ public class accountinfo extends Fragment {
                 builder.setPositiveButton(getString(R.string.logout), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        // Delete table to prevent other accounts from seeing it
+                        ReminderDBHelper database = new ReminderDBHelper(getContext());
+                        database.deletall();
+
                         FirebaseAuth.getInstance().signOut();
                         // Logout
                         Intent intent = new Intent(getActivity(), loginActivity.class);

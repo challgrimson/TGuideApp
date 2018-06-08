@@ -120,7 +120,7 @@ public class calendar extends Fragment {
         createEvents();
 
         // Initilize List View with EmptyView (what to show when empty)
-        reminderListView = (ListView) view.findViewById(R.id.calendar_ListView);
+        reminderListView = view.findViewById(R.id.calendar_ListView);
         View emptyView = view.findViewById(R.id.reminder_Hint);
         reminderListView.setEmptyView(emptyView);
 

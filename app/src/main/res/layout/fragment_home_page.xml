@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,51 +7,59 @@
     android:orientation="vertical"
     android:background="@drawable/faqbackground"
     android:gravity="center">
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1">
-    <WebView
-        android:id="@+id/twitterfeed"
+
+    <FrameLayout
+        android:id="@+id/framelayout"
         android:layout_width="match_parent"
-        android:layout_height="355dp"
-        android:layout_marginStart="5dp"
+        android:layout_height="260dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp">
 
-    </WebView>
-    <ProgressBar
-        android:id="@+id/simpleProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminateTint="#856293"
-        android:indeterminateTintMode="src_atop"
-        android:scaleY="2"
-        android:scaleX="2"
-        />
+        <WebView
+            android:id="@+id/twitterfeed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</FrameLayout>
+        </WebView>
 
+        <ProgressBar
+            android:id="@+id/simpleProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="#856293"
+            android:indeterminateTintMode="src_atop"
+            android:scaleX="2"
+            android:scaleY="2" />
+
+    </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:background="@android:color/holo_red_dark"
         android:orientation="vertical"
-        android:paddingTop="10dp"
-        android:padding="10dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp">
+        android:padding="15dp"
+        android:paddingTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/framelayout">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
-            android:textSize="18sp"
+            android:layout_marginStart="15dp"
+            android:text="@string/emergencyTitle"
             android:textColor="@color/colorWhite"
-            android:text="@string/emergencyTitle" />
+            android:textSize="18sp" />
 
         <include
             android:id="@+id/item1"
@@ -70,54 +78,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:src="@android:drawable/ic_dialog_info"
             android:background="@null"
-            android:contentDescription="@string/cardinfocontentdesp"/>
+            android:contentDescription="@string/cardinfocontentdesp"
+            android:src="@android:drawable/ic_dialog_info" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/sympButton"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:background="@color/colorWhite"
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
         android:text="@string/symptomsbutton"
         android:textColor="#DB0202"
         android:textStyle="bold"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-
-    <!--FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:layout_width="230dp"
-            android:layout_height="230dp"
-            android:layout_gravity="center"
-            android:contentDescription="@string/homeContentDesp"
-            android:src="@drawable/turnersyndromelogo" />
-
-        <com.example.android.tguide.WelcomeAnimation
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </FrameLayout-->
-
-    <!--TextView
-        android:id="@+id/hometextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="0.5"
-        android:text="@string/welcome"
-        android:textColor="@color/welcomeHome"
-        android:textSize="33sp"
-        android:textStyle="bold" /-->
-
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
