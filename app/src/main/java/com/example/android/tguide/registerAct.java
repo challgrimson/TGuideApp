@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class registerAct extends AppCompatActivity implements View.OnClickListener{
 
@@ -89,6 +92,9 @@ public class registerAct extends AppCompatActivity implements View.OnClickListen
                         if(task.isSuccessful()){
                             //display some message here
                             firebaseAuth.getCurrentUser().sendEmailVerification();
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                            ref.child("users").child(user.getUid()).child("firstTime").setValue(true);
                             Toast.makeText(registerAct.this,getString(R.string.registersucess),Toast.LENGTH_LONG).show();
                             finish();
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));

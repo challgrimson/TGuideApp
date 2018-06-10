@@ -26,6 +26,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -56,6 +64,9 @@ public class HomeActivity extends AppCompatActivity
     // Set shared preference
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
+    private Context  mContext;
+
+    boolean firstVBool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,35 +97,58 @@ public class HomeActivity extends AppCompatActivity
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
-        // Check if first time opening app: if so then run introduction dialog
-        // TODO: STORE IN FIREBASE
-        if (sharedPref.getBoolean("firstvisit", true)) {
-            Log.i("HomeActivity","Start Welcome");
-            // Set introduction dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.welcomeDialog);
-            builder.setPositiveButton(R.string.welcomeDialogBegin, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // Dismess on button click
-                    if (dialog != null) {
-                        dialog.dismiss();
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        mContext = this;
+        ref.child("users").child(user.getUid()).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        // Check if first time opening app: if so then run introduction dialog
+
+
+                        User user = dataSnapshot.getValue(User.class);
+                        firstVBool = user.getfirstTime();
+                        Log.i("firstvisit",Boolean.toString(sharedPref.getBoolean("firstvisit", true)));
+                        if (firstVBool) {
+                            Log.i("HomeActivity","Start Welcome");
+                            // Set introduction dialog
+                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                            builder.setMessage(R.string.welcomeDialog);
+                            builder.setPositiveButton(R.string.welcomeDialogBegin, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // Dismess on button click
+                                    if (dialog != null) {
+                                        dialog.dismiss();
+                                    }
+                                }
+                            });
+
+                            // Create and show the AlertDialog
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.setCancelable(false);
+                            alertDialog.setCanceledOnTouchOutside(false);
+                            alertDialog.show();
+
+                            // Create welcome alarm
+                            welcomeAlarm();
+
+                            //set in firebase
+                            FirebaseUser userr = FirebaseAuth.getInstance().getCurrentUser();
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                            ref.child("users").child(userr.getUid()).child("firstTime").setValue(false);
+                        }
                     }
-                }
-            });
 
-            // Create and show the AlertDialog
-            AlertDialog alertDialog = builder.create();
-            alertDialog.setCancelable(false);
-            alertDialog.setCanceledOnTouchOutside(false);
-            alertDialog.show();
+                    @Override
+                    public void onCancelled(DatabaseError error) {
 
-            // Create welcome alarm
-            welcomeAlarm();
+                    }
+                });
 
-            // Set to not first time
-            editor.putBoolean("firstvisit",false);
-            editor.apply();
-        }
 
         // Create welcome alarm - put in seperate space to ensure when switching phone welcome alarm is
         // activated
