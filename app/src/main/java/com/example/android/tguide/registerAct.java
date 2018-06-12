@@ -94,7 +94,7 @@ public class registerAct extends AppCompatActivity implements View.OnClickListen
                             firebaseAuth.getCurrentUser().sendEmailVerification();
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                            ref.child("users").child(user.getUid()).child("firstTime").setValue(true);
+                            ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("firstTime").setValue(true);
                             Toast.makeText(registerAct.this,getString(R.string.registersucess),Toast.LENGTH_LONG).show();
                             finish();
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
@@ -120,5 +120,9 @@ public class registerAct extends AppCompatActivity implements View.OnClickListen
             startActivity(new Intent(registerAct.this, loginActivity.class));
         }
 
+    }
+
+    public static String EncodeString(String string) {
+        return string.replace(".", ",");
     }
 }

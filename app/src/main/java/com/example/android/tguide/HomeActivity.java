@@ -102,7 +102,7 @@ public class HomeActivity extends AppCompatActivity
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
         mContext = this;
-        ref.child("users").child(user.getUid()).addListenerForSingleValueEvent(
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -139,7 +139,7 @@ public class HomeActivity extends AppCompatActivity
                             //set in firebase
                             FirebaseUser userr = FirebaseAuth.getInstance().getCurrentUser();
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                            ref.child("users").child(userr.getUid()).child("firstTime").setValue(false);
+                            ref.child("users").child(EncodeString(userr.getEmail())).child(userr.getUid()).child("baseInfo").child("firstTime").setValue(false);
                         }
                     }
 
@@ -175,6 +175,10 @@ public class HomeActivity extends AppCompatActivity
             ft.replace(R.id.mainFrame, fragment);
             ft.commit();
         }
+    }
+
+    public static String EncodeString(String string) {
+        return string.replace(".", ",");
     }
 
     @Override
