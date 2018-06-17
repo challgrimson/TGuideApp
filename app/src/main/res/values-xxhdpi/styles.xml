@@ -1,0 +1,46 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!-- OverDue theme -->
+    <style name="overdueText" parent="@style/TextAppearance.AppCompat">
+        <item name="android:text">@string/overdue</item>
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <!-- When date inserted -->
+    <style name="DateInsert" parent="@style/TextAppearance.AppCompat">
+        <item name="android:text">@string/overdue</item>
+        <item name="android:textColor">@android:color/holo_green_dark</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <!-- Create mainpage style -->
+    <style name="MainPageCheckBox" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorControlNormal">@color/colorWhite
+        </item>   <!-- normal border color change as you wish -->
+        <item name="colorControlActivated">@android:color/holo_green_light
+        </item> <!-- activated color change as you wish -->
+    </style>
+
+    <style name="splashtheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/splashscreengradient</item>
+    </style>
+
+</resources>

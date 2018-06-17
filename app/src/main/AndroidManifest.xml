@@ -15,6 +15,12 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <supports-screens
+        android:xlargeScreens="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -62,7 +68,7 @@
         </receiver>
 
         <activity android:name=".IntroductionOne" />
-        <activity android:name=".IntroductionTwo"></activity>
+        <activity android:name=".IntroductionTwo"/>
     </application>
 
 </manifest>
