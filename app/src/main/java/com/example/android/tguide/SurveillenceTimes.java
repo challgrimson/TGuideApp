@@ -146,7 +146,7 @@ public class SurveillenceTimes extends Fragment {
         //if (sharedPref.getBoolean("NEWUSER", true)) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-            ref.child("users").child(user.getUid()).addListenerForSingleValueEvent(
+            ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").addListenerForSingleValueEvent(
                     new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -469,27 +469,27 @@ public class SurveillenceTimes extends Fragment {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("users").child(user.getUid()).child("mPAPtext").setValue(PAPsave);
-        ref.child("users").child(user.getUid()).child("mTHYtext").setValue(THYsave);
-        ref.child("users").child(user.getUid()).child("mCELtext").setValue(CELsave);
-        ref.child("users").child(user.getUid()).child("mECGtext").setValue(ECGsave);
-        ref.child("users").child(user.getUid()).child("mECHtext").setValue(ECHsave);
-        ref.child("users").child(user.getUid()).child("mCTtext").setValue(CTsave);
-        ref.child("users").child(user.getUid()).child("mPROtext").setValue(PROsave);
-        ref.child("users").child(user.getUid()).child("mVIStext").setValue(VISsave);
-        ref.child("users").child(user.getUid()).child("mHEAtext").setValue(HEAsave);
-        ref.child("users").child(user.getUid()).child("mBONtext").setValue(BONsave);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mPAPtext").setValue(PAPsave);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mTHYtext").setValue(THYsave);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mCELtext").setValue(CELsave);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mECGtext").setValue(ECGsave);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mECHtext").setValue(ECHsave);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mCTtext").setValue(CTsave);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mPROtext").setValue(PROsave);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mVIStext").setValue(VISsave);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mHEAtext").setValue(HEAsave);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mBONtext").setValue(BONsave);
 
-        ref.child("users").child(user.getUid()).child("mPAPtime").setValue(mPAPtime);
-        ref.child("users").child(user.getUid()).child("mTHYtime").setValue(mTHYtime);
-        ref.child("users").child(user.getUid()).child("mCELtime").setValue(mCELtime);
-        ref.child("users").child(user.getUid()).child("mECGtime").setValue(mECGtime);
-        ref.child("users").child(user.getUid()).child("mECHtime").setValue(mECHtime);
-        ref.child("users").child(user.getUid()).child("mCTtime").setValue(mCTtime);
-        ref.child("users").child(user.getUid()).child("mPROtime").setValue(mPROtime);
-        ref.child("users").child(user.getUid()).child("mVIStime").setValue(mVIStime);
-        ref.child("users").child(user.getUid()).child("mHEAtime").setValue(mHEAtime);
-        ref.child("users").child(user.getUid()).child("mBONtime").setValue(mBONtime);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mPAPtime").setValue(mPAPtime);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mTHYtime").setValue(mTHYtime);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mCELtime").setValue(mCELtime);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mECGtime").setValue(mECGtime);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mECHtime").setValue(mECHtime);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mCTtime").setValue(mCTtime);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mPROtime").setValue(mPROtime);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mVIStime").setValue(mVIStime);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mHEAtime").setValue(mHEAtime);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("mBONtime").setValue(mBONtime);
 
     }
 
@@ -1003,6 +1003,9 @@ public class SurveillenceTimes extends Fragment {
         }
         // Toast: Event added to calendar
         Toast.makeText(getContext(), getString(R.string.timetocalendar), Toast.LENGTH_LONG).show();
+    }
+    public static String EncodeString(String string) {
+        return string.replace(".", ",");
     }
 
 

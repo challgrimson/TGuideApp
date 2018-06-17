@@ -112,7 +112,7 @@ public class WeeklyCheckList extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-        ref.child("users").child(user.getUid()).addListenerForSingleValueEvent(
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -147,10 +147,10 @@ public class WeeklyCheckList extends Fragment {
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-                            ref.child("users").child(user.getUid()).child("clBox1").setValue(false);
-                            ref.child("users").child(user.getUid()).child("clBox2").setValue(false);
-                            ref.child("users").child(user.getUid()).child("clBox3").setValue(false);
-                            ref.child("users").child(user.getUid()).child("clBox4").setValue(false);
+                            ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("clBox1").setValue(false);
+                            ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("clBox2").setValue(false);
+                            ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("clBox3").setValue(false);
+                            ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("clBox4").setValue(false);
                         }
                     }
 
@@ -263,10 +263,10 @@ public class WeeklyCheckList extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-        ref.child("users").child(user.getUid()).child("clBox1").setValue(state1.booleanValue());
-        ref.child("users").child(user.getUid()).child("clBox2").setValue(state2.booleanValue());
-        ref.child("users").child(user.getUid()).child("clBox3").setValue(state3.booleanValue());
-        ref.child("users").child(user.getUid()).child("clBox4").setValue(state4.booleanValue());
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("clBox1").setValue(state1.booleanValue());
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("clBox2").setValue(state2.booleanValue());
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("clBox3").setValue(state3.booleanValue());
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("clBox4").setValue(state4.booleanValue());
     }
 
 
@@ -283,5 +283,9 @@ public class WeeklyCheckList extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(String title);
         void change_calendar();
+    }
+
+    public static String EncodeString(String string) {
+        return string.replace(".", ",");
     }
 }

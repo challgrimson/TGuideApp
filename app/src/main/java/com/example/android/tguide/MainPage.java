@@ -92,7 +92,7 @@ public class MainPage extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         editText =  view.findViewById(R.id.notepad);
-        ref.child("usersNP").child(user.getUid()).addListenerForSingleValueEvent(
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("usersNP").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -146,6 +146,10 @@ public class MainPage extends Fragment {
         notepad_txt = editText.getText().toString();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("usersNP").child(user.getUid()).child("notepad").setValue(notepad_txt);
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("usersNP").child("notepad").setValue(notepad_txt);
+    }
+
+    public static String EncodeString(String string) {
+        return string.replace(".", ",");
     }
 }

@@ -15,6 +15,8 @@ public class User {
     private boolean box2;
     private boolean box3;
 
+    private boolean firstTime;
+
     private String mPAPtext;
     private String mTHYtext;
     private String mCELtext;
@@ -35,11 +37,14 @@ public class User {
     public User(boolean clBox1, boolean clBox2, boolean clBox3, boolean clBox4, String mPAPtext,String mTHYtext,String mCELtext,String mECGtext, String mECHtext,String mCTtext,String mPROtext,String mVIStext,String mHEAtext,String mBONtext,
                 long mPAPtime,long  mTHYtime, long mCELtime, long mECGtime, long mECHtime,long  mCTtime,long  mPROtime,long  mVIStime,long  mHEAtime,long  mBONtimem, String notepad,boolean box1,
                 boolean box2,
-                boolean box3) {
+                boolean box3,
+                boolean firstTime) {
         this.clBox1 = clBox1;
         this.clBox2 = clBox2;
         this.clBox3 = clBox3;
         this.clBox4 = clBox4;
+
+        this.firstTime = firstTime;
 
         this.mPAPtext = mPAPtext;
         this.mTHYtext = mTHYtext;
@@ -86,6 +91,8 @@ public class User {
     public String getmVIStext() {return mVIStext;}
     public String getmHEAtext() {return mHEAtext;}
     public String getmBONtext() {return mBONtext;}
+
+    public boolean getfirstTime() {return firstTime;}
 
     public String getnotepad() {return notepad;}
 

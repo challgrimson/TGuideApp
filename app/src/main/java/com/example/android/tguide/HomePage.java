@@ -131,7 +131,7 @@ public class HomePage extends Fragment {
         // Save current state of checked items
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("usersRdCard").child(user.getUid()).addListenerForSingleValueEvent(
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("usersRdCard").addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -296,9 +296,9 @@ public class HomePage extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-        ref.child("usersRdCard").child(user.getUid()).child("box1").setValue(state1.booleanValue());
-        ref.child("usersRdCard").child(user.getUid()).child("box2").setValue(state2.booleanValue());
-        ref.child("usersRdCard").child(user.getUid()).child("box3").setValue(state3.booleanValue());
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("usersRdCard").child("box1").setValue(state1.booleanValue());
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("usersRdCard").child("box2").setValue(state2.booleanValue());
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("usersRdCard").child("box3").setValue(state3.booleanValue());
     }
 
     /**
@@ -374,6 +374,10 @@ public class HomePage extends Fragment {
         }
 
         return passcode.toString();
+    }
+
+    public static String EncodeString(String string) {
+        return string.replace(".", ",");
     }
 
 }
