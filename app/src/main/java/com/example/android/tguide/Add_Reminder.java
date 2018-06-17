@@ -292,7 +292,6 @@ public class Add_Reminder extends Fragment implements
                 mCalendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(hour));
                 mCalendar.set(Calendar.MINUTE, Integer.valueOf(minute));
 
-                Log.i("Add_Reminder", String.valueOf(mCalendar.get(Calendar.HOUR_OF_DAY)));
                 // Set am or pm
                 int ampm;
                 if (mTimeText.getText().toString().substring(mTimeText.length() - 2).equals("AM")) {
@@ -302,17 +301,10 @@ public class Add_Reminder extends Fragment implements
                 }
                 mCalendar.set(Calendar.AM_PM, ampm);
 
-                Log.i("Add_Reminders", String.valueOf(mTimeText.length()));
-                Log.i("Add_Reminder", String.valueOf(mCalendar.get(Calendar.HOUR_OF_DAY)));
-                Log.i("Add_Reminder", minute);
-                Log.i("Add_Reminder", String.valueOf(ampm));
-
                 // Change default values to new ones
                 mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
                 mMinute = mCalendar.get(Calendar.MINUTE);
 
-                Log.i("Add_Reminder", String.valueOf(mHour));
-                Log.i("Add_Reminder", String.valueOf(mMinute));
         } else {
             // Not restored to set current values
             mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
@@ -781,9 +773,6 @@ public class Add_Reminder extends Fragment implements
 
         } else {
             String uniqueID = mListener.generateUniqueID();
-            Log.i("AddReminder", "ADD-REMINDER");
-            Log.i("AddReminder", uniqueID);
-            Log.i("AddReminder",String.valueOf(Integer.parseInt(uniqueID)));
             // Insert into dataebase
             handler.insertReminder(mTitle, mDescrip, mDate, mTime, mRepeat, mRepeatNo, mRepeatType, mActive, uniqueID);
             // Create notification

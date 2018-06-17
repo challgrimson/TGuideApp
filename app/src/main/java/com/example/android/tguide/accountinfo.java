@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -360,6 +362,37 @@ public class accountinfo extends Fragment {
             }
         });
 
+        // TODO: Change to firebase and delete code pertaining to sharedPreferences
+        // Determine if checkboxes checked or not
+        final SharedPreferences sharedPref = getActivity().getSharedPreferences("TGUIDE",Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPref.edit();
+
+        // Grab views
+        final CheckBox heartBox = view.findViewById(R.id.heartCheck);
+        final CheckBox hearingBox = view.findViewById(R.id.hearingCheck);
+
+        // Set if box is checked or not
+        heartBox.setChecked(sharedPref.getBoolean("heart", false));
+        hearingBox.setChecked(sharedPref.getBoolean("hearing", false));
+
+        // If checked or not then input data
+        heartBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Save heart abnormality state
+                editor.putBoolean("heart", heartBox.isChecked());
+                editor.apply();
+            }
+        });
+
+        hearingBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Save hearing abnormality state
+                editor.putBoolean("hearing", hearingBox.isChecked());
+                editor.apply();
+            }
+        });
 
         return view;
     }

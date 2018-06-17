@@ -148,8 +148,6 @@ public class calendar extends Fragment {
         compactCalendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
-                Log.i(TAG, dbDateFormate.format(dateClicked));
-
                 //SQLiteDatabase db = handler.getWritableDatabase();
                 ReminderCursor = handler.getDateEvents(dbDateFormate.format(dateClicked));
 
@@ -162,7 +160,6 @@ public class calendar extends Fragment {
 
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
-                Log.i(TAG, firstDayOfNewMonth.toString());
                 toolbar.setTitle(dateFormatMonth.format(firstDayOfNewMonth));
             }
         });
@@ -230,11 +227,6 @@ public class calendar extends Fragment {
                 int dash1 = date.indexOf("/");
                 int dash2 = date.indexOf("/", dash1 + 1);
 
-                // Check values
-                Log.i(TAG, date);
-                Log.i(TAG, date.substring(dash2 + 1));
-                Log.i(TAG, date.substring(dash1 + 1, dash2));
-                Log.i(TAG, date.substring(0, dash1));
 
                 calendar.set(Calendar.YEAR, Integer.valueOf(date.substring(dash2 + 1)));
                 calendar.set(Calendar.MONTH, Integer.valueOf(date.substring(dash1 + 1, dash2)) - 1); //-1 b/c one month behind

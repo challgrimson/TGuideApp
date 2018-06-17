@@ -15,9 +15,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i(TAG, "AlarmReceiver");
-
-            Log.i(TAG, "Creating notitication");
             // Finish notification and send it
 
             // Fet instant of notification manager

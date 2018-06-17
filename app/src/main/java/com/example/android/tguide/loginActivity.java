@@ -155,7 +155,6 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Log.d("loginActivity", "Email sent.");
                                     }
                                 }
                             });

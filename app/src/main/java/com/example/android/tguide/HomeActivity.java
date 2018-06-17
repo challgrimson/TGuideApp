@@ -57,6 +57,9 @@ public class HomeActivity extends AppCompatActivity
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
 
+    // Set WelcomeLarm time
+    private static final long welcomeAlarmTime = 3L*2592000000L;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //setTheme(R.style.AppTheme_NoActionBar);
@@ -86,36 +89,6 @@ public class HomeActivity extends AppCompatActivity
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
 
-        // Check if first time opening app: if so then run introduction dialog
-        // TODO: STORE IN FIREBASE
-        if (sharedPref.getBoolean("firstvisit", true)) {
-            Log.i("HomeActivity","Start Welcome");
-            // Set introduction dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.welcomeDialog);
-            builder.setPositiveButton(R.string.welcomeDialogBegin, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    // Dismess on button click
-                    if (dialog != null) {
-                        dialog.dismiss();
-                    }
-                }
-            });
-
-            // Create and show the AlertDialog
-            AlertDialog alertDialog = builder.create();
-            alertDialog.setCancelable(false);
-            alertDialog.setCanceledOnTouchOutside(false);
-            alertDialog.show();
-
-            // Create welcome alarm
-            welcomeAlarm();
-
-            // Set to not first time
-            editor.putBoolean("firstvisit",false);
-            editor.apply();
-        }
-
         // Create welcome alarm - put in seperate space to ensure when switching phone welcome alarm is
         // activated
         if (sharedPref.getBoolean("welcomeAlarm", true)) {
@@ -123,7 +96,7 @@ public class HomeActivity extends AppCompatActivity
             welcomeAlarm();
 
             // Store welcomeAlarm
-            editor.putBoolean("welcomeAlarm", true);
+            editor.putBoolean("welcomeAlarm", false);
             editor.apply();
         }
 
@@ -364,14 +337,12 @@ public class HomeActivity extends AppCompatActivity
         // Generate ID for alarm based on time to ensure it is unique
         Date now = new Date();
         // Creates ID to the nearest second - should be enough time to allow for unique ID
-        Log.i("HomeActivity", new SimpleDateFormat("MMddHHmmss", Locale.CANADA).format(now));
         return new SimpleDateFormat("MMddHHmmss", Locale.CANADA).format(now);
     }
 
     public void welcomeAlarm () {
         // Creat alarm: SET FOR 5 MINUTS
-        Log.i("Alarm","Creating welcome alarm;");
-        begin_notifications(1, getString(R.string.welcomeNotificationTitle), getString(R.string.welcomeNotificationDescrip), System.currentTimeMillis() + 5*60 * 1000, 5 * 60 * 1000, "true");
+        begin_notifications(1, getString(R.string.welcomeNotificationTitle), getString(R.string.welcomeNotificationDescrip), System.currentTimeMillis() + welcomeAlarmTime, welcomeAlarmTime, "true");
     }
 
     public void change_calendar() {

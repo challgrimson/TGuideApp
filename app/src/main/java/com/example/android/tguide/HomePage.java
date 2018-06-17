@@ -224,39 +224,6 @@ public class HomePage extends Fragment {
         });
 
 
-        //Grab list view
-        /*
-        list = view.findViewById(android.R.id.list);
-
-        Log.d("TWITTER","running twitter");
-
-        //mListener.twitterfeed(list);
-        // Initilize Twitter feed
-
-        TwitterConfig config = new TwitterConfig.Builder(getActivity())
-                .logger(new DefaultLogger(Log.DEBUG))
-                .twitterAuthConfig(new TwitterAuthConfig("DbiYTJs0BCJyK4Q6Q6K7Zjyuz", "nawlqnzP5hoWHIwa4vZ314GTCjhOpnvJvdHrTLY3I7FfWrWMhS"))
-                .debug(true)
-                .build();
-        Twitter.initialize(config);
-
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                TweetUi.getInstance();
-            }
-        };
-        thread.start();
-
-        final UserTimeline userTimeline = new UserTimeline.Builder()
-                .screenName("twitterdev")
-                .build();
-        final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(getActivity())
-                .setTimeline(userTimeline)
-                .build();
-        list.setAdapter(adapter);
-        */
-
         // String data taken from twitter publish
         // MIGHT HAVE TO CHANGE FOR FRENCH
         //String data = "<a class=\"twitter-timeline\" href=\"https://twitter.com/TSSCCanada?ref_src=twsrc%5Etfw\">Tweets by TSSCCanada</a> <script async src=\"https://platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>";

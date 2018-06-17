@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -44,14 +43,6 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
     public static final String REMINDER_COLUMN_SOUND = "repeatactive";
     public static final String REMINDER_UNIQUE_ID = "uniqueID";
 
-    // Welcome Notification Table
-    public static final String SURV_TABLE_NAME = "surveillance";
-    public static final String SURV_COLUMN_ID = "_sid";
-    public static final String SURV_ALARM_TIME = "surveillanceTime";
-    public static final String SURV_ALARM_ID = "alarmtype";
-    public static final String SURV_UNIQE_ID = "survuniqueid";
-
-
     public ReminderDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -71,22 +62,11 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
                 REMINDER_UNIQUE_ID + " TEXT NOT NULL)"
         );
 
-
-        db.execSQL("CREATE TABLE " + SURV_TABLE_NAME + "(" +
-                SURV_COLUMN_ID + " INTEGER PRIMARY KEY, " +
-                SURV_ALARM_ID + " TEXT NOT NULL, " +
-                SURV_UNIQE_ID + " TEXT NOT NULL, " +
-                SURV_ALARM_TIME + " TEXT NOT NULL)"
-        );
-
-
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + REMINDER_TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS " + SURV_TABLE_NAME);
         onCreate(db);
     }
 
@@ -101,20 +81,6 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
                             //Cursor cursor = getReminder(Integer.parseInt(user.getuniqueID()));
                             insertReminderFromFire(user.gettitleText(),user.getdescription(), user.getdateText(), user.gettimeText(), user.getrepeat(), user.getrepeatNum(), user.getrepeatType(), user.getsound(), user.getuniqueID());
 
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-
-        FirebaseDatabase.getInstance().getReference().child("usersSurv").child(userr.getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            usersSurv user = snapshot.getValue(usersSurv.class);
-                            insertSurveillanceFirebase(user.getSURV_ALARM_TIME() ,user.getSURV_UNIQE_ID() , user.getid());
                         }
                     }
                     @Override
@@ -203,7 +169,6 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT " + REMINDER_UNIQUE_ID +" FROM " + REMINDER_TABLE_NAME +" WHERE " + REMINDER_COLUMN_ID + " = ?", new String[] {Integer.toString(id)});
         cursor.moveToFirst();
         int uniqueIDPlace = cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_UNIQUE_ID);
-        Log.i("ReminderDBHelper", String.valueOf(uniqueIDPlace));
         String uniqueID = cursor.getString(uniqueIDPlace);
         FirebaseUser userr = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
@@ -258,69 +223,6 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
                 null, null, null, null, null);
     }
 
-    // Insert Reminder time
-    // Insert Surveillance times into database
-    public void insertSurveillance(String id, String time, String uniqueid) {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-
-        FirebaseUser userr = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
-
-        if (exists(id)) {
-            contentValues.put(SURV_ALARM_TIME, time);
-            contentValues.put(SURV_UNIQE_ID, uniqueid);
-            // Update existent time
-            db.update(SURV_TABLE_NAME, contentValues, SURV_ALARM_ID + " = ?", new String[] { id } );
-        } else {
-            contentValues.put(SURV_ALARM_ID, id);
-            contentValues.put(SURV_ALARM_TIME, time);
-            contentValues.put(SURV_UNIQE_ID, uniqueid);
-            // Insert into database
-            db.insert(SURV_TABLE_NAME, null, contentValues);}
-
-        reff.child("usersSurv").child(userr.getUid()).child(uniqueid).child("SURV_ALARM_TIME").setValue(time);
-        reff.child("usersSurv").child(userr.getUid()).child(uniqueid).child("SURV_UNIQE_ID").setValue(uniqueid);
-        reff.child("usersSurv").child(userr.getUid()).child(uniqueid).child("id").setValue(id);
-    }
-
-    // Same as above but for firebase (used when updating)
-    public void insertSurveillanceFirebase(String id, String time, String uniqueid) {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        if (exists(id)) {
-            contentValues.put(SURV_ALARM_TIME, time);
-            contentValues.put(SURV_UNIQE_ID, uniqueid);
-            // Update existent time
-            db.update(SURV_TABLE_NAME, contentValues, SURV_ALARM_ID + " = ?", new String[] { id } );
-        } else {
-            contentValues.put(SURV_ALARM_ID, id);
-            contentValues.put(SURV_ALARM_TIME, time);
-            contentValues.put(SURV_UNIQE_ID, uniqueid);
-            // Insert into database
-            db.insert(SURV_TABLE_NAME, null, contentValues);}
-    }
-
-    // Check to see if already inserted
-    public boolean exists(String id) {
-        SQLiteDatabase db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT " + SURV_ALARM_ID + " FROM " + SURV_TABLE_NAME + " WHERE " +
-                        SURV_ALARM_ID + " = ?",
-                new String[] { id });
-        boolean exists = (cursor.getCount() > 0);
-        cursor.close();
-        return exists;
-    }
-
-    // Grab all surveillance times
-    public Cursor fetchsurveillance() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(SURV_TABLE_NAME, new String[] {SURV_ALARM_ID, SURV_ALARM_TIME, SURV_UNIQE_ID},
-                null, null, null, null, null);
-    }
-
     // Fetch dates for cursor to set calendar events
     public Cursor fetchEvents() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -338,7 +240,6 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
     public void deletall() {
         SQLiteDatabase db = this.getReadableDatabase();
         db.delete(REMINDER_TABLE_NAME, null, null);
-        db.delete(SURV_TABLE_NAME, null, null);
         db.close();
     }
 

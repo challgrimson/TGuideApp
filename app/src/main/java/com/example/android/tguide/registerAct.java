@@ -91,7 +91,7 @@ public class registerAct extends AppCompatActivity implements View.OnClickListen
                             firebaseAuth.getCurrentUser().sendEmailVerification();
                             Toast.makeText(registerAct.this,getString(R.string.registersucess),Toast.LENGTH_LONG).show();
                             finish();
-                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                            startActivity(new Intent(getApplicationContext(), IntroductionOne.class));
                         }else{
                             //display some message here
                             Toast.makeText(registerAct.this,getString(R.string.registerrorr),Toast.LENGTH_LONG).show();

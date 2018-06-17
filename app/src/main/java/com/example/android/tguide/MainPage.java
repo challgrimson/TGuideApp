@@ -101,7 +101,6 @@ public class MainPage extends Fragment {
                             User userNpdata = dataSnapshot.getValue(User.class);
                             //figure out why onyl works for User class??????????????
                             editText.setText(userNpdata.getnotepad());
-                            //Log.i("notepadCHECK",userNpdata.getNotepadText());
                         } else  {
                             editText.setText("");
                         }

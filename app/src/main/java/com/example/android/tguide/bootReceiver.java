@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.util.Log;
 import java.util.Calendar;
 
 /**
@@ -48,31 +47,15 @@ public class bootReceiver extends BroadcastReceiver {
         // Initialize mRpeartTime
         mRepeatTime = -1;
 
-        Log.i(TAG, "Reseting Welcome Alarm");
-
         //Reset welcomeAlarm
         begin_notifications(1, mContext.getString(R.string.welcomeNotificationTitle), mContext.getString(R.string.welcomeNotificationDescrip), determineNextTime(), 60 * 1000, "true");
         // Grab time from database
-        /*
-        ReminderDBHelper handler = new ReminderDBHelper(mContext);
-        Cursor cursor = handler.getAlarmTime();
-        cursor.moveToFirst();
-        String time = cursor.getString(cursor.getColumnIndexOrThrow(ReminderDBHelper.WALARM_ALARN_DATE));
-        */
-        //Log.i(TAG, time);
+
         // Initilize calendar
         mCalendar = Calendar.getInstance();
 
         // Restore set reminders
         restoreReminder();
-
-        // Restore surveillance times
-        ///
-        // SHOULD BE SET UNDER SURVEILLANCE TIMES BUT CONFIRM
-        ///
-        //
-        //
-        //surveillancetimes();
     }
 
     // Build notification
@@ -134,8 +117,6 @@ public class bootReceiver extends BroadcastReceiver {
 
     // Restore the created reminders
     public void restoreReminder () {
-        Log.i(TAG, "Restoring Reminders");
-
         Cursor cursor = handler.fetchAllReminders();
 
         // Iterate through cursor data and restore set alarms
@@ -189,18 +170,6 @@ public class bootReceiver extends BroadcastReceiver {
                     ampm = 1;
                 }
 
-                Log.i(TAG, uniqueID);
-                Log.i(TAG, date);
-                Log.i(TAG, date.substring(dash2 + 1));
-                Log.i(TAG, date.substring(dash1 + 1, dash2));
-                Log.i(TAG, date.substring(0, dash1));
-                Log.i(TAG,time);
-                Log.i(TAG, hour);
-                Log.i(TAG, time.substring(time.length()-5, time.length()-3));
-                Log.i(TAG, String.valueOf(mRepeat));
-                Log.i(TAG, mRepeatNo);
-                Log.i(TAG,mRepeatType);
-
                 mCalendar.set(Calendar.YEAR, Integer.valueOf(date.substring(dash2 + 1)));
                 mCalendar.set(Calendar.MONTH, Integer.valueOf(date.substring(dash1 + 1, dash2)) - 1); //-1 b/c one month behind
                 mCalendar.set(Calendar.DAY_OF_MONTH, Integer.valueOf(date.substring(0, dash1)));
@@ -236,78 +205,4 @@ public class bootReceiver extends BroadcastReceiver {
         }
         cursor.close();
     }
-
-    /*
-    public void surveillancetimes() {
-        Log.i(TAG, "Reseting Surveillance");
-
-        // Update the serveilant times
-        Cursor cursor = handler.fetchsurveillance();
-
-        if (cursor != null) {
-            cursor.moveToFirst();
-
-            int id = cursor.getColumnIndexOrThrow(ReminderDBHelper.SURV_ALARM_ID);
-            int time = cursor.getColumnIndexOrThrow(ReminderDBHelper.SURV_ALARM_TIME);
-            int uniqueid = cursor.getColumnIndexOrThrow(ReminderDBHelper.SURV_UNIQE_ID);
-
-            Log.i(TAG, String.valueOf(id) + String.valueOf(time) + String.valueOf(uniqueid));
-
-            while (!cursor.isAfterLast()) {
-                String idvalue = cursor.getString(id);
-                String timevalue = cursor.getString(time);
-                String uniqueidvalue = cursor.getString(uniqueid);
-
-                Log.i(TAG, idvalue);
-                Log.i(TAG, timevalue);
-                Log.i(TAG, uniqueidvalue);
-
-                switch (Integer.valueOf(idvalue)) {
-                    case 1:
-                        begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.physicalexamTitle),
-                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue), -1, "false");
-                        break;
-                    case 6:
-                        begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.screenbloodTitle),
-                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue), -1, "false");
-                        break;
-                    case 10:
-                        begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.celiacTitle),
-                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
-                        break;
-                    case 11:
-                        begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.ECGTitle),
-                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
-                        break;
-                    case 12:
-                        begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.ECHOTitle),
-                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
-                        break;
-                    case 13:
-                        begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.CTMRITitle),
-                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
-                        break;
-                    case 14:
-                        begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.antiproTitle),
-                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
-                        break;
-                    case 15:
-                        begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.visionTitle),
-                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
-                        break;
-                    case 16:
-                        begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.hearingTitle),
-                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
-                        break;
-                    case 17:
-                        begin_notifications(Integer.valueOf(uniqueidvalue), mContext.getString(R.string.bonedensityTitle),
-                                mContext.getString(R.string.physicalexamdesp), Long.valueOf(timevalue) + 30000, -1, "false");
-                        break;
-                }
-                cursor.moveToNext();
-            }
-        }
-        cursor.close();
-    }
-    */
 }

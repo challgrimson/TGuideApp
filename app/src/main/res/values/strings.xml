@@ -54,11 +54,6 @@
 
     <!-- Strings for home view -->
     <string name="welcome">Welcome to TGuide!</string>
-    <string name="welcomeDialog">Welcome to TGuide! The TGuide Team hopes this app can be a way to help you. When you enter the app, click on the button in the
-    top left of the screen to begin exploring what this app has to offer. Visit the FAQ page for a serious of commonly asked questions and for a
-        couple other resources that may help you! Please note that TGuide is only meant to aid you in manage your condition and is not
-        responsible for any missed appointments or other issues that may arise when using this app. Lets get started!</string>
-    <string name="welcomeDialogBegin">Let\'s Begin!</string>
     <string name="welcomeNotificationTitle">How are you doing?</string>
     <string name="welcomeNotificationDescrip">Remember to complete your checklist!</string>
     <string name="channelTitle">TGuide Reminders</string>
@@ -122,7 +117,13 @@
     <string name="button6Text">Of course, if you are interested in providing feedback or have any questions/concerns about TGuide,
         please feel free to leave a comment on the app store. We are always looking for
         new ways to improve the app! If you have any questions about the Turner Society of Canada or any other questions/concerns,
-        please contact info@turnersyndrome.ca.</string>
+        please contact info@turnersyndrome.ca.
+    </string>
+
+    <string name="button7Title">What happens if I get a new phone?</string>
+    <string name="button7Text">All of your information is saved within your account so just download TGuide and login in!
+        However, all your calendar events will be saved but you will not receive a reminder for these.
+    </string>
 
     <!-- Strings for Checklist -->
     <string name="titleChecklist">Checklist Description</string>
@@ -306,6 +307,8 @@
     enter your password to confirm the deletion of your account, you will be unable to access
     your information after the account has been deleted.</string>
     <string name="passwordresetConfirm">Please confirm that you would like to reset your password.</string>
+    <string name="heartabnormalities">Heart Abnormalities</string>
+    <string name="hearingabnormalities">Hearing Abnormalities</string>
 
     <!-- Login Info -->
     <string name="requestemaillogin">Please enter email</string>
@@ -320,4 +323,16 @@
 
     <!-- Calendar Stuff -->
     <string name="printError">Error. Please close app and try again.</string>
+
+    <!-- Introduction -->
+    <string name="next">Next</string>
+    <string name="welcomeDialogBegin">Let\'s Begin!</string>
+    <string name="welcomeDialog">Welcome to TGuide! The TGuide Team hopes this app can be a way to help you. When you enter the app, click on the button in the
+    top left of the screen to begin exploring what this app has to offer. Visit the FAQ page for a serious of commonly asked questions and for a
+        couple other resources that may help you! Please note that TGuide is only meant to aid you in manage your condition and is not
+        responsible for any missed appointments or other issues that may arise when using this app.</string>
+    <string name="intro2Dialog">Before we begin, we just need to ask you two questions. You can change these values anytime in the
+    account settings.</string>
+    <string name="heartAbnorm">Do you have any heart abnormalities?</string>
+    <string name="hearingAbnorm">Do you have any hearing abnormalities?</string>
 </resources>
