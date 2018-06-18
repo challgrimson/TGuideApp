@@ -8,6 +8,6 @@
     <dimen name="text_margin">16dp</dimen>
 
     <!-- Home Page -->
-    <dimen name="HPframelayout">115dp</dimen>
+    <dimen name="HPframelayout">155dp</dimen>
     <dimen name="HPtextsize">9sp</dimen>
 </resources>

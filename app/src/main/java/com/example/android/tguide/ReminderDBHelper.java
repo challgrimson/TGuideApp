@@ -175,7 +175,6 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
         reff.child("usersRem").child(userr.getUid()).child(uniqueID).removeValue();
 
 
-
         return db.delete(REMINDER_TABLE_NAME, REMINDER_COLUMN_ID + " = ?", new String[]{Integer.toString(id)});
     }
 
@@ -201,7 +200,6 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + REMINDER_TABLE_NAME +" WHERE " + REMINDER_COLUMN_ID + " = ?", new String[] { String.valueOf(reminderID) });
         int uniqueIDPlace = cursor.getColumnIndexOrThrow(ReminderDBHelper.REMINDER_UNIQUE_ID);
         String uniqueID = cursor.getString(uniqueIDPlace);
-
         FirebaseUser userr = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reff = FirebaseDatabase.getInstance().getReference();
         reff.child("usersRem").child(userr.getUid()).child(uniqueID).child("titleText").setValue(titleText);

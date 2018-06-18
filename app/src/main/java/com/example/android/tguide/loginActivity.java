@@ -101,7 +101,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                         if(task.isSuccessful()){
                             // Load date from firebase
                             ReminderDBHelper database = new ReminderDBHelper(getApplicationContext());
-                            database.loadFromFirebase();
+                            //database.loadFromFirebase();
 
                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                             finish();
