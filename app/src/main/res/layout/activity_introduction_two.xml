@@ -1,49 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.android.tguide.IntroductionTwo">
+    tools:context="com.example.android.tguide.IntroductionTwo"
+    android:background="@drawable/faqbackground">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/intro2Dialog"/>
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/heartAbnorm"/>
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/intro2Dialog"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="25dp"
+            android:textSize="17sp"/>
 
-    <CheckBox
-        android:id="@+id/heartBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"/>
+        <LinearLayout
+            android:id="@+id/heartquestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="15dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hearingAbnorm"/>
+            <CheckBox
+                android:id="@+id/heartBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:buttonTint="@android:color/holo_green_dark"
+                android:layout_marginEnd="15dp"/>
 
-    <CheckBox
-        android:id="@+id/hearingBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/heartAbnorm"
+                android:textSize="17sp"
+                android:layout_marginEnd="15dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/hearingquestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="15dp">
+
+            <CheckBox
+                android:id="@+id/hearingBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:buttonTint="@android:color/holo_green_dark"
+                android:layout_marginEnd="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hearingAbnorm"
+                android:textSize="17sp"/>
+
+        </LinearLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/introductionTwoBut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:text="@string/welcomeDialogBegin"/>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/transparent"
+        android:text="@string/welcomeDialogBegin"
+        android:textStyle="bold"
+        android:textSize="19sp"/>
 
-</LinearLayout>
+</RelativeLayout>

@@ -265,6 +265,11 @@
     <string name="password">Password</string>
     <string name="enteremail">Enter Email</string>
     <string name="enterpassword">Password</string>
+    <string name="passwordweak">Password must be more than 6 characters. Please try again.</string>
+    <string name="emailwrong">Email in wrong format. Please try again.</string>
+    <string name="accountexist">Account already exists.</string>
+
+
 
     <!-- Activity Drawer Strings -->
     <string name="home">Home</string>
@@ -316,9 +321,9 @@
     <string name="error">Error</string>
     <string name="loggingin">Logging in ...</string>
     <string name="logingeorr">Login Error. Please try again.</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="registersucess">Successfully Registered</string>
-    <string name="registerrorr">Registration Error</string>
+    <string name="registerrorr">Registration Error. Please try again.</string>
     <string name="verifyfirst">Please verify your account first</string>
 
     <!-- Calendar Stuff -->
@@ -327,12 +332,19 @@
     <!-- Introduction -->
     <string name="next">Next</string>
     <string name="welcomeDialogBegin">Let\'s Begin!</string>
-    <string name="welcomeDialog">Welcome to TGuide! The TGuide Team hopes this app can be a way to help you. When you enter the app, click on the button in the
-    top left of the screen to begin exploring what this app has to offer. Visit the FAQ page for a serious of commonly asked questions and for a
-        couple other resources that may help you! Please note that TGuide is only meant to aid you in manage your condition and is not
-        responsible for any missed appointments or other issues that may arise when using this app.</string>
-    <string name="intro2Dialog">Before we begin, we just need to ask you two questions. You can change these values anytime in the
+    <string name="welcomeDialog">TGuide helps you keep track of your appoinments and when you are due
+        to see your health care provicer.You can create reminders to help track of any appointments or medications you have.
+        The built in checklist will help to keep you on track.TGuide\'s reflection and notepad are quick ways to
+        help you with mindfulness and stay organized with your thoughts and daily routine.If you want to learn more, check out
+        the FAQ page. Please note that TGuide is not responsible for any missed appointments or anything else that may
+        occur while using this app.</string>
+    <string name="intro2Dialog">Before we begin, please check all that apply to you. These question
+        will help to determine when it is best to see your health care provider. You can change these values anytime in the
     account settings.</string>
-    <string name="heartAbnorm">Do you have any heart abnormalities?</string>
-    <string name="hearingAbnorm">Do you have any hearing abnormalities?</string>
+    <string name="heartAbnorm">I have one or more HEART abnormalities</string>
+    <string name="hearingAbnorm">I have one or more HEARING abnormalities</string>
+    <string name="welcomeTGuide">Welcome to TGuide</string>
+    <string name="welcomeTGuideDialog">This simple, easy to use application aims to help individuals with Turner Syndrome
+        manage their condition.</string>
+    <string name="logocontentdesp">Turner Syndrome Society Logo</string>
 </resources>

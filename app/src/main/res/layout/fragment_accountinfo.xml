@@ -71,6 +71,15 @@
             android:layout_marginStart="35dp"
             android:layout_marginEnd="35dp">
 
+            <CheckBox
+                android:id="@+id/heartCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="15dp"
+                android:buttonTint="@android:color/holo_green_dark"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,14 +87,8 @@
                 android:paddingEnd="5dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:text="@string/heartabnormalities"/>
-
-            <CheckBox
-                android:id="@+id/heartCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"/>
+                android:text="@string/heartAbnorm"
+                android:textSize="20sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -95,6 +98,15 @@
             android:layout_marginStart="35dp"
             android:layout_marginEnd="35dp">
 
+            <CheckBox
+                android:id="@+id/hearingCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginEnd="15dp"
+                android:buttonTint="@android:color/holo_green_dark"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -102,15 +114,10 @@
                 android:paddingEnd="5dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:text="@string/hearingabnormalities"/>
-
-            <CheckBox
-                android:id="@+id/hearingCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"/>
+                android:text="@string/hearingAbnorm"
+                android:textSize="20sp"/>
         </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout

@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -98,6 +101,15 @@ public class registerAct extends AppCompatActivity implements View.OnClickListen
                             Toast.makeText(registerAct.this,getString(R.string.registersucess),Toast.LENGTH_LONG).show();
                             finish();
                             startActivity(new Intent(getApplicationContext(), IntroductionOne.class));
+                        } else if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                            //If email already registered.
+                            Toast.makeText(registerAct.this,getString(R.string.accountexist),Toast.LENGTH_LONG).show();
+                        }else if (task.getException() instanceof FirebaseAuthWeakPasswordException) {
+                            //if password not 'stronger'
+                            Toast.makeText(registerAct.this,getString(R.string.passwordweak),Toast.LENGTH_LONG).show();
+                        }else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                            //If email are in incorret  format
+                            Toast.makeText(registerAct.this,getString(R.string.emailwrong),Toast.LENGTH_LONG).show();
                         }else{
                             //display some message here
                             Toast.makeText(registerAct.this,getString(R.string.registerrorr),Toast.LENGTH_LONG).show();
