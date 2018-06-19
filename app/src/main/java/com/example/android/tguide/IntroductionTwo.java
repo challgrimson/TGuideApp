@@ -9,6 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class IntroductionTwo extends AppCompatActivity {
     /**
      * Class holds buttons that will determine if the user has a heart abnormality.
@@ -35,28 +40,29 @@ public class IntroductionTwo extends AppCompatActivity {
             }
         });
 
-        // TODO: Delete these four lines after put into firebase
-        // Delete after firebase
-        // Set shared preference values
-        final SharedPreferences sharedPref = this.getSharedPreferences("TGUIDE", Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPref.edit();
 
         heartBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Put this into Firebase
-                editor.putBoolean("heart", heartBox.isChecked());
-                editor.apply();
+                // Save heart abnormality state
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("heartBox").setValue(heartBox.isChecked());
             }
         });
 
         hearingBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Put this into Firebase
-                editor.putBoolean("hearing", hearingBox.isChecked());
-                editor.apply();
+                // Save hearing abnormality state
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("hearingBox").setValue(hearingBox.isChecked());
             }
         });
+    }
+
+    public static String EncodeString(String string) {
+        return string.replace(".", ",");
     }
 }

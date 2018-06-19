@@ -26,6 +26,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 
@@ -362,26 +368,42 @@ public class accountinfo extends Fragment {
             }
         });
 
-        // TODO: Change to firebase and delete code pertaining to sharedPreferences
-        // Determine if checkboxes checked or not
-        final SharedPreferences sharedPref = getActivity().getSharedPreferences("TGUIDE",Context.MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPref.edit();
-
         // Grab views
         final CheckBox heartBox = view.findViewById(R.id.heartCheck);
         final CheckBox hearingBox = view.findViewById(R.id.hearingCheck);
 
         // Set if box is checked or not
-        heartBox.setChecked(sharedPref.getBoolean("heart", false));
-        hearingBox.setChecked(sharedPref.getBoolean("hearing", false));
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.hasChild("heartBox") || dataSnapshot.hasChild("hearingBox")) {
+                            // Get user value
+                            User user = dataSnapshot.getValue(User.class);
+
+                            heartBox.setChecked(user.getheartBox());
+                            hearingBox.setChecked(user.gethearingBox());
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+
+                    }
+                });
 
         // If checked or not then input data
         heartBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Save heart abnormality state
-                editor.putBoolean("heart", heartBox.isChecked());
-                editor.apply();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("heartBox").setValue(heartBox.isChecked());
             }
         });
 
@@ -389,12 +411,19 @@ public class accountinfo extends Fragment {
             @Override
             public void onClick(View view) {
                 // Save hearing abnormality state
-                editor.putBoolean("hearing", hearingBox.isChecked());
-                editor.apply();
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").child("hearingBox").setValue(hearingBox.isChecked());
             }
         });
 
+
+
         return view;
+    }
+
+    public static String EncodeString(String string) {
+        return string.replace(".", ",");
     }
 
     @Override

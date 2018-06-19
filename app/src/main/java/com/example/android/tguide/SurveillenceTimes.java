@@ -95,6 +95,10 @@ public class SurveillenceTimes extends Fragment {
     // Set Reminder times
     private static final long milYearRem = (milMonth *10L);
 
+    //heartbox/hearing box boolean
+    private boolean heartBoxC;
+    private boolean hearingBoxC;
+
     public SurveillenceTimes() {
         // Required empty public constructor
     }
@@ -342,35 +346,54 @@ public class SurveillenceTimes extends Fragment {
         heartTimeRem = 3L*milYearRem;
         hearingTime = 2L*milYear;
         heartTimeRem = 2L*milYearRem;
+        final View view2 = view;
+        ref.child("users").child(EncodeString(user.getEmail())).child(user.getUid()).child("baseInfo").addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot.hasChild("heartBox") || dataSnapshot.hasChild("hearingBox")) {
+                            // Get user value
+                            User user = dataSnapshot.getValue(User.class);
 
-        // TODO: Grab data from firebase instead of editor
-        // TODO: When switch to fireabase delete the shared preference lines
-        final SharedPreferences sharedPref = getActivity().getSharedPreferences("TGUIDE", Context.MODE_PRIVATE);
+                            heartBoxC = user.getheartBox();
+                            hearingBoxC = user.gethearingBox();
 
-        if (sharedPref.getBoolean("heart", false)) {
-            // Change the heart value to have abnormalities and change text
-            heartTime = milYear;
-            heartTimeRem = milYearRem;
 
-            TextView ECGTime = view.findViewById(R.id.ECGtime);
-            TextView ECHOTime = view.findViewById(R.id.EchoTime);
-            TextView CTMRITime = view.findViewById(R.id.CTMRITime);
+                                if (heartBoxC) {
+                                // Change the heart value to have abnormalities and change text
+                                heartTime = milYear;
+                                heartTimeRem = milYearRem;
 
-            ECGTime.setText(R.string.yearly);
-            ECHOTime.setText(R.string.yearly);
-            CTMRITime.setText(R.string.yearly);
-        }
+                                TextView ECGTime = view2.findViewById(R.id.ECGtime);
+                                TextView ECHOTime = view2.findViewById(R.id.EchoTime);
+                                TextView CTMRITime = view2.findViewById(R.id.CTMRITime);
 
-        if (sharedPref.getBoolean("hearing", false)) {
-            // Change hearing text and time for abnormalities
-            hearingTime = milYear;
-            hearingTimeRem = milYearRem;
+                                ECGTime.setText(R.string.yearly);
+                                ECHOTime.setText(R.string.yearly);
+                                CTMRITime.setText(R.string.yearly);
+                            }
 
-            TextView HearTime = view.findViewById(R.id.hearingTime);
+                            if (hearingBoxC) {
+                                // Change hearing text and time for abnormalities
+                                hearingTime = milYear;
+                                hearingTimeRem = milYearRem;
 
-            HearTime.setText(R.string.yearly);
+                                TextView HearTime = view2.findViewById(R.id.hearingTime);
 
-        }
+                                HearTime.setText(R.string.yearly);
+
+                            }
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+
+                    }
+                });
+
 
         return view;
     }

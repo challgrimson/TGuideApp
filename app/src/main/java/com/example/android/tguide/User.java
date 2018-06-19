@@ -11,6 +11,9 @@ public class User {
     private boolean clBox3;
     private boolean clBox4;
 
+    private boolean heartBox;
+    private boolean hearingBox;
+
     private boolean box1;
     private boolean box2;
     private boolean box3;
@@ -38,11 +41,16 @@ public class User {
                 long mPAPtime,long  mTHYtime, long mCELtime, long mECGtime, long mECHtime,long  mCTtime,long  mPROtime,long  mVIStime,long  mHEAtime,long  mBONtimem, String notepad,boolean box1,
                 boolean box2,
                 boolean box3,
-                boolean firstTime) {
+                boolean firstTime,
+                boolean heartBox,
+                boolean hearingBox) {
         this.clBox1 = clBox1;
         this.clBox2 = clBox2;
         this.clBox3 = clBox3;
         this.clBox4 = clBox4;
+
+        this.hearingBox = hearingBox;
+        this.heartBox = heartBox;
 
         this.firstTime = firstTime;
 
@@ -80,6 +88,9 @@ public class User {
     public boolean getClBox2() {return clBox2;}
     public boolean getClBox3() {return clBox3;}
     public boolean getClBox4() {return clBox4;}
+
+    public boolean getheartBox() {return heartBox;}
+    public boolean gethearingBox() {return hearingBox;}
 
     public String getmPAPtext() {return mPAPtext;}
     public String getmTHYtext() {return mTHYtext;}
