@@ -3,19 +3,24 @@ package com.example.android.tguide;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -60,6 +65,9 @@ public class HomeActivity extends AppCompatActivity
     // Set WelcomeLarm time
     private static final long welcomeAlarmTime = 3L*2592000000L;
 
+    // Create Channel ID and description
+    String channelID, channelDesp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //setTheme(R.style.AppTheme_NoActionBar);
@@ -88,6 +96,25 @@ public class HomeActivity extends AppCompatActivity
         // Set shared preference values
         sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
+
+        // Create channel for notifications
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel notificationChannel = notificationManager.getNotificationChannel(channelID);
+            // check if notificational exists
+            if (notificationChannel == null) {
+                // Create channel for making alarms
+                channelID = "TGuide_Notifications";
+                channelDesp = "TGuide Notifications";
+                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                notificationChannel = new NotificationChannel(channelID, channelDesp, importance);
+                notificationChannel.enableLights(true);
+                notificationChannel.setLightColor(Color.RED);
+                notificationChannel.enableVibration(true);
+                notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                notificationManager.createNotificationChannel(notificationChannel);
+            }
+        }
 
         // Create welcome alarm - put in seperate space to ensure when switching phone welcome alarm is
         // activated
@@ -203,23 +230,48 @@ public class HomeActivity extends AppCompatActivity
         Intent resultIntent = new Intent(this, HomeActivity.class);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (mActive.equals("true")) {
-            // Builder Object for notification sound on
-            return new Notification.Builder(this)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle(notificationTitle)
-                    .setContentText(notificationDesp)
-                    .setSound(soundUri)
-                    .setContentIntent(resultPendingIntent)
-                    .build();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (mActive.equals("true")) {
+                // Builder Object for notification sound on
+                return new NotificationCompat.Builder(this, channelID)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(notificationTitle)
+                        .setContentText(notificationDesp)
+                        .setContentIntent(resultPendingIntent)
+                        .setAutoCancel(true)
+                        .build();
+            } else {
+                // Builder Object for notification sound off
+                return new NotificationCompat.Builder(this, channelID)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(notificationTitle)
+                        .setContentText(notificationDesp)
+                        .setContentIntent(resultPendingIntent)
+                        .setAutoCancel(true)
+                        .build();
+            }
+
         } else {
-            // Builder Object for notification sound off
-            return new Notification.Builder(this)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle(notificationTitle)
-                    .setContentText(notificationDesp)
-                    .setContentIntent(resultPendingIntent)
-                    .build();
+            if (mActive.equals("true")) {
+                // Builder Object for notification sound on
+                return new Notification.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(notificationTitle)
+                        .setContentText(notificationDesp)
+                        .setSound(soundUri)
+                        .setContentIntent(resultPendingIntent)
+                        .setAutoCancel(true)
+                        .build();
+            } else {
+                // Builder Object for notification sound off
+                return new Notification.Builder(this)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(notificationTitle)
+                        .setContentText(notificationDesp)
+                        .setContentIntent(resultPendingIntent)
+                        .setAutoCancel(true)
+                        .build();
+            }
         }
     }
 
@@ -230,7 +282,7 @@ public class HomeActivity extends AppCompatActivity
         Intent myIntent = new Intent(this, AlarmReceiver.class);
         myIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, ID);
         myIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
-        PendingIntent resultPendingIntent = PendingIntent.getBroadcast(this,ID, myIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent resultPendingIntent = PendingIntent.getBroadcast(this, ID, myIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
         // See if repeat and so, set

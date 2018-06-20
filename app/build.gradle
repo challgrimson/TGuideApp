@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.example.android.tguide"
         minSdkVersion 22
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -21,35 +21,35 @@ android {
 
 
 dependencies {
-    implementation 'com.google.firebase:firebase-database:11.8.0'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:26.1.0'
-    compile 'com.android.support:recyclerview-v7:26.1.0'
-    compile 'com.wdullaer:materialdatetimepicker:1.2.1'
-    compile 'com.bignerdranch.android:recyclerview-multiselect:0.2'
-    compile 'com.wrapp.floatlabelededittext:library:0.0.6'
-    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
-    compile 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.wdullaer:materialdatetimepicker:1.2.1'
+    implementation 'com.bignerdranch.android:recyclerview-multiselect:0.2'
+    implementation 'com.wrapp.floatlabelededittext:library:0.0.6'
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    implementation 'com.android.support:support-v4:27.1.1'
     //FIREBASE
-    compile 'com.google.firebase:firebase-core:11.8.0'
-    compile 'com.google.firebase:firebase-auth:11.8.0'
-    compile 'com.google.firebase:firebase-storage:11.8.0'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-auth:16.0.2'
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
 
     // GIF Repository to show gif
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.10'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.10'
 
     // Material design calendar
-    compile 'com.github.sundeepk:compact-calendar-view:2.0.2.3'
+    implementation 'com.github.sundeepk:compact-calendar-view:2.0.2.3'
 
     // Include all the Twitter UI to display timeline
     //compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
 
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
 
 // FIREBASE

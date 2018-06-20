@@ -2,14 +2,20 @@ package com.example.android.tguide;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+
 import java.util.Calendar;
 
 /**
@@ -37,6 +43,9 @@ public class bootReceiver extends BroadcastReceiver {
 
     ReminderDBHelper handler;
 
+    // For channel
+    String channelID, channelDesp;
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -48,11 +57,30 @@ public class bootReceiver extends BroadcastReceiver {
         mRepeatTime = -1;
 
         //Reset welcomeAlarm
-        begin_notifications(1, mContext.getString(R.string.welcomeNotificationTitle), mContext.getString(R.string.welcomeNotificationDescrip), determineNextTime(), 60 * 1000, "true");
+        begin_notifications(1, mContext.getString(R.string.welcomeNotificationTitle), mContext.getString(R.string.welcomeNotificationDescrip), determineNextTime(), 3L*2592000000L, "true");
         // Grab time from database
 
         // Initilize calendar
         mCalendar = Calendar.getInstance();
+
+        // Create channel for notifications
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel notificationChannel = notificationManager.getNotificationChannel(channelID);
+            // check if notificational exists
+            if (notificationChannel == null) {
+                // Create channel for making alarms
+                channelID = "TGuide_Notifications";
+                channelDesp = "TGuide Notifications";
+                int importance = NotificationManager.IMPORTANCE_DEFAULT;
+                notificationChannel = new NotificationChannel(channelID, channelDesp, importance);
+                notificationChannel.enableLights(true);
+                notificationChannel.setLightColor(Color.RED);
+                notificationChannel.enableVibration(true);
+                notificationChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                notificationManager.createNotificationChannel(notificationChannel);
+            }
+        }
 
         // Restore set reminders
         restoreReminder();
@@ -66,23 +94,48 @@ public class bootReceiver extends BroadcastReceiver {
         Intent resultIntent = new Intent(mContext, HomeActivity.class);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        if (mActive.equals("true")) {
-            // Builder Object for notification sound on
-            return new Notification.Builder(mContext)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle(notificationTitle)
-                    .setContentText(notificationDesp)
-                    .setSound(soundUri)
-                    .setContentIntent(resultPendingIntent)
-                    .build();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (mActive.equals("true")) {
+                // Builder Object for notification sound on
+                return new NotificationCompat.Builder(mContext, channelID)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(notificationTitle)
+                        .setContentText(notificationDesp)
+                        .setContentIntent(resultPendingIntent)
+                        .setAutoCancel(true)
+                        .build();
+            } else {
+                // Builder Object for notification sound off
+                return new NotificationCompat.Builder(mContext, channelID)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(notificationTitle)
+                        .setContentText(notificationDesp)
+                        .setContentIntent(resultPendingIntent)
+                        .setAutoCancel(true)
+                        .build();
+            }
+
         } else {
-            // Builder Object for notification sound off
-            return new Notification.Builder(mContext)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle(notificationTitle)
-                    .setContentText(notificationDesp)
-                    .setContentIntent(resultPendingIntent)
-                    .build();
+            if (mActive.equals("true")) {
+                // Builder Object for notification sound on
+                return new Notification.Builder(mContext)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(notificationTitle)
+                        .setContentText(notificationDesp)
+                        .setSound(soundUri)
+                        .setContentIntent(resultPendingIntent)
+                        .setAutoCancel(true)
+                        .build();
+            } else {
+                // Builder Object for notification sound off
+                return new Notification.Builder(mContext)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(notificationTitle)
+                        .setContentText(notificationDesp)
+                        .setContentIntent(resultPendingIntent)
+                        .setAutoCancel(true)
+                        .build();
+            }
         }
 
         // Create intent for this notification
@@ -112,7 +165,8 @@ public class bootReceiver extends BroadcastReceiver {
     }
 
     public long determineNextTime() {
-        return (System.currentTimeMillis() + System.currentTimeMillis() % (5*60*1000));
+        // Determine when welcome alarm should be set next
+        return (System.currentTimeMillis() + System.currentTimeMillis() % (3L*2592000000L));
     }
 
     // Restore the created reminders
