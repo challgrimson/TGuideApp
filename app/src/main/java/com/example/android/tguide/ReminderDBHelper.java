@@ -263,4 +263,12 @@ public class ReminderDBHelper extends SQLiteOpenHelper {
     public static String EncodeString(String string) {
         return string.replace(".", ",");
     }
+
+    public boolean notEmpty() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor Rcursor = db.rawQuery( "SELECT * FROM " + REMINDER_TABLE_NAME, null );
+        boolean notEmpty = (Rcursor.getCount() > 0);
+        Rcursor.close();
+        return notEmpty;
+    }
 }
