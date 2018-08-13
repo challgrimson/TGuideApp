@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="com.example.android.tguide.MainPage">
+    tools:context="com.turner.android.tguide.MainPage">
 
     <!-- For when accessibility is on - will read to user -->
 

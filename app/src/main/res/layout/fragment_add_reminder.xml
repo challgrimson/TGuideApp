@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.android.tguide.Add_Reminder">
+    tools:context="com.turner.android.tguide.Add_Reminder">
 
     <!-- For Title Section -->
     <LinearLayout

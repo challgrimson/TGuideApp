@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context="com.example.android.tguide.FAQ">
+    tools:context="com.turner.android.tguide.FAQ">
 
     <LinearLayout
         android:id="@+id/LL"
